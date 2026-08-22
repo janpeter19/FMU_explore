@@ -1,0 +1,10 @@
+[built-system]
+requires = []
+build-backend = ""
+
+[project]
+name = "fmu_explore_pyfmi"
+version = "1.1.0"
+authors = [
+   {name = "Jan Peter Axelsson"}
+]
