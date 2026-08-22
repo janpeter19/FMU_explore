@@ -1,6 +1,6 @@
-[built-system]
-requires = []
-build-backend = ""
+[buil-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "fmu_explore_pyfmi"
