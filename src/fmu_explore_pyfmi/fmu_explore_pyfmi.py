@@ -15,10 +15,9 @@
 # 2026-08-19b Take away ax1 and ax2 and let them reach simu() using the new list ax part of data of class module
 # 2026-08-20a Make lines a parameter and introduce resetPen() that can used by newplot() from the application
 # 2026-08-21  Transferred to Github repository for running with Google Colab
-# 2026-08-22  The module put into pakcage FMU_explore at Github
+# 2026-08-22  The module put into package FMU_explore at Github
+# 2026-08-24  The package now corrected and works
 #------------------------------------------------------------------------------------------------------------------
-
-__version__ = '1.1.0'
 
 import platform
 import numpy as np 

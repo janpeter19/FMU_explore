@@ -1,0 +1,9 @@
+LICENSE
+README.md
+pyproject.toml
+src/fmu_explore_pyfmi/__init__.py
+src/fmu_explore_pyfmi/fmu_explore_pyfmi.py
+src/fmu_explore_pyfmi.egg-info/PKG-INFO
+src/fmu_explore_pyfmi.egg-info/SOURCES.txt
+src/fmu_explore_pyfmi.egg-info/dependency_links.txt
+src/fmu_explore_pyfmi.egg-info/top_level.txt
