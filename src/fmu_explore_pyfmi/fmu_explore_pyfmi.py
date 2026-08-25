@@ -17,17 +17,23 @@
 # 2026-08-21  Transferred to Github repository for running with Google Colab
 # 2026-08-22  The module put into package FMU_explore at Github
 # 2026-08-24  The package now corrected and works
+# 2026-08-25  The package extended with possibility to include an external function like cstrProdMax()
+# 2026-08-25  Expand eval() in simu() to include locals()
 #------------------------------------------------------------------------------------------------------------------
 
 import platform
 import numpy as np 
 import matplotlib.pyplot as plt 
 import matplotlib.image as img
+import pandas as pd
 import zipfile
 from importlib_metadata import version 
 from pyfmi.fmi import FMUException 
 from pyfmi import load_fmu
 from itertools import cycle
+
+def empty_function(*args, **kwargs):
+   return None
 
 class fmu_explore:
    
@@ -35,9 +41,10 @@ class fmu_explore:
    def __init__(self, model, parValue, parLocation, parCheck, fmu_model, fmu_process_diagram, \
                       MSL_usage, MSL_version, BPL_version, \
                       opts_std, simulationTime, timeDiscreteStates, stateValue, \
-                      diagrams, ax, lines):
+                      diagrams, ax, lines,
+                      external_function=empty_function):
                      
-      self.FMU_explore_version = 'FMU-explore version 1.1.0'
+      self.FMU_explore_version = 'FMU-explore version 1.1.1'
       self.model = model
       self.parValue = parValue  
       self.parLocation = parLocation
@@ -54,6 +61,7 @@ class fmu_explore:
       self.diagrams = diagrams     
       self.ax = ax                 
       self.lines = lines
+      self.external_function = external_function
 
    # Define how to read dictionary for parameter values
    def readParValue(self, file, sheet):
@@ -165,10 +173,13 @@ class fmu_explore:
                      print(parLocation[parName], ':', dict_reverser(parLocation)[Location], ':', parName,':', 
                         np.round(model.get(parLocation[parName])[0],decimals))
 
+   # Set the pen for the diagrams
+   def setPen(self, lines_new):
+      self.lines = lines_new
+
    # Reset the pen for the diagrams
    def resetPen(self):
       self.linecycler = cycle(self.lines)
-
 
    # Show plots from sim_res, just that
    def show(self):
@@ -183,6 +194,10 @@ class fmu_explore:
       
       # Plot diagrams 
       for command in diagrams: eval(command)
+      
+   # Set options for simulation
+   def setOptions(self,options_new):
+      self.opts_std = options_new
 
    # Simulation
    def simu(self, simulationTimeLocal=5, mode='Initial'):        
@@ -200,9 +215,11 @@ class fmu_explore:
       parLocation = self.parLocation
       fmu_model = self.fmu_model
       model = self.model
+      external_function = self.external_function
     
       # Global variables
-      global prevFinalTime, t, sim_res
+#      global prevFinalTime, t, sim_res
+      global prevFinalTime
    
       # Simulation flag
       simulationDone = False
@@ -274,7 +291,7 @@ class fmu_explore:
  
          # Plot diagrams
          linetype = next(linecycler)    
-         for command in diagrams: eval(command)
+         for command in diagrams: eval(command, {}, locals())
             
          # Store final state values stateValue:
          for key in list(stateValue.keys()): stateValue[key] = model.get(key)[0]        
