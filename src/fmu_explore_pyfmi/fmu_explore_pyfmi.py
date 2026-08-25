@@ -62,6 +62,8 @@ class fmu_explore:
       self.ax = ax                 
       self.lines = lines
       self.external_function = external_function
+      self.sim_res = None
+      self.t = None
 
    # Define how to read dictionary for parameter values
    def readParValue(self, file, sheet):
@@ -185,15 +187,28 @@ class fmu_explore:
    def show(self):
       """Show diagrams chosen by newplot()"""
       
+      print("SHOW object:", id(self))
+      print("t:", self.t is None)
+      print("sim_res:", self.sim_res is None)
+      
       diagrams = self.diagrams
       ax = self.ax  
       linecycler = self.linecycler
+      t = self.t
+      sim_res = self.sim_res
       
       # Plot pen
-      linetype = next(linecycler)    
+      linetype = next(linecycler) 
+      
+      print("t is None:", t is None)
+      print("sim_res is None:", sim_res is None)
+      print("result is None:", sim_res['bioreactor.c[2]'] is None)
+      print("result is None:", sim_res['bioreactor.c[2]'] is None)
+      print("linetype is None:", linetype is None)
+      
       
       # Plot diagrams 
-      for command in diagrams: eval(command)
+      for command in diagrams: eval(command, {}, locals())
       
    # Set options for simulation
    def setOptions(self,options_new):
@@ -203,6 +218,8 @@ class fmu_explore:
    def simu(self, simulationTimeLocal=5, mode='Initial'):        
       """Model loaded and given intial values and parameter before,
          and plot window also setup before."""
+      
+      print("SIMU object:", id(self))
 
       options = self.opts_std      
       simulationTime = self.simulationTime
@@ -247,7 +264,10 @@ class fmu_explore:
             model.set(parLocation[key],parValue[key])   
          # Simulate
          sim_res = model.simulate(final_time=simulationTime, options=options)  
+         self.sim_res = sim_res
+         self.t = sim_res['time']         
          simulationDone = True
+         
       elif mode in ['Continued', 'continued', 'cont']:
 
          if prevFinalTime == 0: 
@@ -280,6 +300,9 @@ class fmu_explore:
             sim_res = model.simulate(start_time=prevFinalTime,
                                     final_time=prevFinalTime + simulationTime,
                                     options=options) 
+            self.sim_res = sim_res
+            self.t = sim_res['time']
+#            t = self.t
             simulationDone = True             
       else:
          print("Simulation mode not correct")
@@ -287,8 +310,8 @@ class fmu_explore:
       if simulationDone:
     
          # Extract data
-         t = sim_res['time']
- 
+         t = self.t
+         
          # Plot diagrams
          linetype = next(linecycler)    
          for command in diagrams: eval(command, {}, locals())
