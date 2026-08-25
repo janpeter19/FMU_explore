@@ -31,7 +31,7 @@ Specific goals - now reached:
 * Module v2 now works in Linux with PyFMI and no surprises / Done 260821
 * Module v2 stored in package and used both locally and in Colab  / Done 260824
 * How do I make the performance function cstrProdMax() available inside simu() / Done 260825
-* **Make sim_res available in the Jupyter/Colab notebook when needed**
+* Make sim_res available in the Jupyter/Colab notebook when needed / Done 260825
 * Reduce declaration of version to only one place from todays three places
 
 
