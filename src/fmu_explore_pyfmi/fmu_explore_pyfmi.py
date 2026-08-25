@@ -19,6 +19,7 @@
 # 2026-08-24  The package now corrected and works
 # 2026-08-25  The package extended with possibility to include an external function like cstrProdMax()
 # 2026-08-25  Expand eval() in simu() to include locals()
+# 2026-08-25  Fixed simu() and show()
 #------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -186,11 +187,7 @@ class fmu_explore:
    # Show plots from sim_res, just that
    def show(self):
       """Show diagrams chosen by newplot()"""
-      
-      print("SHOW object:", id(self))
-      print("t:", self.t is None)
-      print("sim_res:", self.sim_res is None)
-      
+            
       diagrams = self.diagrams
       ax = self.ax  
       linecycler = self.linecycler
@@ -199,14 +196,7 @@ class fmu_explore:
       
       # Plot pen
       linetype = next(linecycler) 
-      
-      print("t is None:", t is None)
-      print("sim_res is None:", sim_res is None)
-      print("result is None:", sim_res['bioreactor.c[2]'] is None)
-      print("result is None:", sim_res['bioreactor.c[2]'] is None)
-      print("linetype is None:", linetype is None)
-      
-      
+            
       # Plot diagrams 
       for command in diagrams: eval(command, {}, locals())
       
@@ -218,8 +208,6 @@ class fmu_explore:
    def simu(self, simulationTimeLocal=5, mode='Initial'):        
       """Model loaded and given intial values and parameter before,
          and plot window also setup before."""
-      
-      print("SIMU object:", id(self))
 
       options = self.opts_std      
       simulationTime = self.simulationTime
@@ -235,7 +223,6 @@ class fmu_explore:
       external_function = self.external_function
     
       # Global variables
-#      global prevFinalTime, t, sim_res
       global prevFinalTime
    
       # Simulation flag
@@ -302,7 +289,6 @@ class fmu_explore:
                                     options=options) 
             self.sim_res = sim_res
             self.t = sim_res['time']
-#            t = self.t
             simulationDone = True             
       else:
          print("Simulation mode not correct")
