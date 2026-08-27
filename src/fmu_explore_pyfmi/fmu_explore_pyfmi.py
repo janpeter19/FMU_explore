@@ -20,6 +20,7 @@
 # 2026-08-25  The package extended with possibility to include an external function like cstrProdMax()
 # 2026-08-25  Expand eval() in simu() to include locals()
 # 2026-08-25  Fixed simu() and show()
+# 2026-08-26  Single version number used throughout and put in pyproject.toml
 #------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -437,7 +438,7 @@ class fmu_explore:
       
       model = self.model 
       MSL_version = self.MSL_version
-      BPL_version = self.BPL_version 
+      BPL_version = self.BPL_version       
       FMU_explore_version = self.FMU_explore_version    
       
       FMU_type = model.__class__.__name__

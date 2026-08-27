@@ -31,12 +31,17 @@ Specific goals - now reached:
 * Module v2 now works in Linux with PyFMI and no surprises / Done 260821
 * Module v2 stored in package and used both locally and in Colab  / Done 260824
 * How do I make the performance function cstrProdMax() available inside simu() / Done 260825
-* Make sim_res available in the Jupyter/Colab notebook when needed / Done 260825
-* Reduce declaration of version to only one place from todays three places
+* Make sim_res available in the Jupyter/Colab notebook when needed 
+* Make declaration of version in only one place from todays three places
+* Make simulationTime default for simu()
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-08-27 Now brought in BPL\_CHO\_Perfusion_cspr_openloop.
+
+2026-08-26 Now brought three more applications to Colab: PL\_TEST2\_Chemostat, BPL\_YEAST_AIR\_Fedbatch, BPL\_CHO\_Fedbatch.   
 
 2026-08-25 Almost managed to convert BPL\_TEST2\_Chemostat for FMU\_explore 1.1.0. Remains to handle cstrProdMax() defined in user functions, though. 
 
