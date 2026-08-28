@@ -41,7 +41,7 @@ Specific goals - now reached:
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
 
-2026-08-28 Now brought in BPL\_IEC\_Operation.
+2026-08-28 Now brought in BPL\_IEC\_Operation, BPL\_STEM\_AIR\_Perfusion.
 
 2026-08-27 Now brought in BPL\_CHO\_Perfusion_cspr_openloop.
 
