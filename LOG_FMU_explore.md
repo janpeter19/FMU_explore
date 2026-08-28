@@ -34,10 +34,14 @@ Specific goals - now reached:
 * Make sim_res available in the Jupyter/Colab notebook when needed 
 * Make declaration of version in only one place from todays three places
 * Make simulationTime default for simu()
+* Make cstrProdMax() available during plotting
+* Make profile() available during plotting
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-08-28 Now brought in BPL\_IEC\_Operation.
 
 2026-08-27 Now brought in BPL\_CHO\_Perfusion_cspr_openloop.
 
