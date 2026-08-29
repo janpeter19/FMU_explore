@@ -21,6 +21,7 @@
 # 2026-08-25  Expand eval() in simu() to include locals()
 # 2026-08-25  Fixed simu() and show()
 # 2026-08-26  Single version number used throughout and put in pyproject.toml
+# 2026-08-29  Modified simu() and made sim_res acceissble outsinde simu() and now ver 1.1.2
 #------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -46,7 +47,7 @@ class fmu_explore:
                       diagrams, ax, lines,
                       external_function=empty_function):
                      
-      self.FMU_explore_version = 'FMU-explore version 1.1.1'
+      self.FMU_explore_version = 'FMU-explore version 1.1.2'
       self.model = model
       self.parValue = parValue  
       self.parLocation = parLocation
@@ -307,10 +308,12 @@ class fmu_explore:
          for key in list(stateValue.keys()): stateValue[key] = model.get(key)[0]        
 
          # Store time from where simulation will start next time
-         prevFinalTime = model.time
+         prevFinalTime = model.time      
    
       else:
          print('Error: No simulation done')
+         
+      return sim_res
 
    # Describe model parts of the combined system
    def describe_parts(self, component_list=[]):
