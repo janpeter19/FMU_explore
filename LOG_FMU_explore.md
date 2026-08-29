@@ -31,7 +31,7 @@ Specific goals - now reached:
 * Module v2 now works in Linux with PyFMI and no surprises / Done 260821
 * Module v2 stored in package and used both locally and in Colab  / Done 260824
 * How do I make the performance function cstrProdMax() available inside simu() / Done 260825
-* Make sim_res available in the Jupyter/Colab notebook when needed 
+* Make sim_res available in the Jupyter/Colab notebook when needed / Done 260829
 * Make declaration of version in only one place from todays three places
 * Make simulationTime default for simu()
 * Make cstrProdMax() available during plotting
@@ -40,6 +40,10 @@ Specific goals - now reached:
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-08-28 Now brought in BPL\_YEAST\_COB\_Batch usng FMU\_explore ver 1.1.2
+
+2026-08-29 I made sim_res available outside simu() by just introducting a return statement in the function. Call this **FMU\_explorer ver 1.1.2**.
 
 2026-08-28 Now brought in BPL\_IEC\_Operation, BPL\_STEM\_AIR\_Perfusion.
 
