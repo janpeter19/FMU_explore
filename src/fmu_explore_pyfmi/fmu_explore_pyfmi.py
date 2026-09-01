@@ -22,6 +22,7 @@
 # 2026-08-25  Fixed simu() and show()
 # 2026-08-26  Single version number used throughout and put in pyproject.toml
 # 2026-08-29  Modified simu() and made sim_res acceissble outsinde simu() and now ver 1.1.2
+# 2026-09-01  Make it possible to set simulationTime and also options in simu() and now ver 1.1.3
 #------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -47,7 +48,7 @@ class fmu_explore:
                       diagrams, ax, lines,
                       external_function=empty_function):
                      
-      self.FMU_explore_version = 'FMU-explore version 1.1.2'
+      self.FMU_explore_version = 'FMU-explore version 1.1.3'
       self.model = model
       self.parValue = parValue  
       self.parLocation = parLocation
@@ -207,12 +208,16 @@ class fmu_explore:
       self.opts_std = options_new
 
    # Simulation
-   def simu(self, simulationTimeLocal=5, mode='Initial'):        
+   def simu(self, simulationTime=None, options=None, mode='Initial'):        
       """Model loaded and given intial values and parameter before,
          and plot window also setup before."""
-
-      options = self.opts_std      
-      simulationTime = self.simulationTime
+      
+      if simulationTime is None:
+         simulationTime = self.simulationTime
+         
+      if options is None:
+         options=self.opts_std
+  
       diagrams = self.diagrams 
       ax = self.ax  
       linecycler = self.linecycler
@@ -229,10 +234,7 @@ class fmu_explore:
    
       # Simulation flag
       simulationDone = False
-   
-      # Transfer of argument to global variable
-      simulationTime = simulationTimeLocal 
-      
+        
       # Check parValue
       value_missing = 0
       for key in parValue.keys():
