@@ -23,6 +23,7 @@
 # 2026-08-26  Single version number used throughout and put in pyproject.toml
 # 2026-08-29  Modified simu() and made sim_res acceissble outsinde simu() and now ver 1.1.2
 # 2026-09-01  Make it possible to set simulationTime and also options in simu() and now ver 1.1.3
+# 2026-09-01  Make external_function useful in diagrams and introduced "context" in simu() and show() ver 1.1.4
 #------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -48,7 +49,7 @@ class fmu_explore:
                       diagrams, ax, lines,
                       external_function=empty_function):
                      
-      self.FMU_explore_version = 'FMU-explore version 1.1.3'
+      self.FMU_explore_version = 'FMU-explore version 1.1.4'
       self.model = model
       self.parValue = parValue  
       self.parLocation = parLocation
@@ -196,12 +197,16 @@ class fmu_explore:
       linecycler = self.linecycler
       t = self.t
       sim_res = self.sim_res
+      external_function = self.external_function 
       
       # Plot pen
       linetype = next(linecycler) 
             
       # Plot diagrams 
-      for command in diagrams: eval(command, {}, locals())
+      context = locals().copy()
+      context[self.external_function.__name__] = self.external_function     
+      for command in diagrams: eval(command, {}, context) 
+    
       
    # Simulation
    def simu(self, simulationTime=None, mode='Initial', options=None):        
@@ -223,7 +228,7 @@ class fmu_explore:
       parLocation = self.parLocation
       fmu_model = self.fmu_model
       model = self.model
-      external_function = self.external_function
+      external_function = self.external_function     
     
       # Global variables
       global prevFinalTime
@@ -299,8 +304,11 @@ class fmu_explore:
          t = self.t
          
          # Plot diagrams
-         linetype = next(linecycler)    
-         for command in diagrams: eval(command, {}, locals())
+         linetype = next(linecycler)  
+         context = locals().copy()
+         context[self.external_function.__name__] = self.external_function
+           
+         for command in diagrams: eval(command, {}, context)                         
             
          # Store final state values stateValue:
          for key in list(stateValue.keys()): stateValue[key] = model.get(key)[0]        
