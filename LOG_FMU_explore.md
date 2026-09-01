@@ -33,14 +33,19 @@ Specific goals - now reached:
 * How do I make the performance function cstrProdMax() available inside simu() / Done 260825
 * Make sim_res available in the Jupyter/Colab notebook when needed / Done 260829
 * Make declaration of version in only one place from todays three places
-* **Make simulationTime default for simu() and also possible to set in simu()**
-* **Make options in simu() possible to set**
+* Make simulationTime default for simu() and also possible to set in simu() / Done 260901
+* Make options in simu() possible to set / Done 260901
+* **Make version of scipy.optimize visible in system_info()**
 * Make cstrProdMax() available during plotting
 * Make profile() available during plotting
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-09-01 Brought in BPL\_TEST2\_Batch\_calibration.
+
+2026-09-01 I made simu() have parameters simultionTime and options free to set but default taken from the class. Call it **FMU\_explorer ver 1.1.3**.
 
 2026-08-28 Now brought in BPL\_YEAST\_COB\_Batch and BPL\_TEST2\_Batch\_design_space using FMU\_explore ver 1.1.2
 
