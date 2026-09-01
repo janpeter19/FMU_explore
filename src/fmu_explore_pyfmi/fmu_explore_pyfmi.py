@@ -44,7 +44,7 @@ class fmu_explore:
    # Set the actual variables associated with the application given
    def __init__(self, model, parValue, parLocation, parCheck, fmu_model, fmu_process_diagram, \
                       MSL_usage, MSL_version, BPL_version, \
-                      opts_std, simulationTime, timeDiscreteStates, stateValue, \
+                      options, simulationTime, timeDiscreteStates, stateValue, \
                       diagrams, ax, lines,
                       external_function=empty_function):
                      
@@ -58,7 +58,7 @@ class fmu_explore:
       self.BPL_version = BPL_version
       self.fmu_model = fmu_model
       self.fmu_process_diagram = fmu_process_diagram
-      self.opts_std = opts_std
+      self.options = options
       self.simulationTime = simulationTime                                    
       self.timeDiscreteStates = timeDiscreteStates
       self.stateValue = stateValue
@@ -203,12 +203,8 @@ class fmu_explore:
       # Plot diagrams 
       for command in diagrams: eval(command, {}, locals())
       
-   # Set options for simulation
-   def setOptions(self,options_new):
-      self.opts_std = options_new
-
    # Simulation
-   def simu(self, simulationTime=None, options=None, mode='Initial'):        
+   def simu(self, simulationTime=None, mode='Initial', options=None):        
       """Model loaded and given intial values and parameter before,
          and plot window also setup before."""
       
@@ -216,7 +212,7 @@ class fmu_explore:
          simulationTime = self.simulationTime
          
       if options is None:
-         options=self.opts_std
+         options=self.options
   
       diagrams = self.diagrams 
       ax = self.ax  
