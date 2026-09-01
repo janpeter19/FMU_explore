@@ -32,16 +32,18 @@ Specific goals - now reached:
 * Module v2 stored in package and used both locally and in Colab  / Done 260824
 * How do I make the performance function cstrProdMax() available inside simu() / Done 260825
 * Make sim_res available in the Jupyter/Colab notebook when needed / Done 260829
-* Make declaration of version in only one place from todays three places
 * Make simulationTime default for simu() and also possible to set in simu() / Done 260901
 * Make options in simu() possible to set / Done 260901
+* Make cstrProdMax() available during plotting / Done 260901
+* Make profile() available during plotting / Done 260901
 * **Make version of scipy.optimize visible in system_info()**
-* Make cstrProdMax() available during plotting
-* Make profile() available during plotting
+* Make declaration of version in only one place from todays two places
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-09-01 Brought in the liast three applictions Chemostat, Perfusion and IEC\_validation and uing **FMU\_explorer ver 1.1.4**.
 
 2026-09-01 Brought in BPL\_TEST2\_Batch\_calibration.
 
