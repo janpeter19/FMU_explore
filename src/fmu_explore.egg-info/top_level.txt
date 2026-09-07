@@ -1,1 +1,2 @@
+fmu_explore_fmpy
 fmu_explore_pyfmi

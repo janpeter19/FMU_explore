@@ -1,6 +1,7 @@
 Metadata-Version: 2.4
-Name: fmu_explore_pyfmi
-Version: 1.1.4
+Name: fmu_explore
+Version: 1.1.5
 Author: Jan Peter Axelsson
+Requires-Python: >=3.12
 License-File: LICENSE
 Dynamic: license-file

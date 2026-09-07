@@ -1,32 +1,14 @@
-# module fmu_explore_pyfmi
+# module fmu_explore_fmpy
 # Author: Jan Peter Axelsson
 # License:  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 #------------------------------------------------------------------------------------------------------------------
-# 2026-08-13a Now include par, init, disp
-# 2026-08-13b Now include SDG, system_info, BPL_info
-# 2026-08-13c Now include process_diagram
-# 2026-08-13d Now include describe_general, describe_parts, describe_MSL, readParValue, readParLocation
-# 2026-08-14a Corrected par() to include self.parCheck
-# 2026-08-14b Add variables to class related to simu()
-# 2026-08-17a Try to bring in the last functions simu() and show(), setLines() 
-# 2026-08-17b Try to fix linecycler
-# 2026-08-18a Corrected around linecycler, sim_res
-# 2026-08-19a Changed BPL_info to FMU_explore_info, include ax1, ax2 for test
-# 2026-08-19b Take away ax1 and ax2 and let them reach simu() using the new list ax part of data of class module
-# 2026-08-20a Make lines a parameter and introduce resetPen() that can used by newplot() from the application
-# 2026-08-21  Transferred to Github repository for running with Google Colab
-# 2026-08-22  The module put into package FMU_explore at Github
-# 2026-08-24  The package now corrected and works
-# 2026-08-25  The package extended with possibility to include an external function like cstrProdMax()
-# 2026-08-25  Expand eval() in simu() to include locals()
-# 2026-08-25  Fixed simu() and show()
-# 2026-08-26  Single version number used throughout and put in pyproject.toml
-# 2026-08-29  Modified simu() and made sim_res acceissble outsinde simu() and now ver 1.1.2
-# 2026-09-01  Make it possible to set simulationTime and also options in simu() and now ver 1.1.3
-# 2026-09-01  Make external_function useful in diagrams and introduced "context" in simu() and show() ver 1.1.4
-# 2026-09-02  No change in this module but on tha package level to pave the way for fmu_explore_fmpy, now ver 1.1.5
+# 2026-09-02 - Created - start from fmu_explore_pyfmi ver 1.1.4 and now call it ver 1.1.5
+# 2026-09-03 - Changed to model_description, corrected arguments for functions
+# 2026-09-04 - Fixes of model_get etc, disp(), describe_general(), while simu() remains to be fixed also model_get
+# 2026-09-07 - Another fix of disp() and a couple of fixes for model_get - self.sim_res and self_start_values
 #------------------------------------------------------------------------------------------------------------------
 
+import sys
 import platform
 import numpy as np 
 import matplotlib.pyplot as plt 
@@ -34,24 +16,25 @@ import matplotlib.image as img
 import pandas as pd
 import zipfile
 from importlib_metadata import version 
-from pyfmi.fmi import FMUException 
-from pyfmi import load_fmu
+from fmpy import simulate_fmu
+from fmpy import read_model_description
+import fmpy as fmpy
 from itertools import cycle
 
 def empty_function(*args, **kwargs):
    return None
 
 class fmu_explore:
-   
+      
    # Set the actual variables associated with the application given
    def __init__(self, model, parValue, parLocation, parCheck, fmu_model, fmu_process_diagram, \
                       MSL_usage, MSL_version, BPL_version, \
-                      options, simulationTime, timeDiscreteStates, stateValue, \
-                      diagrams, ax, lines,
+                      options, simulationTime, timeDiscreteStates, stateValue, stateValueInitial, stateValueInitialLoc, keyVariables, \
+                      diagrams, ax, lines, \
                       external_function=empty_function):
                      
       self.FMU_explore_version = 'FMU-explore version 1.1.5'
-      self.model = model
+      self.model_description = model
       self.parValue = parValue  
       self.parLocation = parLocation
       self.parCheck = parCheck
@@ -64,10 +47,14 @@ class fmu_explore:
       self.simulationTime = simulationTime                                    
       self.timeDiscreteStates = timeDiscreteStates
       self.stateValue = stateValue
+      self.stateValueInitial = stateValueInitial
+      self.stateValueInitialLoc = stateValueInitialLoc
+      self.keyVariables = keyVariables
       self.diagrams = diagrams     
       self.ax = ax                 
       self.lines = lines
       self.external_function = external_function
+      self.start_values = None
       self.sim_res = None
       self.t = None
 
@@ -89,25 +76,24 @@ class fmu_explore:
       """ Read parameter short and long names from an Excel-file sheet by sheet. For use in the notebook!
           Return a dictionary."""
       
-      parLocation = self.parLocation
+      parLocation = self.parLocation      
       
       parLocation_local = {}
       for sheet in sheets:
          table = pd.ExcelFile(file).parse(sheet)
          for k in list(range(len(table))):
             parLocation_local[table['Par'][k]] = table['Location'][k]
-      parLocation.update(parLocation_local)      
+      parLocation.update(parLocation_local)
  
    # Define function par() for parameter update
    def par(self, *x, **x_kwarg):
-      """ Set parameter values if available in the predefined dictionaryt parValue. """
+      """ Set parameter values if available in the predefined dictionary parValue. """
       
       parValue = self.parValue
-      parCheck = self.parCheck
+      parCheck = self.parCheck      
       
       x_kwarg.update(*x)
       x_temp = {}
-      
       for key in x_kwarg.keys():
          if key in parValue.keys():
             x_temp.update({key: x_kwarg[key]})
@@ -124,27 +110,80 @@ class fmu_explore:
    def init(self, *x, **x_kwarg):
       """ Set initial values and the name should contain string '_start' to be accepted.
           The function can handle general parameter string location names if entered as a dictionary. """
-      
-      parValue = self.parValue
-      
+
+      parValue = self.parValue      
+
       x_kwarg.update(*x)
       x_init={}
-
       for key in x_kwarg.keys():
          if '_start' in key: 
             x_init.update({key: x_kwarg[key]})
          else:
             print('Error:', key, '- seems not an initial value, use par() instead - check the spelling')
-      parValue.update(x_init)
+      parValue.update(x_init) 
+   
+   # Define fuctions similar to pyfmi model.get(), model.get_variable_descirption(), model.get_variable_unit()
+   def model_get(self, parLoc):
+      """ Function corresponds to pyfmi model.get() but returns just a value and not a list"""
       
+      model_description = read_model_description(self.fmu_model)
+#      model_description = self.model_description
+      sim_res = self.sim_res
+      start_values = self.start_values
+      
+      par_var = model_description.modelVariables
+      for k in range(len(par_var)):
+         if par_var[k].name == parLoc:
+            try:
+               if (par_var[k].causality in ['local']) & (par_var[k].variability in ['constant']):
+                  value = float(par_var[k].start)                 
+               elif par_var[k].causality in ['parameter']: 
+                  value = float(par_var[k].start)  
+               elif par_var[k].causality in ['calculatedParameter']: 
+                  value = float(sim_res[par_var[k].name][0]) 
+               elif par_var[k].name in start_values.keys():
+                  value = start_values[par_var[k].name]   
+               elif par_var[k].variability == 'continuous':
+                  try:
+                     timeSeries = sim_res[par_var[k].name]
+                     value = float(timeSeries[-1])
+                  except (AttributeError, ValueError):
+                     value = None
+                     print('Variable not logged')
+               else:
+                  value = None
+            except NameError:
+               print('Error: Information available after first simulation')
+               value = None          
+      return value
+ 
+   # Define functions that mimic pyfmi-interacdtions 
+   def model_get_variable_description(self, parLoc):
+      """ Function corresponds to pyfmi model.get_variable_description() but returns just a value and not a list"""
+      
+      model_description = read_model_description(self.fmu_model)   
+      
+      par_var = model_description.modelVariables
+      value = [x.description for x in par_var if parLoc in x.name]   
+      return value[0]
+   
+   def model_get_variable_unit(self, parLoc):
+      """ Function corresponds to pyfmi model.get_variable_unit() but returns just a value and not a list"""
+      
+      model_description = read_model_description(self.fmu_model)   
+      
+      par_var = model_description.modelVariables
+      value = [x.unit for x in par_var if parLoc in x.name]
+      return value[0]
+                               
+   # Define function disp() for display of initial values and parameters
    def disp(self, name='', decimals=3, mode='short'):
       """ Display intial values and parameters in the model that include "name" and is in parLocation list.
-          Note, it does not take the value from the dictionary par but from the model. """
-
-      model = self.model
-      parValue = self.parValue
-      parLocation = self.parLocation
-
+          Note, it does not take the value from the dictionary parValue but from the model. """
+      
+      parValue = self.parValue 
+      parLocation = self.parLocation 
+   
       def dict_reverser(d):
          seen = set()
          return {v: k for k, v in d.items() if v not in seen or seen.add(v)}
@@ -153,33 +192,36 @@ class fmu_explore:
          k = 0
          for Location in [parLocation[k] for k in parValue.keys()]:
             if name in Location:
-               if type(model.get(Location)[0]) != np.bool_:
-                  print(dict_reverser(parLocation)[Location] , ':', np.round(model.get(Location)[0],decimals))
+               if type(self.model_get(Location)) != np.bool_:
+                  print(dict_reverser(parLocation)[Location] , ':', np.round(self.model_get(Location),decimals))
                else:
-                  print(dict_reverser(parLocation)[Location] , ':', model.get(Location)[0])               
+                  print(dict_reverser(parLocation)[Location] , ':', self.model_get(Location))               
             else:
                k = k+1
          if k == len(parLocation):
             for parName in parValue.keys():
                if name in parName:
-                  if type(model.get(Location)[0]) != np.bool_:
-                     print(parName,':', np.round(model.get(parLocation[parName])[0],decimals))
+                  if type(self.model_get(Location)) != np.bool_:
+                     print(parName,':', np.round(self.model_get(parLocation[parName]),decimals))
                   else: 
-                     print(parName,':', model.get(parLocation[parName])[0])
+                     print(parName,':', self.model_get(parLocation[parName])[0])
+
       if mode in ['long','location']:
          k = 0
          for Location in [parLocation[k] for k in parValue.keys()]:
             if name in Location:
-               if type(model.get(Location)[0]) != np.bool_:       
-                  print(Location,':', dict_reverser(parLocation)[Location] , ':', np.round(model.get(Location)[0],decimals))
+               if type(self.model_get(Location)) != np.bool_:       
+                  print(Location,':', dict_reverser(parLocation)[Location] , ':', np.round(self.model_get(Location),decimals))
             else:
                k = k+1
          if k == len(parLocation):
             for parName in parValue.keys():
                if name in parName:
-                  if type(model.get(Location)[0]) != np.bool_:
+                  if type(self.model_get(Location)) != np.bool_:
                      print(parLocation[parName], ':', dict_reverser(parLocation)[Location], ':', parName,':', 
-                        np.round(model.get(parLocation[parName])[0],decimals))
+                        np.round(self.model_get(parLocation[parName]),decimals))
+
+#------------------------------------------------------------------------------------------------------------------
 
    # Set the pen for the diagrams
    def setPen(self, lines_new):
@@ -207,7 +249,8 @@ class fmu_explore:
       context = locals().copy()
       context[self.external_function.__name__] = self.external_function     
       for command in diagrams: eval(command, {}, context) 
-    
+ 
+#------------------------------------------------------------------------------------------------------------------    
       
    # Simulation
    def simu(self, simulationTime=None, mode='Initial', options=None):        
@@ -224,110 +267,126 @@ class fmu_explore:
       ax = self.ax  
       linecycler = self.linecycler
       timeDiscreteStates = self.timeDiscreteStates      
-      stateValue = self.stateValue      
+      stateValue = self.stateValue
+      stateValueInitial = self.stateValueInitial
+      stateValueInitialLoc = self.stateValueInitialLoc
+      keyVariables = self.keyVariables      
       parValue = self.parValue
       parLocation = self.parLocation
       fmu_model = self.fmu_model
-      model = self.model
-      external_function = self.external_function     
-    
+      model_description = read_model_description(fmu_model)  
+      external_function = self.external_function  
+      
       # Global variables
       global prevFinalTime
    
       # Simulation flag
       simulationDone = False
-        
-      # Check parValue
-      value_missing = 0
-      for key in parValue.keys():
-         if parValue[key] in [np.nan, None, '']:
-            print('Value missing:', key)
-            value_missing =+1
-      if value_missing>0: return
-         
-      # Load model
-      if model is None:
-         model = load_fmu(fmu_model) 
-      model.reset()
-      
+           
+      # Internal help function to extract variables to be stored
+      def extract_variables(diagrams):
+          output = []
+          variables = [v for v in model_description.modelVariables if v.causality == 'local']
+          for j in range(len(diagrams)):
+              for k in range(len(variables)):
+                  if variables[k].name in diagrams[j]:
+                      output.append(variables[k].name)
+          return output
+
       # Run simulation
-      if mode in ['Initial', 'initial', 'init']:
-         # Set parameters and intial state values:
-         for key in parValue.keys():
-            model.set(parLocation[key],parValue[key])   
+      if mode in ['Initial', 'initial', 'init']: 
+      
+         start_values = {parLocation[k]:parValue[k] for k in parValue.keys()}         
+         stateValueInitial = self.stateValueInitial
+         stateValueInitialLoc = self.stateValueInitialLoc
+      
          # Simulate
-         sim_res = model.simulate(final_time=simulationTime, options=options)  
+         sim_res = simulate_fmu(
+            filename = fmu_model,
+            validate = False,
+            start_time = 0,
+            stop_time = simulationTime,
+            output_interval = simulationTime/options['NCP'],
+            record_events = True,
+            start_values = start_values,
+            fmi_call_logger = None,
+            output = list(set(extract_variables(diagrams) + list(stateValue.keys()) + keyVariables))
+         )
+         self.start_values = start_values
          self.sim_res = sim_res
-         self.t = sim_res['time']         
+         self.t = sim_res['time']      
          simulationDone = True
-         
+      
       elif mode in ['Continued', 'continued', 'cont']:
-
+      
          if prevFinalTime == 0: 
-            print("Error: Simulation is first done with default mode = init'")      
-         else:
+            print("Error: Simulation is first done with default mode = init'")
          
-            # Set parameters and intial state values:
+         else:         
+            # Update parValueMod and create parLocationMod
+            parValueRed = parValue.copy()
+            parLocationRed = parLocation.copy()
             for key in parValue.keys():
-               model.set(parLocation[key],parValue[key])                
+               if parLocation[key] in stateValueInitial.values(): 
+                  del parValueRed[key]  
+                  del parLocationRed[key]
+            parLocationMod = dict(list(parLocationRed.items()) + list(stateValueInitialLoc.items()))
+   
+            # Create parValueMod and parLocationMod
+            parValueMod = dict(list(parValueRed.items()) + 
+               [(stateValueInitial[key], stateValue[key]) for key in stateValue.keys()])      
 
-            for key in stateValue.keys():
-               if not key[-1] == ']':
-                  if key[-3:] == 'I.y': 
-                     model.set(key[:-10]+'I_start', stateValue[key]) 
-                  elif key[-3:] == 'D.x': 
-                     model.set(key[:-10]+'D_start', stateValue[key]) 
-                  else:
-                     model.set(key+'_start', stateValue[key])
-               elif key[-3] == '[':
-                  model.set(key[:-3]+'_start'+key[-3:], stateValue[key]) 
-               elif key[-4] == '[':
-                  model.set(key[:-4]+'_start'+key[-4:], stateValue[key]) 
-               elif key[-5] == '[':
-                  model.set(key[:-5]+'_start'+key[-5:], stateValue[key]) 
-               else:
-                  print('The state vecotr has more than 1000 states')
-                  break
-
+            start_values = {parLocationMod[k]:parValueMod[k] for k in parValueMod.keys()}
+  
             # Simulate
-            sim_res = model.simulate(start_time=prevFinalTime,
-                                    final_time=prevFinalTime + simulationTime,
-                                    options=options) 
+            sim_res = simulate_fmu(
+               filename = fmu_model,
+               validate = False,
+               start_time = prevFinalTime,
+               stop_time = prevFinalTime + simulationTime,
+               output_interval = simulationTime/options['NCP'],
+               record_events = True,
+               start_values = start_values,
+               fmi_call_logger = None,
+               output = list(set(extract_variables(diagrams) + list(stateValue.keys()) + keyVariables))
+            )
+            self.start_values = start_values
             self.sim_res = sim_res
-            self.t = sim_res['time']
-            simulationDone = True             
+            self.t = sim_res['time']   
+            simulationDone = True
       else:
-         print("Simulation mode not correct")
+      
+         print("Error: Simulation mode not correct")
 
       if simulationDone:
-    
+         
          # Extract data
          t = self.t
-         
-         # Plot diagrams
-         linetype = next(linecycler)  
+      
+         # Plot diagrams from simulation
+         linetype = next(linecycler)
          context = locals().copy()
          context[self.external_function.__name__] = self.external_function
-           
-         for command in diagrams: eval(command, {}, context)                         
-            
-         # Store final state values stateValue:
-         for key in list(stateValue.keys()): stateValue[key] = model.get(key)[0]        
-
-         # Store time from where simulation will start next time
-         prevFinalTime = model.time      
+             
+         for command in diagrams: eval(command, {}, context) 
    
-      else:
-         print('Error: No simulation done')
+         # Store final state values in stateValue:        
+         for key in list(stateValue.keys()): stateValue[key] = self.model_get(key)  
          
-      return sim_res
+         # Store time from where simulation will start next time
+         prevFinalTime = sim_res['time'][-1]
+      
+      else:
+         print('Error: No simulation done')    
+
+#------------------------------------------------------------------------------------------------------------------
 
    # Describe model parts of the combined system
    def describe_parts(self, component_list=[]):
       """List all parts of the model""" 
       
-      model = self.model
-       
+      model_description = self.model_description
+      
       def model_component(variable_name):
          i = 0
          name = ''
@@ -344,7 +403,7 @@ class fmu_explore:
          if name in ['der', 'temp_1', 'temp_2', 'temp_3', 'temp_4', 'temp_5', 'temp_6', 'temp_7']: name = ''
          return name
     
-      variables = list(model.get_model_variables().keys())
+      variables = [v.name for v in model_description.modelVariables]
         
       for i in range(len(variables)):
          component = model_component(variables[i])
@@ -365,7 +424,7 @@ class fmu_explore:
    def describe_general(self, name, decimals):
       
       parLocation = self.parLocation
-      model = self.model
+      fmu_model = self.fmu_model
   
       if name == 'time':
          description = 'Time'
@@ -373,13 +432,13 @@ class fmu_explore:
          print(description,'[',unit,']')
       
       elif name == 'process':
-         print(model.get_description())    
+         print(read_model_description(fmu_model).description)   
       
       elif name in parLocation.keys():
-         description = model.get_variable_description(parLocation[name])
-         value = model.get(parLocation[name])[0]
+         description = self.model_get_variable_description(parLocation[name])                
+         value = self.model_get(parLocation[name])
          try:
-            unit = model.get_variable_unit(parLocation[name])
+            unit = self.model_get_variable_unit(parLocation[name])
          except FMUException:
             unit =''
          if unit =='':
@@ -387,14 +446,14 @@ class fmu_explore:
                print(description, ':', np.round(value, decimals))
             else:
                print(description, ':', value)            
-         else:
+         if value is not None:
            print(description, ':', np.round(value, decimals), '[',unit,']')
-                  
+                         
       else:
-         description = model.get_variable_description(name)
-         value = model.get(name)[0]
+         description = self.model_get_variable_description(name)
+         value = self.model_get(name)
          try:
-            unit = model.get_variable_unit(name)
+            unit = self.model.get_variable_unit(name)
          except FMUException:
             unit =''
          if unit =='':
@@ -441,36 +500,41 @@ class fmu_explore:
       print()
       print('Brief information about a command by help(), eg help(simu)') 
       print('Key system information is listed with the command system_info()')
-      
-   # Dexribe framework
+
+   # Dexribe framework 
    def system_info(self):
       """Print system information"""
       
-      model = self.model 
       MSL_version = self.MSL_version
       BPL_version = self.BPL_version       
-      FMU_explore_version = self.FMU_explore_version    
+      FMU_explore_version = self.FMU_explore_version
+      fmu_model = self.fmu_model
+      model_description = self.model_description          
       
-      FMU_type = model.__class__.__name__
+      constants = [v for v in model_description.modelVariables if v.causality == 'local']
+   
       print()
       print('System information')
       print(' -OS:', platform.system())
       print(' -Python:', platform.python_version())
       try:
-          scipy_ver = scipy.__version__
-          print(' -Scipy:',scipy_ver)
+         scipy_ver = scipy.__version__
+         print(' -Scipy:',scipy_ver)
       except NameError:
-          print(' -Scipy: not installed in the notebook')
-      print(' -PyFMI:', version('pyfmi'))
-      print(' -FMU by:', model.get_generation_tool())
-      print(' -FMI:', model.get_version())
-      print(' -Type:', FMU_type)
-      print(' -Name:', model.get_name())
-      print(' -Generated:', model.get_generation_date_and_time())
+         print(' -Scipy: not installed in the notebook')
+      print(' -FMPy:', version('fmpy'))
+      print(' -FMU by:', read_model_description(fmu_model).generationTool)
+      print(' -FMI:', read_model_description(fmu_model).fmiVersion)
+      if model_description.modelExchange is None:
+          print(' -Type: CS')
+      else:
+          print(' -Type: ME')
+      print(' -Name:', read_model_description(fmu_model).modelName)
+      print(' -Generated:', read_model_description(fmu_model).generationDateAndTime)
       print(' -MSL:', MSL_version)    
       print(' -Description:', BPL_version)   
       print(' -Interaction:', FMU_explore_version)
-      
+            
    # Acknowledgement
    def SDG(self, explanation=False):
      if explanation:

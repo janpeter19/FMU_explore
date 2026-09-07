@@ -36,14 +36,22 @@ Specific goals - now reached:
 * Make options in simu() possible to set / Done 260901
 * Make cstrProdMax() available during plotting / Done 260901
 * Make profile() available during plotting / Done 260901
+* Fix simu('cont') for fmu\_explore\_fmpy and model\_get() / Done 260907
+* 
 * **Make version of scipy.optimize visible in system_info()**
 * Make declaration of version in only one place from todays two places
+* Reorganise the list of arguments for the class (and update notebooks)
+
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
 
-2026-09-01 Brought in the liast three applictions Chemostat, Perfusion and IEC\_validation and uing **FMU\_explorer ver 1.1.4**.
+2026-09-07 Now BPL\_TEST2\_Batch works with fmu_explore_fmpy in **ver 1.1.5**. This version of FMU\_explore will be uploaded to Github. 
+
+2026-09-02 Start the work with fmu\_explore\_fmpy and call it ver 1.1.5
+
+2026-09-01 Brought in the liast three applictions Chemostat, Perfusion and IEC\_validation and using **FMU\_explore ver 1.1.4**.
 
 2026-09-01 Brought in BPL\_TEST2\_Batch\_calibration.
 
