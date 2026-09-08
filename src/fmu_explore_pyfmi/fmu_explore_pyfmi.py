@@ -25,6 +25,7 @@
 # 2026-09-01  Make it possible to set simulationTime and also options in simu() and now ver 1.1.3
 # 2026-09-01  Make external_function useful in diagrams and introduced "context" in simu() and show() ver 1.1.4
 # 2026-09-02  No change in this module but on tha package level to pave the way for fmu_explore_fmpy, now ver 1.1.5
+# 2026-09-08  Fix in module fmu_explore_fmpy in describe_general(), now ver 1.1.6
 #------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -50,7 +51,7 @@ class fmu_explore:
                       diagrams, ax, lines,
                       external_function=empty_function):
                      
-      self.FMU_explore_version = 'FMU-explore version 1.1.5'
+      self.FMU_explore_version = 'FMU-explore version 1.1.6'
       self.model = model
       self.parValue = parValue  
       self.parLocation = parLocation
