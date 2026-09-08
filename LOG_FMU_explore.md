@@ -41,11 +41,16 @@ Specific goals - now reached:
 * **Make version of scipy.optimize visible in system_info()**
 * Make declaration of version in only one place from todays two places
 * Reorganise the list of arguments for the class (and update notebooks)
+* Handle cstrProdMax etc for fmpy
 
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-09-08 Fixed in fmu\_explore\_fmpy/decribe\_gemeral() a model.get to model_get. Call it now **ver 1.1.6**.
+
+2026-09-08 Now BPL\_TEST2\_Fedbatch and BPL\_YEAST\_AIR\_Fedbatch\_DOcontrol works with fmpy in ver 1.1.5. 
 
 2026-09-07 Now BPL\_TEST2\_Batch works with fmu_explore_fmpy in **ver 1.1.5**. This version of FMU\_explore will be uploaded to Github. 
 

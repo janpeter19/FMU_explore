@@ -6,6 +6,7 @@
 # 2026-09-03 - Changed to model_description, corrected arguments for functions
 # 2026-09-04 - Fixes of model_get etc, disp(), describe_general(), while simu() remains to be fixed also model_get
 # 2026-09-07 - Another fix of disp() and a couple of fixes for model_get - self.sim_res and self_start_values
+# 2026-09-08 - Fixed a model.get... to model_get... in describe_general()
 #------------------------------------------------------------------------------------------------------------------
 
 import sys
@@ -33,7 +34,7 @@ class fmu_explore:
                       diagrams, ax, lines, \
                       external_function=empty_function):
                      
-      self.FMU_explore_version = 'FMU-explore version 1.1.5'
+      self.FMU_explore_version = 'FMU-explore version 1.1.6'
       self.model_description = model
       self.parValue = parValue  
       self.parLocation = parLocation
@@ -367,6 +368,7 @@ class fmu_explore:
          linetype = next(linecycler)
          context = locals().copy()
          context[self.external_function.__name__] = self.external_function
+#         context[self.model_get.__name__] = self.model_get                       # <------ ver 1.1.6 perhaps
              
          for command in diagrams: eval(command, {}, context) 
    
@@ -453,7 +455,7 @@ class fmu_explore:
          description = self.model_get_variable_description(name)
          value = self.model_get(name)
          try:
-            unit = self.model.get_variable_unit(name)
+            unit = self.model_get_variable_unit(name)
          except FMUException:
             unit =''
          if unit =='':
