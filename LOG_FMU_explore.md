@@ -50,6 +50,8 @@ Specific goals - now reached:
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
 
+2026-09-09 Now also BPL\_IEC\_validation works with fmu_explore_fmpy after a few fixes. But I keep the ver 1.1.6. In the notebook I have started to call the populated FMU_explore for Adpated instead of Dummy. Later I think I will change the name in the module to say AdaptWith to better bring the understanding of the workflow to the reader of the notebook.
+
 2026-09-08 Fixed in fmu\_explore\_fmpy/decribe\_gemeral() a model.get to model_get. Call it now **ver 1.1.6**.
 
 2026-09-08 Now BPL\_TEST2\_Fedbatch and BPL\_YEAST\_AIR\_Fedbatch\_DOcontrol works with fmpy in ver 1.1.5. 
