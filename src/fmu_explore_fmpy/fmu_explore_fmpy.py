@@ -8,6 +8,7 @@
 # 2026-09-07 - Another fix of disp() and a couple of fixes for model_get - self.sim_res and self_start_values
 # 2026-09-08 - Fixed a model.get... to model_get... in describe_general()
 # 2026-09-09 - Introduce function to only have toml-file version in the module, but keep the ver 1.1.6
+# 2026-09-09 - Made prevFinalTime a self-parameter in the class instead of a global parameter from setup-file
 #------------------------------------------------------------------------------------------------------------------
 
 import sys
@@ -59,6 +60,7 @@ class fmu_explore:
       self.start_values = None
       self.sim_res = None
       self.t = None
+      self.prevFinalTime = 0
 
    # Define how to read dictionary for parameter values
    def readParValue(self, file, sheet):
@@ -276,12 +278,10 @@ class fmu_explore:
       parValue = self.parValue
       parLocation = self.parLocation
       fmu_model = self.fmu_model
-      model_description = read_model_description(fmu_model)  
+      model_description = read_model_description(fmu_model)
+      prevFinalTime = self.prevFinalTime  
       external_function = self.external_function  
-      
-      # Global variables
-      global prevFinalTime
-   
+         
       # Simulation flag
       simulationDone = False
            
@@ -321,7 +321,7 @@ class fmu_explore:
       
       elif mode in ['Continued', 'continued', 'cont']:
       
-         if prevFinalTime == 0: 
+         if self.prevFinalTime == 0: 
             print("Error: Simulation is first done with default mode = init'")
          
          else:         
@@ -369,7 +369,6 @@ class fmu_explore:
          linetype = next(linecycler)
          context = locals().copy()
          context[self.external_function.__name__] = self.external_function
-#         context[self.model_get.__name__] = self.model_get                       # <------ ver 1.1.6 perhaps
              
          for command in diagrams: eval(command, {}, context) 
    
@@ -377,7 +376,7 @@ class fmu_explore:
          for key in list(stateValue.keys()): stateValue[key] = self.model_get(key)  
          
          # Store time from where simulation will start next time
-         prevFinalTime = sim_res['time'][-1]
+         self.prevFinalTime = sim_res['time'][-1]
       
       else:
          print('Error: No simulation done')    

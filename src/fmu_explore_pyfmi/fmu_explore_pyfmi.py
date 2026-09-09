@@ -27,6 +27,7 @@
 # 2026-09-02  No change in this module but on tha package level to pave the way for fmu_explore_fmpy, now ver 1.1.5
 # 2026-09-08  Fix in module fmu_explore_fmpy in describe_general(), now ver 1.1.6
 # 2026-09-09 - Introduce function to only have toml-file version in the module, but keep the ver 1.1.6
+# 2026-09-09 - Made prevFinalTime a self-parameter in the class instead of a global parameter from setup-file
 #------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -72,6 +73,7 @@ class fmu_explore:
       self.external_function = external_function
       self.sim_res = None
       self.t = None
+      self.prevFinalTime = 0
 
    # Define how to read dictionary for parameter values
    def readParValue(self, file, sheet):
@@ -231,11 +233,9 @@ class fmu_explore:
       parLocation = self.parLocation
       fmu_model = self.fmu_model
       model = self.model
+      prevFinalTime = self.prevFinalTime 
       external_function = self.external_function     
-    
-      # Global variables
-      global prevFinalTime
-   
+       
       # Simulation flag
       simulationDone = False
         
@@ -317,7 +317,7 @@ class fmu_explore:
          for key in list(stateValue.keys()): stateValue[key] = model.get(key)[0]        
 
          # Store time from where simulation will start next time
-         prevFinalTime = model.time      
+         self.prevFinalTime = model.time      
    
       else:
          print('Error: No simulation done')
