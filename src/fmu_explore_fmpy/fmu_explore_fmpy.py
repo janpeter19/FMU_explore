@@ -7,6 +7,7 @@
 # 2026-09-04 - Fixes of model_get etc, disp(), describe_general(), while simu() remains to be fixed also model_get
 # 2026-09-07 - Another fix of disp() and a couple of fixes for model_get - self.sim_res and self_start_values
 # 2026-09-08 - Fixed a model.get... to model_get... in describe_general()
+# 2026-09-09 - Introduce function to only have toml-file version in the module, but keep the ver 1.1.6
 #------------------------------------------------------------------------------------------------------------------
 
 import sys
@@ -21,6 +22,7 @@ from fmpy import simulate_fmu
 from fmpy import read_model_description
 import fmpy as fmpy
 from itertools import cycle
+from importlib.metadata import version
 
 def empty_function(*args, **kwargs):
    return None
@@ -34,7 +36,6 @@ class fmu_explore:
                       diagrams, ax, lines, \
                       external_function=empty_function):
                      
-      self.FMU_explore_version = 'FMU-explore version 1.1.6'
       self.model_description = model
       self.parValue = parValue  
       self.parLocation = parLocation
@@ -509,7 +510,6 @@ class fmu_explore:
       
       MSL_version = self.MSL_version
       BPL_version = self.BPL_version       
-      FMU_explore_version = self.FMU_explore_version
       fmu_model = self.fmu_model
       model_description = self.model_description          
       
@@ -535,7 +535,7 @@ class fmu_explore:
       print(' -Generated:', read_model_description(fmu_model).generationDateAndTime)
       print(' -MSL:', MSL_version)    
       print(' -Description:', BPL_version)   
-      print(' -Interaction:', FMU_explore_version)
+      print(' -Interaction: FMU_explore version', version("FMU_explore"))
             
    # Acknowledgement
    def SDG(self, explanation=False):

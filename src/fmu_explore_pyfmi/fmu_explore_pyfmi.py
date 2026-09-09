@@ -26,6 +26,7 @@
 # 2026-09-01  Make external_function useful in diagrams and introduced "context" in simu() and show() ver 1.1.4
 # 2026-09-02  No change in this module but on tha package level to pave the way for fmu_explore_fmpy, now ver 1.1.5
 # 2026-09-08  Fix in module fmu_explore_fmpy in describe_general(), now ver 1.1.6
+# 2026-09-09 - Introduce function to only have toml-file version in the module, but keep the ver 1.1.6
 #------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -38,6 +39,7 @@ from importlib_metadata import version
 from pyfmi.fmi import FMUException 
 from pyfmi import load_fmu
 from itertools import cycle
+from importlib.metadata import version
 
 def empty_function(*args, **kwargs):
    return None
@@ -51,7 +53,6 @@ class fmu_explore:
                       diagrams, ax, lines,
                       external_function=empty_function):
                      
-      self.FMU_explore_version = 'FMU-explore version 1.1.6'
       self.model = model
       self.parValue = parValue  
       self.parLocation = parLocation
@@ -449,8 +450,7 @@ class fmu_explore:
       
       model = self.model 
       MSL_version = self.MSL_version
-      BPL_version = self.BPL_version       
-      FMU_explore_version = self.FMU_explore_version    
+      BPL_version = self.BPL_version          
       
       FMU_type = model.__class__.__name__
       print()
@@ -470,7 +470,7 @@ class fmu_explore:
       print(' -Generated:', model.get_generation_date_and_time())
       print(' -MSL:', MSL_version)    
       print(' -Description:', BPL_version)   
-      print(' -Interaction:', FMU_explore_version)
+      print(' -Interaction: FMU_explore version', version("FMU_explore"))
       
    # Acknowledgement
    def SDG(self, explanation=False):
