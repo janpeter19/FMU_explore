@@ -9,6 +9,7 @@
 # 2026-09-08 - Fixed a model.get... to model_get... in describe_general()
 # 2026-09-09 - Introduce function to only have toml-file version in the module, but keep the ver 1.1.6
 # 2026-09-09 - Made prevFinalTime a self-parameter in the class instead of a global parameter from setup-file
+# 2026-09-09 - To simu() added the function self.model_get() to the context for eval() useful in some plots
 #------------------------------------------------------------------------------------------------------------------
 
 import sys
@@ -369,6 +370,7 @@ class fmu_explore:
          linetype = next(linecycler)
          context = locals().copy()
          context[self.external_function.__name__] = self.external_function
+         context[self.model_get.__name__] = self.model_get
              
          for command in diagrams: eval(command, {}, context) 
    
