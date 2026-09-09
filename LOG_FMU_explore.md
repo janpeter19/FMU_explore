@@ -37,9 +37,9 @@ Specific goals - now reached:
 * Make cstrProdMax() available during plotting / Done 260901
 * Make profile() available during plotting / Done 260901
 * Fix simu('cont') for fmu\_explore\_fmpy and model\_get() / Done 260907
+* Make declaration of version in only one place from todays two places / Done 260909
 * 
 * **Make version of scipy.optimize visible in system_info()**
-* Make declaration of version in only one place from todays two places
 * Reorganise the list of arguments for the class (and update notebooks)
 * Handle cstrProdMax etc for fmpy
 
