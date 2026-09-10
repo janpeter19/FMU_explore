@@ -3,6 +3,7 @@
 # License:  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 #------------------------------------------------------------------------------------------------------------------
 # 2026-09-02 - Created - start from fmu_explore_pyfmi ver 1.1.4 and now call it ver 1.1.5
+# 2026-09-02 - Before a script 1.0.3 dated 2026-03-26 and originates likely 2023-02-11
 # 2026-09-03 - Changed to model_description, corrected arguments for functions
 # 2026-09-04 - Fixes of model_get etc, disp(), describe_general(), while simu() remains to be fixed also model_get
 # 2026-09-07 - Another fix of disp() and a couple of fixes for model_get - self.sim_res and self_start_values
@@ -11,6 +12,7 @@
 # 2026-09-09 - Made prevFinalTime a self-parameter in the class instead of a global parameter from setup-file
 # 2026-09-09 - To simu() added the function self.model_get() to the context for eval() useful in some plots
 # 2026-09-10 - Added to simu() the return of sim_res to handle one test application and now call it ver 1.1.7
+# 2026-09-10 - I corrected the code system_info() so that now scipy version can read although installed late
 #------------------------------------------------------------------------------------------------------------------
 
 import sys
@@ -25,7 +27,7 @@ from fmpy import simulate_fmu
 from fmpy import read_model_description
 import fmpy as fmpy
 from itertools import cycle
-from importlib.metadata import version
+from importlib.metadata import version, PackageNotFoundError
 
 def empty_function(*args, **kwargs):
    return None
@@ -524,9 +526,8 @@ class fmu_explore:
       print(' -OS:', platform.system())
       print(' -Python:', platform.python_version())
       try:
-         scipy_ver = scipy.__version__
-         print(' -Scipy:',scipy_ver)
-      except NameError:
+         print(' -Scipy:', version("scipy"))
+      except PackageNotFoundError:
          print(' -Scipy: not installed in the notebook')
       print(' -FMPy:', version('fmpy'))
       print(' -FMU by:', read_model_description(fmu_model).generationTool)

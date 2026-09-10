@@ -2,6 +2,7 @@
 # Author: Jan Peter Axelsson
 # License:  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 #------------------------------------------------------------------------------------------------------------------
+# 2026-08-10. Created from a script-version 1.0.3 date 2026-03-26 with origin long time back, presnte 2022-01-31
 # 2026-08-13a Now include par, init, disp
 # 2026-08-13b Now include SDG, system_info, BPL_info
 # 2026-08-13c Now include process_diagram
@@ -28,6 +29,7 @@
 # 2026-09-08  Fix in module fmu_explore_fmpy in describe_general(), now ver 1.1.6
 # 2026-09-09 - Introduce function to only have toml-file version in the module, but keep the ver 1.1.6
 # 2026-09-09 - Made prevFinalTime a self-parameter in the class instead of a global parameter from setup-file
+# 2026-09-10 - I corrected the code system_info() so that now scipy version can read although installed late
 #------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -458,10 +460,9 @@ class fmu_explore:
       print(' -OS:', platform.system())
       print(' -Python:', platform.python_version())
       try:
-          scipy_ver = scipy.__version__
-          print(' -Scipy:',scipy_ver)
-      except NameError:
-          print(' -Scipy: not installed in the notebook')
+         print(' -Scipy:', version("scipy"))
+      except PackageNotFoundError:
+         print(' -Scipy: not installed in the notebook')
       print(' -PyFMI:', version('pyfmi'))
       print(' -FMU by:', model.get_generation_tool())
       print(' -FMI:', model.get_version())
