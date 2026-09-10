@@ -10,6 +10,7 @@
 # 2026-09-09 - Introduce function to only have toml-file version in the module, but keep the ver 1.1.6
 # 2026-09-09 - Made prevFinalTime a self-parameter in the class instead of a global parameter from setup-file
 # 2026-09-09 - To simu() added the function self.model_get() to the context for eval() useful in some plots
+# 2026-09-10 - Added to simu() the return of sim_res to handle one test application and now call it ver 1.1.7
 #------------------------------------------------------------------------------------------------------------------
 
 import sys
@@ -381,7 +382,9 @@ class fmu_explore:
          self.prevFinalTime = sim_res['time'][-1]
       
       else:
-         print('Error: No simulation done')    
+         print('Error: No simulation done') 
+         
+      return sim_res   
 
 #------------------------------------------------------------------------------------------------------------------
 
