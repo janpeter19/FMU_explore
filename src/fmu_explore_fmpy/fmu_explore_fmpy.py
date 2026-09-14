@@ -13,6 +13,7 @@
 # 2026-09-09 - To simu() added the function self.model_get() to the context for eval() useful in some plots
 # 2026-09-10 - Added to simu() the return of sim_res to handle one test application and now call it ver 1.1.7
 # 2026-09-10 - I corrected the code system_info() so that now scipy version can read although installed late
+# 2026-09-12 - Moved defintion of stateValue from setup to the init-file
 # 2026-09-12 - Taka away the possilibyt sim_res = simu() since you need other times remember ; to silence output
 #------------------------------------------------------------------------------------------------------------------
 
@@ -45,19 +46,20 @@ class AdaptWith:
                       external_function=empty_function):
       
       # Define self variables               
-      self.model_description = model
       self.parValue = parValue  
       self.parLocation = parLocation
       self.parCheck = parCheck
+      self.keyVariables = keyVariables
+      self.model_description = model
+      self.fmu_model = fmu_model
+      self.fmu_process_diagram = fmu_process_diagram
       self.MSL_usage = MSL_usage
       self.MSL_version = MSL_version
       self.BPL_version = BPL_version
-      self.fmu_model = fmu_model
-      self.fmu_process_diagram = fmu_process_diagram
       self.options = options
       self.simulationTime = simulationTime                                    
       self.timeDiscreteStates = timeDiscreteStates
-      self.keyVariables = keyVariables
+
       self.diagrams = diagrams     
       self.ax = ax                 
       self.lines = lines
@@ -296,7 +298,6 @@ class AdaptWith:
       context[self.external_function.__name__] = self.external_function     
       for command in diagrams: eval(command, {}, context) 
  
-#------------------------------------------------------------------------------------------------------------------    
       
    # Simulation
    def simu(self, simulationTime=None, mode='Initial', options=None):        
@@ -423,10 +424,7 @@ class AdaptWith:
       
       else:
          print('Error: No simulation done') 
-         
-#     return sim_res   
 
-#------------------------------------------------------------------------------------------------------------------
 
    # Describe model parts of the combined system
    def describe_parts(self, component_list=[]):

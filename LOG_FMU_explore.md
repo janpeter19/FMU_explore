@@ -51,6 +51,8 @@ Specific goals - now reached:
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
 
+2026-09-14 Now moved defintion of statValue from setup to init-file of fmu\_explore\_pyfmi. Polished both modules a little bit. Now call this **ver 1.2.0**. If works in Windows I will make it my firste "release" on Github!
+
 2026-09-11 For fmu\_explore\_fmpy I brought in calculation of stateValue to the module from the setup-file. Further I changed the class namde to AdaptWith and reorganized tha parameters. Call this **ver 1.1.8**
 
 I test appications in Windows locally before I upload to Github and likely done on Monday if everthing else works fine.

@@ -2,34 +2,35 @@
 # Author: Jan Peter Axelsson
 # License:  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 #------------------------------------------------------------------------------------------------------------------
-# 2026-08-10. Created from a script-version 1.0.3 date 2026-03-26 with origin long time back, presnte 2022-01-31
-# 2026-08-13a Now include par, init, disp
-# 2026-08-13b Now include SDG, system_info, BPL_info
-# 2026-08-13c Now include process_diagram
-# 2026-08-13d Now include describe_general, describe_parts, describe_MSL, readParValue, readParLocation
-# 2026-08-14a Corrected par() to include self.parCheck
-# 2026-08-14b Add variables to class related to simu()
-# 2026-08-17a Try to bring in the last functions simu() and show(), setLines() 
-# 2026-08-17b Try to fix linecycler
-# 2026-08-18a Corrected around linecycler, sim_res
-# 2026-08-19a Changed BPL_info to FMU_explore_info, include ax1, ax2 for test
-# 2026-08-19b Take away ax1 and ax2 and let them reach simu() using the new list ax part of data of class module
-# 2026-08-20a Make lines a parameter and introduce resetPen() that can used by newplot() from the application
-# 2026-08-21  Transferred to Github repository for running with Google Colab
-# 2026-08-22  The module put into package FMU_explore at Github
-# 2026-08-24  The package now corrected and works
-# 2026-08-25  The package extended with possibility to include an external function like cstrProdMax()
-# 2026-08-25  Expand eval() in simu() to include locals()
-# 2026-08-25  Fixed simu() and show()
-# 2026-08-26  Single version number used throughout and put in pyproject.toml
-# 2026-08-29  Modified simu() and made sim_res acceissble outsinde simu() and now ver 1.1.2
-# 2026-09-01  Make it possible to set simulationTime and also options in simu() and now ver 1.1.3
-# 2026-09-01  Make external_function useful in diagrams and introduced "context" in simu() and show() ver 1.1.4
-# 2026-09-02  No change in this module but on tha package level to pave the way for fmu_explore_fmpy, now ver 1.1.5
-# 2026-09-08  Fix in module fmu_explore_fmpy in describe_general(), now ver 1.1.6
+# 2026-08-10. - Created from a script-version 1.0.3 date 2026-03-26 with origin long time back, presnte 2022-01-31
+# 2026-08-13a - Now include par, init, disp
+# 2026-08-13b - Now include SDG, system_info, BPL_info
+# 2026-08-13c - Now include process_diagram
+# 2026-08-13d - Now include describe_general, describe_parts, describe_MSL, readParValue, readParLocation
+# 2026-08-14a - Corrected par() to include self.parCheck
+# 2026-08-14b - Add variables to class related to simu()
+# 2026-08-17a - Try to bring in the last functions simu() and show(), setLines() 
+# 2026-08-17b - Try to fix linecycler
+# 2026-08-18a - Corrected around linecycler, sim_res
+# 2026-08-19a - Changed BPL_info to FMU_explore_info, include ax1, ax2 for test
+# 2026-08-19b - Take away ax1 and ax2 and let them reach simu() using the new list ax part of data of class module
+# 2026-08-20a - Make lines a parameter and introduce resetPen() that can used by newplot() from the application
+# 2026-08-21 - Transferred to Github repository for running with Google Colab
+# 2026-08-22 - The module put into package FMU_explore at Github
+# 2026-08-24 - The package now corrected and works
+# 2026-08-25 - The package extended with possibility to include an external function like cstrProdMax()
+# 2026-08-25 - Expand eval() in simu() to include locals()
+# 2026-08-25 - Fixed simu() and show()
+# 2026-08-26 - Single version number used throughout and put in pyproject.toml
+# 2026-08-29 - Modified simu() and made sim_res acceissble outsinde simu() and now ver 1.1.2
+# 2026-09-01 - Make it possible to set simulationTime and also options in simu() and now ver 1.1.3
+# 2026-09-01 - Make external_function useful in diagrams and introduced "context" in simu() and show() ver 1.1.4
+# 2026-09-02 - No change in this module but on tha package level to pave the way for fmu_explore_fmpy, now ver 1.1.5
+# 2026-09-08 - Fix in module fmu_explore_fmpy in describe_general(), now ver 1.1.6
 # 2026-09-09 - Introduce function to only have toml-file version in the module, but keep the ver 1.1.6
 # 2026-09-09 - Made prevFinalTime a self-parameter in the class instead of a global parameter from setup-file
 # 2026-09-10 - I corrected the code system_info() so that now scipy version can read although installed late
+# 2026-09-14 - Moved defintion of stateValue from setup to the init-file
 #------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -47,28 +48,30 @@ from importlib.metadata import version
 def empty_function(*args, **kwargs):
    return None
 
-class fmu_explore:
+class AdaptWith:
    
    # Set the actual variables associated with the application given
-   def __init__(self, model, parValue, parLocation, parCheck, fmu_model, fmu_process_diagram, \
+   def __init__(self, parValue, parLocation, parCheck, \
+                      model, fmu_model, fmu_process_diagram, \
                       MSL_usage, MSL_version, BPL_version, \
-                      options, simulationTime, timeDiscreteStates, stateValue, \
-                      diagrams, ax, lines,
+                      options, simulationTime, timeDiscreteStates,  \
+                      diagrams, ax, lines, \
                       external_function=empty_function):
                      
-      self.model = model
+      # Define self variables 
       self.parValue = parValue  
       self.parLocation = parLocation
       self.parCheck = parCheck
+      self.model = model
+      self.fmu_model = fmu_model
+      self.fmu_process_diagram = fmu_process_diagram      
       self.MSL_usage = MSL_usage
       self.MSL_version = MSL_version
       self.BPL_version = BPL_version
-      self.fmu_model = fmu_model
-      self.fmu_process_diagram = fmu_process_diagram
       self.options = options
       self.simulationTime = simulationTime                                    
       self.timeDiscreteStates = timeDiscreteStates
-      self.stateValue = stateValue
+      
       self.diagrams = diagrams     
       self.ax = ax                 
       self.lines = lines
@@ -76,6 +79,12 @@ class fmu_explore:
       self.sim_res = None
       self.t = None
       self.prevFinalTime = 0
+      
+      # Create stateValue that later will be used to store final state and used for initialization in 'cont':
+      stateValue =  {}
+      stateValue = model.get_states_list()
+      stateValue.update(timeDiscreteStates)
+      self.stateValue = stateValue
 
    # Define how to read dictionary for parameter values
    def readParValue(self, file, sheet):
@@ -324,7 +333,6 @@ class fmu_explore:
       else:
          print('Error: No simulation done')
          
-      return sim_res
 
    # Describe model parts of the combined system
    def describe_parts(self, component_list=[]):

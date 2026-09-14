@@ -7,7 +7,5 @@ src/fmu_explore.egg-info/dependency_links.txt
 src/fmu_explore.egg-info/top_level.txt
 src/fmu_explore_fmpy/__init__.py
 src/fmu_explore_fmpy/fmu_explore_fmpy.py
-src/fmu_explore_fmpy _new/__init__.py
-src/fmu_explore_fmpy _new/fmu_explore_fmpy_new.py
 src/fmu_explore_pyfmi/__init__.py
 src/fmu_explore_pyfmi/fmu_explore_pyfmi.py
