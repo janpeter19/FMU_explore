@@ -13,6 +13,7 @@
 # 2026-09-09 - To simu() added the function self.model_get() to the context for eval() useful in some plots
 # 2026-09-10 - Added to simu() the return of sim_res to handle one test application and now call it ver 1.1.7
 # 2026-09-10 - I corrected the code system_info() so that now scipy version can read although installed late
+# 2026-09-12 - Taka away the possilibyt sim_res = simu() since you need other times remember ; to silence output
 #------------------------------------------------------------------------------------------------------------------
 
 import sys
@@ -32,15 +33,18 @@ from importlib.metadata import version, PackageNotFoundError
 def empty_function(*args, **kwargs):
    return None
 
-class fmu_explore:
+#class fmu_explore:
+class AdaptWith:
       
    # Set the actual variables associated with the application given
-   def __init__(self, model, parValue, parLocation, parCheck, fmu_model, fmu_process_diagram, \
+   def __init__(self, parValue, parLocation, parCheck, keyVariables, \
+                      model, fmu_model, fmu_process_diagram, \
                       MSL_usage, MSL_version, BPL_version, \
-                      options, simulationTime, timeDiscreteStates, stateValue, stateValueInitial, stateValueInitialLoc, keyVariables, \
+                      options, simulationTime, timeDiscreteStates,  \
                       diagrams, ax, lines, \
                       external_function=empty_function):
-                     
+      
+      # Define self variables               
       self.model_description = model
       self.parValue = parValue  
       self.parLocation = parLocation
@@ -53,9 +57,6 @@ class fmu_explore:
       self.options = options
       self.simulationTime = simulationTime                                    
       self.timeDiscreteStates = timeDiscreteStates
-      self.stateValue = stateValue
-      self.stateValueInitial = stateValueInitial
-      self.stateValueInitialLoc = stateValueInitialLoc
       self.keyVariables = keyVariables
       self.diagrams = diagrams     
       self.ax = ax                 
@@ -65,6 +66,43 @@ class fmu_explore:
       self.sim_res = None
       self.t = None
       self.prevFinalTime = 0
+      
+      # Create stateValue that later will be used to store final state and used for initialization in 'cont':
+      stateValue =  {}
+      stateValue = {variable.derivative.name:None for variable in self.model_description.modelVariables \
+                                                  if variable.derivative is not None}
+      stateValue.update(timeDiscreteStates) 
+      self.stateValue = stateValue
+
+      stateValueInitial = {}
+      for key in self.stateValue.keys():
+          if not key[-1] == ']':
+               if key[-3:] == 'I.y':
+                  stateValueInitial[key] = key[:-10]+'I_start'
+               elif key[-3:] == 'D.x':
+                  stateValueInitial[key] = key[:-10]+'D_start'
+               else:
+                  stateValueInitial[key] = key+'_start'
+          elif key[-3] == '[':
+              stateValueInitial[key] = key[:-3]+'_start'+key[-3:]
+          elif key[-4] == '[':
+              stateValueInitial[key] = key[:-4]+'_start'+key[-4:]
+          elif key[-5] == '[':
+              stateValueInitial[key] = key[:-5]+'_start'+key[-5:] 
+          else:
+              print('The state vector has more than 1000 states')
+              break
+              
+      self.stateValueInitial = stateValueInitial              
+              
+
+      stateValueInitialLoc = {}
+      for value in stateValueInitial.values():
+          stateValueInitialLoc[value] = value
+
+      self.stateValueInitialLoc = stateValueInitialLoc      
+         
+   #---------------------------------------------------------------------------------------------------------------      
 
    # Define how to read dictionary for parameter values
    def readParValue(self, file, sheet):
@@ -386,7 +424,7 @@ class fmu_explore:
       else:
          print('Error: No simulation done') 
          
-      return sim_res   
+#     return sim_res   
 
 #------------------------------------------------------------------------------------------------------------------
 

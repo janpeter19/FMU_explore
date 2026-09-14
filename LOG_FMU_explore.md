@@ -42,14 +42,18 @@ Specific goals - now reached:
 * Added to simu() the context parameter with model_get() good for eval() / Done 260909
 * Addes to simu() in fmu\_explore\_fmpy a return of sim\_res / Done 260910
 * Make version of scipy.optimize visible in system_info() / Done 260910
+* Reorganise the list of arguments for the class (and update notebooks) / Done 260911
 * 
-* Reorganise the list of arguments for the class (and update notebooks)
 * Handle cstrProdMax etc for fmpy
 
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-09-11 For fmu\_explore\_fmpy I brought in calculation of stateValue to the module from the setup-file. Further I changed the class namde to AdaptWith and reorganized tha parameters. Call this **ver 1.1.8**
+
+I test appications in Windows locally before I upload to Github and likely done on Monday if everthing else works fine.
 
 2026-09-09 Now also BPL\_IEC\_validation works with fmu_explore_fmpy after a few fixes. But I keep the ver 1.1.6. In the notebook I have started to call the populated FMU_explore for Adpated instead of Dummy. Later I think I will change the name in the module to say AdaptWith to better bring the understanding of the workflow to the reader of the notebook.
 
