@@ -45,11 +45,17 @@ Specific goals - now reached:
 * Reorganise the list of arguments for the class (and update notebooks) / Done 260911
 * 
 * Handle cstrProdMax etc for fmpy
+* Test if sufficient to create the model just inside the module
 
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-09-16 I introduced ver **1.2.1** for maintenance. First thing was to bring back the posssibility to get out the version number by module.\___version\___. Before that I briefly checked the need for diagrams, ax, and lines in the setup file and found that they are needed for newplot() communicating with the module functions.
+
+
+2026-09-15 All applications with adjusted notebooks and run with the released version 1.2.0.
 
 2026-09-14 Now moved defintion of statValue from setup to init-file of fmu\_explore\_pyfmi. Polished both modules a little bit. Now call this **ver 1.2.0**. If works in Windows I will make it my firste "release" on Github!
 

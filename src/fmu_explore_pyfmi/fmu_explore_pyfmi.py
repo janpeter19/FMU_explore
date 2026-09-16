@@ -70,8 +70,7 @@ class AdaptWith:
       self.BPL_version = BPL_version
       self.options = options
       self.simulationTime = simulationTime                                    
-      self.timeDiscreteStates = timeDiscreteStates
-      
+      self.timeDiscreteStates = timeDiscreteStates      
       self.diagrams = diagrams     
       self.ax = ax                 
       self.lines = lines
