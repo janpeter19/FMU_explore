@@ -30,10 +30,12 @@ License information: The package FMU\_explore is shared under the GPL 3.0 licens
 
 References:
 
-Axelsson, J. P., "Design apsects of FMU\_explore a Python module to complement PyFMI", OpenModelica workshop in Linköping, January 31, 2022.
-[presentation slides](https://www.openmodelica.org/images/M_images/OpenModelicaWorkshop_2022/1505_Axelsson%202022,%20Design%20aspects%20of%20FMU-explore%20a%20Python%20module%20to%20complement%20PyFMI.pdf).
+Axelsson, J. P., "Design apsects of FMU\_explore a Python module to complement PyFMI", OpenModelica workshop in Linköping, January 31, 2022,
+[abstract](https://github.com/janpeter19/References/blob/main/Axelsson_2022_abstract%20.pdf)
+[slides](https://www.openmodelica.org/images/M_images/OpenModelicaWorkshop_2022/1505_Axelsson%202022,%20Design%20aspects%20of%20FMU-explore%20a%20Python%20module%20to%20complement%20PyFMI.pdf).
 
 Axelsson, J. P., "Experience with Google Colab for running Modelica FMU in notebooks and no installation", OpenModelica workshop in Linköping, February 3, 2025. 
-[presentation slides](https://openmodelica.org/images/M_images/OpenModelicaWorkshop_2025/2025-02-03_Google_Colab_FMU_Notebooks.pdf).
+[abstract](https://github.com/janpeter19/References/blob/main/Axelsson_2025_abstract%20.pdf)
+[slides](https://openmodelica.org/images/M_images/OpenModelicaWorkshop_2025/2025-02-03_Google_Colab_FMU_Notebooks.pdf).
 
 
