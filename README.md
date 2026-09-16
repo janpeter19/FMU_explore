@@ -18,7 +18,7 @@ Here is a need in a Jupyter notebook context for:
 * Facilitate change of simulator-engine without changing the notebook
 * Same notebook for both Windows and Linux environment
 
-The package FMU\_explore try to meet these needs, by introducing a handfull of functions adapted to the context of the application. The user provide short names of important parameters and variables as well as definitions of standard plots. The main ideas behind package were presented in OpenModelica workshops a few years ago, see references below.
+The package FMU\_explore try to meet these needs, by introducing a handfull of functions adapted to the context of the application. The user provides short names of important parameters and variables as well as definitions of standard plots. The main ideas behind the package were presented in OpenModelica workshops a few years ago, see references below.
 
 The package contains one module for each simulator-engine, and so far:
 
