@@ -15,27 +15,31 @@
 # 2026-09-10 - I corrected the code system_info() so that now scipy version can read although installed late
 # 2026-09-12 - Moved defintion of stateValue from setup to the init-file
 # 2026-09-12 - Taka away the possilibyt sim_res = simu() since you need other times remember ; to silence output
+# 2026-09-17 - Do not reimport version, class docstring, import itertools, zipfile, importlib before numy
+# 2026-09-18 - Change type() to isinstance()
 #------------------------------------------------------------------------------------------------------------------
 
-import sys
 import platform
+import zipfile
+from itertools import cycle
+from importlib.metadata import version, PackageNotFoundError
+
 import numpy as np 
 import matplotlib.pyplot as plt 
 import matplotlib.image as img
 import pandas as pd
-import zipfile
-from importlib_metadata import version 
+
 from fmpy import simulate_fmu
 from fmpy import read_model_description
 import fmpy as fmpy
-from itertools import cycle
-from importlib.metadata import version, PackageNotFoundError
 
 def empty_function(*args, **kwargs):
    return None
 
 #class fmu_explore:
 class AdaptWith:
+   """The class parameters essentially adapt the functions to the 
+      context of the application."""
       
    # Set the actual variables associated with the application given
    def __init__(self, parValue, parLocation, parCheck, keyVariables, \
@@ -240,7 +244,7 @@ class AdaptWith:
          k = 0
          for Location in [parLocation[k] for k in parValue.keys()]:
             if name in Location:
-               if type(self.model_get(Location)) != np.bool_:
+               if not isinstance(self.model_get(Location), np.bool_):
                   print(dict_reverser(parLocation)[Location] , ':', np.round(self.model_get(Location),decimals))
                else:
                   print(dict_reverser(parLocation)[Location] , ':', self.model_get(Location))               
@@ -249,7 +253,7 @@ class AdaptWith:
          if k == len(parLocation):
             for parName in parValue.keys():
                if name in parName:
-                  if type(self.model_get(Location)) != np.bool_:
+                  if not isinstance(self.model_get(Location), np.bool_):
                      print(parName,':', np.round(self.model_get(parLocation[parName]),decimals))
                   else: 
                      print(parName,':', self.model_get(parLocation[parName])[0])
@@ -258,14 +262,14 @@ class AdaptWith:
          k = 0
          for Location in [parLocation[k] for k in parValue.keys()]:
             if name in Location:
-               if type(self.model_get(Location)) != np.bool_:       
+               if not isinstance(self.model_get(Location), np.bool_):       
                   print(Location,':', dict_reverser(parLocation)[Location] , ':', np.round(self.model_get(Location),decimals))
             else:
                k = k+1
          if k == len(parLocation):
             for parName in parValue.keys():
                if name in parName:
-                  if type(self.model_get(Location)) != np.bool_:
+                  if not isinstance(self.model_get(Location), np.bool_):
                      print(parLocation[parName], ':', dict_reverser(parLocation)[Location], ':', parName,':', 
                         np.round(self.model_get(parLocation[parName]),decimals))
 
@@ -487,7 +491,7 @@ class AdaptWith:
          except FMUException:
             unit =''
          if unit =='':
-            if type(value) != np.bool_:
+            if not isinstance(value, np.bool_):
                print(description, ':', np.round(value, decimals))
             else:
                print(description, ':', value)            
@@ -502,7 +506,7 @@ class AdaptWith:
          except FMUException:
             unit =''
          if unit =='':
-            if type(value) != np.bool_:
+            if not isinstance(value, np.bool_):
                print(description, ':', np.round(value, decimals))
             else:
                print(description, ':', value)     

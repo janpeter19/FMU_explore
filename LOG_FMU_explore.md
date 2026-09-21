@@ -47,10 +47,29 @@ Specific goals - now reached:
 * Handle cstrProdMax etc for fmpy
 * Test if sufficient to create the model just inside the module
 
+Tentative release note for version 1.3.0 say
+
+Improved code quality using pylint:
+
+* import of packages so that internal packages are first
+* import only packages used
+* change type() to isinstance()
+* docstrings for class and functions
+* change indentation to 4 spaces
+
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-09-18 Started the work yesterday with pylint to improve code quality and adopt to standards. Now call ver **1.2.2**. So far:
+
+* import of packages not used taken away, also adjust setup-files of applications
+* import order of packages, third party later
+* class docstring
+* change type() to isinstance() - recomended since faster
+
+Later I will change indentation to 4 spaces instead of 3 and make that a separate comitment.
 
 2026-09-16 I introduced ver **1.2.1** for maintenance. First thing was to bring back the posssibility to get out the version number by module.\___version\___. Before that I briefly checked the need for diagrams, ax, and lines in the setup file and found that they are needed for newplot() communicating with the module functions.
 
