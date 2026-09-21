@@ -42,7 +42,9 @@ Specific goals - now reached:
 * Added to simu() the context parameter with model_get() good for eval() / Done 260909
 * Addes to simu() in fmu\_explore\_fmpy a return of sim\_res / Done 260910
 * Make version of scipy.optimize visible in system_info() / Done 260910
-* Reorganise the list of arguments for the class (and update notebooks) / Done 260911
+* Reorganise the list of arguments for the class (and update notebooks) / Done 
+260911
+* Improved code: indentation, iterations in par(), init(), describe_parts() / Done 260921
 * 
 * Handle cstrProdMax etc for fmpy
 * Test if sufficient to create the model just inside the module
@@ -57,12 +59,15 @@ Improved code quality using pylint:
 * change type() to isinstance() / done 1.2.2
 * change indentation to 4 spaces / done 1.2.3
 * docstrings for class and functions / done 1.2.3 
-* modify some expression of loops over dictionaries and lists
+* modify some expression of loops over dictionaries and lists / done now 1.2.4
+* 
 * handle cstrProdMax
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-09-21 Now also made all docstrings and improbed code fpr iteration in par(), init(), describe_parts(). Tested in six applications. Call this **1.2.4**
 
 2026-09-21 Now made indentation to 4 spaces instead of 3. Call this **1.2.3**.
 It works at least for BPL\_TEST2\_Batch. Also tested in Colab.

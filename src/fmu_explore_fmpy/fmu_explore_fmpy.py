@@ -1,3 +1,5 @@
+"""Explain the module"""
+
 # module fmu_explore_fmpy
 # Author: Jan Peter Axelsson
 # License:  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
@@ -19,7 +21,8 @@
 # 2026-09-18 - Change type() to isinstance()
 # 2026-09-21 - Changed indentation from 3 spaces to 4 and some more changes to comply with the Python standard
 # 2026-09-21 - Added docstrings to some functions. Took away in par() the variable index since not used
-# 2026-09-21 - Simplifed the code for iteration over kwarg in par() and init()
+# 2026-09-21 - Simplified the code for iteration over kwarg in par() and init()
+# 2026-09-21 - Simplified the code for iteration over variables in describe_parts()
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -559,7 +562,7 @@ class AdaptWith:
 
         variables = [v.name for v in model_description.modelVariables]
 
-        for i in range(len(variables)):
+        for i, name in enumerate(variables):
             component = model_component(variables[i])
             if (component not in component_list) & (
                 component
