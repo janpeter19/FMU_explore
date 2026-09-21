@@ -341,13 +341,13 @@ class AdaptWith:
 
     # Set the pen for the diagrams
     def setPen(self, lines_new):
-       """Set the list of maximally four pens."""
+        """Set the list of maximally four pens."""
 
         self.lines = lines_new
 
     # Reset the pen for the diagrams
     def resetPen(self):
-       """Set the pen to the first one in the list."""
+        """Set the pen to the first one in the list."""
 
         self.linecycler = cycle(self.lines)
 
@@ -407,6 +407,7 @@ class AdaptWith:
             output = []
             variables = [
                 v for v in model_description.modelVariables if v.causality == "local"
+            ]
 
             for j in range(len(diagrams)):
                 for k in range(len(variables)):

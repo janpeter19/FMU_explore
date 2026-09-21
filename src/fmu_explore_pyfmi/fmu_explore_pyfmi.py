@@ -256,13 +256,13 @@ class AdaptWith:
 
     # Set the pen for the diagrams
     def setPen(self, lines_new):
-       """Set the list of maximally four pens."""
+        """Set the list of maximally four pens."""
 
         self.lines = lines_new
 
     # Reset the pen for the diagrams
     def resetPen(self):
-       """Set the pen to the first one in the list."""
+        """Set the pen to the first one in the list."""
 
         self.linecycler = cycle(self.lines)
 
@@ -581,8 +581,8 @@ class AdaptWith:
 
     # Acknowledgement
     def SDG(self, explanation=False):
-       """Explanation of the SDG and its history."""
-
+        """Explanation of the SDG and its history."""
+        
         if explanation:
             print('"Soli Deo Gloria"')
             print(' It is latin and means "To the honour of God".')
