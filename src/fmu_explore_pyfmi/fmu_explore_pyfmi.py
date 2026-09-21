@@ -34,6 +34,7 @@
 # 2026-09-17 - Do not reimport version, class docstring, import itertools, zipfile, imporlib before numpy
 # 2026-09-18 - Changed type() to isinstance
 # 2026-09-21 - Changed indentation from 3 spaces to 4 and some more changes to comply with the Python standard
+# 2026-09-21 - Added docstrings to some functions
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -163,8 +164,8 @@ class AdaptWith:
     # Define function init() for initial values update
     def init(self, *x, **x_kwarg):
         """Set initial values and the name should contain string '_start' to be accepted.
-        The function can handle general parameter string location names if entered as a dictionary.
-        """
+        The function can handle general parameter string location names if entered as 
+        a dictionary."""
 
         parValue = self.parValue
 
@@ -191,6 +192,8 @@ class AdaptWith:
         parLocation = self.parLocation
 
         def dict_reverser(d):
+            """Simply reverse the dictionary. A help function."""
+           
             seen = set()
             return {v: k for k, v in d.items() if v not in seen or seen.add(v)}
 
@@ -253,10 +256,14 @@ class AdaptWith:
 
     # Set the pen for the diagrams
     def setPen(self, lines_new):
+       """Set the list of maximally four pens."""
+
         self.lines = lines_new
 
     # Reset the pen for the diagrams
     def resetPen(self):
+       """Set the pen to the first one in the list."""
+
         self.linecycler = cycle(self.lines)
 
     # Show plots from sim_res, just that
@@ -395,7 +402,7 @@ class AdaptWith:
 
     # Describe model parts of the combined system
     def describe_parts(self, component_list=[]):
-        """List all parts of the model"""
+        """List all parts of the model."""
 
         model = self.model
 
@@ -447,7 +454,7 @@ class AdaptWith:
         print(sorted(component_list, key=str.casefold))
 
     def describe_MSL(self):
-        """List MSL version and components used"""
+        """List MSL version and components used."""
 
         MSL_usage = self.MSL_usage
 
@@ -455,6 +462,7 @@ class AdaptWith:
 
     # Describe parameters and variables in the Modelica code
     def describe_general(self, name, decimals):
+        """Describe time, process, parameters and variables."""
 
         parLocation = self.parLocation
         model = self.model
@@ -499,6 +507,7 @@ class AdaptWith:
 
     # Plot process diagram
     def process_diagram(self):
+        """Show the process diagram."""
 
         fmu_model = self.fmu_model
         fmu_process_diagram = self.fmu_process_diagram
@@ -519,6 +528,8 @@ class AdaptWith:
 
     # Describe FMU_explore commands
     def FMU_explore_info(self):
+        """Brief information about the commands of FMU_explore."""
+       
         print()
         print("Model for the process has been setup. Key commands:")
         print(" - par()       - change of parameters and initial values")
@@ -543,7 +554,7 @@ class AdaptWith:
 
     # Dexribe framework
     def system_info(self):
-        """Print system information"""
+        """Print system information."""
 
         model = self.model
         MSL_version = self.MSL_version
@@ -570,6 +581,8 @@ class AdaptWith:
 
     # Acknowledgement
     def SDG(self, explanation=False):
+       """Explanation of the SDG and its history."""
+
         if explanation:
             print('"Soli Deo Gloria"')
             print(' It is latin and means "To the honour of God".')
