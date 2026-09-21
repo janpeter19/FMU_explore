@@ -40,7 +40,7 @@ Specific goals - now reached:
 * Make declaration of version in only one place from todays two places / Done 260909
 * Made prevFinalTime local to the FMU\_explore class / Done 260909
 * Added to simu() the context parameter with model_get() good for eval() / Done 260909
-* Addes to simu() in fmu\_explore\_fmpy a return of sim\_res / Done 260910
+* Added to simu() in fmu\_explore\_fmpy a return of sim\_res / Done 260910
 * Make version of scipy.optimize visible in system_info() / Done 260910
 * Reorganise the list of arguments for the class (and update notebooks) / Done 
 260911
@@ -48,6 +48,7 @@ Specific goals - now reached:
 * 
 * Handle cstrProdMax etc for fmpy
 * Test if sufficient to create the model just inside the module
+* Handle default simulation time at least from OpenModelica FMUs
 
 Tentative release note for version 1.3.0 say
 
