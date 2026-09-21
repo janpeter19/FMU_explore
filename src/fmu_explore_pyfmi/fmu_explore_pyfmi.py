@@ -1,3 +1,5 @@
+"""Explain the module"""
+
 # module fmu_explore_pyfmi
 # Author: Jan Peter Axelsson
 # License:  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
@@ -35,6 +37,8 @@
 # 2026-09-18 - Changed type() to isinstance
 # 2026-09-21 - Changed indentation from 3 spaces to 4 and some more changes to comply with the Python standard
 # 2026-09-21 - Added docstrings to some functions. Took away in par() the variable index since not used
+# 2026-09-21 - Simplifed the code for iteration over kwarg in par() and init()
+# 2026-09-21 - Simplified the code for iteration over variables in describe_parts()
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -52,7 +56,7 @@ from pyfmi import load_fmu
 
 
 def empty_function(*args, **kwargs):
-   """Just an empty function to handle external_function as argument for the class."""
+    """Just an empty function to handle external_function as argument for the class."""
 
     return None
 
@@ -109,7 +113,7 @@ class AdaptWith:
         stateValue = model.get_states_list()
         stateValue.update(timeDiscreteStates)
         self.stateValue = stateValue
-        
+
     # ---------------------------------------------------------------------------------------------
 
     def readParValue(self, file, sheet):
@@ -148,8 +152,8 @@ class AdaptWith:
         x_kwarg.update(*x)
         x_temp = {}
 
-        for key in x_kwarg.keys():
-            if key in parValue.keys():
+        for key in x_kwarg:
+            if key in parValue:
                 x_temp.update({key: x_kwarg[key]})
             else:
                 print(
@@ -176,7 +180,7 @@ class AdaptWith:
         x_kwarg.update(*x)
         x_init = {}
 
-        for key in x_kwarg.keys():
+        for key in x_kwarg:
             if "_start" in key:
                 x_init.update({key: x_kwarg[key]})
             else:
@@ -199,7 +203,7 @@ class AdaptWith:
 
         def dict_reverser(d):
             """Simply reverse the dictionary. A help function."""
-           
+
             seen = set()
             return {v: k for k, v in d.items() if v not in seen or seen.add(v)}
 
@@ -442,7 +446,7 @@ class AdaptWith:
 
         variables = list(model.get_model_variables().keys())
 
-        for i in range(len(variables)):
+        for i, name in enumerate(variables):
             component = model_component(variables[i])
             if (component not in component_list) & (
                 component
@@ -538,7 +542,7 @@ class AdaptWith:
 
     def FMU_explore_info(self):
         """Describe briefly teh FMU_explore commands."""
-       
+
         print()
         print("Model for the process has been setup. Key commands:")
         print(" - par()       - change of parameters and initial values")
@@ -591,11 +595,10 @@ class AdaptWith:
 
     def SDG(self, explanation=False):
         """Acknowledgement. Explanation of the SDG and its history."""
-        
+
         if explanation:
             print('"Soli Deo Gloria"')
             print(' It is latin and means "To the honour of God".')
-            print(" The great composer Johan Sebastian Bach", 
+            print(" The great composer Johan Sebastian Bach",
                   " used to end his compositions with this small remark SDG.")
             print(" And I like to do that too :).")
-            

@@ -19,6 +19,7 @@
 # 2026-09-18 - Change type() to isinstance()
 # 2026-09-21 - Changed indentation from 3 spaces to 4 and some more changes to comply with the Python standard
 # 2026-09-21 - Added docstrings to some functions. Took away in par() the variable index since not used
+# 2026-09-21 - Simplifed the code for iteration over kwarg in par() and init()
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -37,7 +38,7 @@ import fmpy as fmpy
 
 
 def empty_function(*args, **kwargs):
-   """Just an empty function to handle external_function as argument for the class."""
+    """Just an empty function to handle external_function as argument for the class."""
 
     return None
 
@@ -166,8 +167,8 @@ class AdaptWith:
 
         x_kwarg.update(*x)
         x_temp = {}
-        for key in x_kwarg.keys():
-            if key in parValue.keys():
+        for key in x_kwarg:
+            if key in parValue:
                 x_temp.update({key: x_kwarg[key]})
             else:
                 print(
@@ -193,7 +194,7 @@ class AdaptWith:
 
         x_kwarg.update(*x)
         x_init = {}
-        for key in x_kwarg.keys():
+        for key in x_kwarg:
             if "_start" in key:
                 x_init.update({key: x_kwarg[key]})
             else:
