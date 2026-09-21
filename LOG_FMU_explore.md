@@ -52,15 +52,17 @@ Tentative release note for version 1.3.0 say
 Improved code quality using pylint:
 
 * import of packages so that internal packages are first
-* import only packages used
-* change type() to isinstance()
+* import only packages used / done
+* change type() to isinstance() / done
+* change indentation to 4 spaces / done
 * docstrings for class and functions
-* change indentation to 4 spaces
-
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-09-21 Now made indentation to 4 spaces instead of 3. Call this **1.2.3**.
+It works at least for BPL\_TEST2\_Batch. Also tested in Colab.
 
 2026-09-18 Started the work yesterday with pylint to improve code quality and adopt to standards. Now call ver **1.2.2**. So far:
 
