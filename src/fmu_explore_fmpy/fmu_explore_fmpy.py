@@ -37,6 +37,8 @@ import fmpy as fmpy
 
 
 def empty_function(*args, **kwargs):
+   """Just an empty function to handle external_function as argument for the class."""
+
     return None
 
 
@@ -127,7 +129,7 @@ class AdaptWith:
 
         self.stateValueInitialLoc = stateValueInitialLoc
 
-    # ---------------------------------------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------------------
 
     def readParValue(self, file, sheet):
         """Read parameter short names and values from an Excel-file from 
@@ -141,6 +143,7 @@ class AdaptWith:
             parValue_local[table["Par"][k]] = table["Value"][k]
         parValue.update(parValue_local)
 
+
     def readParLocation(self, file, sheets):
         """Read parameter short and long names from an Excel-file sheet by sheet. 
         For use in the notebook! Return a dictionary."""
@@ -153,6 +156,7 @@ class AdaptWith:
             for k in list(range(len(table))):
                 parLocation_local[table["Par"][k]] = table["Location"][k]
         parLocation.update(parLocation_local)
+
 
     def par(self, *x, **x_kwarg):
         """Set parameter values if available in the predefined dictionary parValue."""
@@ -173,11 +177,12 @@ class AdaptWith:
                 )
         parValue.update(x_temp)
 
-        parErrors = [requirement for requirement in parCheck if not (eval(requirement))]
+        parErrors = [requirement for requirement in parCheck if not eval(requirement)]
         if not parErrors == []:
             print("Error - the following requirements do not hold:")
             for item in enumerate(parErrors):
                 print(item)
+
 
     def init(self, *x, **x_kwarg):
         """Set initial values of the state variables. The name should contain string '_start' 
@@ -198,6 +203,7 @@ class AdaptWith:
                     "- seems not an initial value, use par() instead - check the spelling",
                 )
         parValue.update(x_init)
+
 
     def model_get(self, parLoc):
         """Function corresponds to pyfmi model.get() but returns just a value and not a list"""
@@ -235,6 +241,7 @@ class AdaptWith:
                     value = None
         return value
 
+
     def model_get_variable_description(self, parLoc):
         """Function corresponds to pyfmi model.get_variable_description() but returns just a value and not a list"""
 
@@ -244,6 +251,7 @@ class AdaptWith:
         value = [x.description for x in par_var if parLoc in x.name]
         return value[0]
 
+
     def model_get_variable_unit(self, parLoc):
         """Function corresponds to pyfmi model.get_variable_unit() but returns just a value and not a list"""
 
@@ -252,6 +260,7 @@ class AdaptWith:
         par_var = model_description.modelVariables
         value = [x.unit for x in par_var if parLoc in x.name]
         return value[0]
+
 
     def disp(self, name="", decimals=3, mode="short"):
         """Display intial values and parameters in the model that include "name" and 
@@ -329,15 +338,18 @@ class AdaptWith:
                                 ),
                             )
 
+
     def setPen(self, lines_new):
         """Set the list of maximally four pens for the diagram."""
 
         self.lines = lines_new
 
+
     def resetPen(self):
         """Set the pen to the first one in the list."""
 
         self.linecycler = cycle(self.lines)
+
 
     def show(self):
         """Show diagrams chosen by newplot() and stored in sim_res last simulation."""
@@ -357,6 +369,7 @@ class AdaptWith:
         context[self.external_function.__name__] = self.external_function
         for command in diagrams:
             eval(command, {}, context)
+
 
     def simu(self, simulationTime=None, mode="Initial", options=None):
         """Simulation of the model. The given intial values and parameters are given in parValue 
@@ -511,6 +524,7 @@ class AdaptWith:
         else:
             print("Error: No simulation done")
 
+
     def describe_parts(self, component_list=[]):
         """List model parts of the combined system."""
 
@@ -563,12 +577,13 @@ class AdaptWith:
 
         print(sorted(component_list, key=str.casefold))
 
+
     def describe_MSL(self):
         """List MSL version and components used."""
 
         MSL_usage = self.MSL_usage
-
         print("MSL:", MSL_usage)
+
 
     def describe_general(self, name, decimals):
         """Describe time, process, parameters and variables in the Modelica code."""
@@ -614,6 +629,7 @@ class AdaptWith:
             else:
                 print(description, ":", np.round(value, decimals), "[", unit, "]")
 
+
     def process_diagram(self):
         """Plot the process diagram."""
 
@@ -633,6 +649,7 @@ class AdaptWith:
             plt.show()
         except FileNotFoundError:
             print("And no such file on disk either")
+
 
     def FMU_explore_info(self):
         """Describe briefly teh FMU_explore commands."""
@@ -658,6 +675,7 @@ class AdaptWith:
         print()
         print("Brief information about a command by help(), eg help(simu)")
         print("Key system information is listed with the command system_info()")
+
 
     def system_info(self):
         """Describe system information."""
@@ -691,6 +709,7 @@ class AdaptWith:
         print(" -MSL:", MSL_version)
         print(" -Description:", BPL_version)
         print(" -Interaction: FMU_explore version", version("FMU_explore"))
+
 
     def SDG(self, explanation=False):
         """Explanation of the SDG and its history."""

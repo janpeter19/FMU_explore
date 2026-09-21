@@ -53,7 +53,7 @@ Improved code quality using pylint:
 
 * fix version() that can be retrieved in the usual way / done 1.2.1
 * import of packages so that internal packages are first 1.2.2
-* import only packages used / done 1.2.2
+* import only packages used, but numpy imported / done 1.2.2
 * change type() to isinstance() / done 1.2.2
 * change indentation to 4 spaces / done 1.2.3
 * docstrings for class and functions / done 1.2.3 
