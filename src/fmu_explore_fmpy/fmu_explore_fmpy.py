@@ -18,7 +18,7 @@
 # 2026-09-17 - Do not reimport version, class docstring, import itertools, zipfile, importlib before numy
 # 2026-09-18 - Change type() to isinstance()
 # 2026-09-21 - Changed indentation from 3 spaces to 4 and some more changes to comply with the Python standard
-# 2026-09-21 - Added docstrings to some functions
+# 2026-09-21 - Added docstrings to some functions. Took away in par() the variable index since not used
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -40,7 +40,6 @@ def empty_function(*args, **kwargs):
     return None
 
 
-# class fmu_explore:
 class AdaptWith:
     """The class parameters essentially adapt the functions to the
     context of the application."""
@@ -130,10 +129,9 @@ class AdaptWith:
 
     # ---------------------------------------------------------------------------------------------------------------
 
-    # Define how to read dictionary for parameter values
     def readParValue(self, file, sheet):
-        """Read parameter short names and values from an Excel-file from defined sheet. For use in the notebook!
-        Return a dictionary."""
+        """Read parameter short names and values from an Excel-file from 
+        defined sheet. For use in the notebook! Return a dictionary."""
 
         parValue = self.parValue
 
@@ -143,10 +141,9 @@ class AdaptWith:
             parValue_local[table["Par"][k]] = table["Value"][k]
         parValue.update(parValue_local)
 
-    # Define how to read dictionary for parameter location
     def readParLocation(self, file, sheets):
-        """Read parameter short and long names from an Excel-file sheet by sheet. For use in the notebook!
-        Return a dictionary."""
+        """Read parameter short and long names from an Excel-file sheet by sheet. 
+        For use in the notebook! Return a dictionary."""
 
         parLocation = self.parLocation
 
@@ -157,7 +154,6 @@ class AdaptWith:
                 parLocation_local[table["Par"][k]] = table["Location"][k]
         parLocation.update(parLocation_local)
 
-    # Define function par() for parameter update
     def par(self, *x, **x_kwarg):
         """Set parameter values if available in the predefined dictionary parValue."""
 
@@ -180,14 +176,13 @@ class AdaptWith:
         parErrors = [requirement for requirement in parCheck if not (eval(requirement))]
         if not parErrors == []:
             print("Error - the following requirements do not hold:")
-            for index, item in enumerate(parErrors):
+            for item in enumerate(parErrors):
                 print(item)
 
-    # Define function init() for initial values update
     def init(self, *x, **x_kwarg):
-        """Set initial values and the name should contain string '_start' to be accepted.
-        The function can handle general parameter string location names if entered as a dictionary.
-        """
+        """Set initial values of the state variables. The name should contain string '_start' 
+        to be accepted. The function can handle general parameter string location names 
+        if entered as a dictionary."""
 
         parValue = self.parValue
 
@@ -204,7 +199,6 @@ class AdaptWith:
                 )
         parValue.update(x_init)
 
-    # Define fuctions similar to pyfmi model.get(), model.get_variable_descirption(), model.get_variable_unit()
     def model_get(self, parLoc):
         """Function corresponds to pyfmi model.get() but returns just a value and not a list"""
 
@@ -241,7 +235,6 @@ class AdaptWith:
                     value = None
         return value
 
-    # Define functions that mimic pyfmi-interacdtions
     def model_get_variable_description(self, parLoc):
         """Function corresponds to pyfmi model.get_variable_description() but returns just a value and not a list"""
 
@@ -260,11 +253,10 @@ class AdaptWith:
         value = [x.unit for x in par_var if parLoc in x.name]
         return value[0]
 
-    # Define function disp() for display of initial values and parameters
     def disp(self, name="", decimals=3, mode="short"):
-        """Display intial values and parameters in the model that include "name" and is in parLocation list.
-        Note, it does not take the value from the dictionary parValue but from the model.
-        """
+        """Display intial values and parameters in the model that include "name" and 
+        is in parLocation list. Note, it does not take the value from the dictionary par 
+        but from the model."""
 
         parValue = self.parValue
         parLocation = self.parLocation
@@ -337,23 +329,18 @@ class AdaptWith:
                                 ),
                             )
 
-    # ------------------------------------------------------------------------------------------------------------------
-
-    # Set the pen for the diagrams
     def setPen(self, lines_new):
-        """Set the list of maximally four pens."""
+        """Set the list of maximally four pens for the diagram."""
 
         self.lines = lines_new
 
-    # Reset the pen for the diagrams
     def resetPen(self):
         """Set the pen to the first one in the list."""
 
         self.linecycler = cycle(self.lines)
 
-    # Show plots from sim_res, just that
     def show(self):
-        """Show diagrams chosen by newplot()"""
+        """Show diagrams chosen by newplot() and stored in sim_res last simulation."""
 
         diagrams = self.diagrams
         ax = self.ax
@@ -371,10 +358,9 @@ class AdaptWith:
         for command in diagrams:
             eval(command, {}, context)
 
-    # Simulation
     def simu(self, simulationTime=None, mode="Initial", options=None):
-        """Model loaded and given intial values and parameter before,
-        and plot window also setup before."""
+        """Simulation of the model. The given intial values and parameters are given in parValue 
+        and given before. The plot window is also setup before."""
 
         if simulationTime is None:
             simulationTime = self.simulationTime
@@ -525,9 +511,8 @@ class AdaptWith:
         else:
             print("Error: No simulation done")
 
-    # Describe model parts of the combined system
     def describe_parts(self, component_list=[]):
-        """List all parts of the model."""
+        """List model parts of the combined system."""
 
         model_description = self.model_description
 
@@ -585,9 +570,8 @@ class AdaptWith:
 
         print("MSL:", MSL_usage)
 
-    # Describe parameters and variables in the Modelica code
     def describe_general(self, name, decimals):
-        """Describe time, process, parameters and variables."""
+        """Describe time, process, parameters and variables in the Modelica code."""
 
         parLocation = self.parLocation
         fmu_model = self.fmu_model
@@ -630,9 +614,8 @@ class AdaptWith:
             else:
                 print(description, ":", np.round(value, decimals), "[", unit, "]")
 
-    # Plot process diagram
     def process_diagram(self):
-        """Show the process diagram."""
+        """Plot the process diagram."""
 
         fmu_model = self.fmu_model
         fmu_process_diagram = self.fmu_process_diagram
@@ -651,9 +634,8 @@ class AdaptWith:
         except FileNotFoundError:
             print("And no such file on disk either")
 
-    # Describe FMU_explore commands
     def FMU_explore_info(self):
-        """Brief information about the commands of FMU_explore."""
+        """Describe briefly teh FMU_explore commands."""
        
         print()
         print("Model for the process has been setup. Key commands:")
@@ -677,9 +659,8 @@ class AdaptWith:
         print("Brief information about a command by help(), eg help(simu)")
         print("Key system information is listed with the command system_info()")
 
-    # Dexribe framework
     def system_info(self):
-        """Print system information."""
+        """Describe system information."""
 
         MSL_version = self.MSL_version
         BPL_version = self.BPL_version
@@ -711,7 +692,6 @@ class AdaptWith:
         print(" -Description:", BPL_version)
         print(" -Interaction: FMU_explore version", version("FMU_explore"))
 
-    # Acknowledgement
     def SDG(self, explanation=False):
         """Explanation of the SDG and its history."""
 

@@ -51,11 +51,14 @@ Tentative release note for version 1.3.0 say
 
 Improved code quality using pylint:
 
-* import of packages so that internal packages are first
-* import only packages used / done
-* change type() to isinstance() / done
-* change indentation to 4 spaces / done
-* docstrings for class and functions
+* fix version() that can be retrieved in the usual way / done 1.2.1
+* import of packages so that internal packages are first 1.2.2
+* import only packages used / done 1.2.2
+* change type() to isinstance() / done 1.2.2
+* change indentation to 4 spaces / done 1.2.3
+* docstrings for class and functions / done 1.2.3 
+* modify some expression of loops over dictionaries and lists
+* handle cstrProdMax
 
 
 ## Day to day notes in reversed time order 
