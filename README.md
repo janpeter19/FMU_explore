@@ -3,13 +3,12 @@ The purpose of this software is to provide a simplified, yet powerful, interface
 
 The simplified interface is especially useful when simulations are used in teaching where the focus is on dynamics of the process, rather than on Python scripting. The examples below illustrate the virtue of the simplified user interface.
 
+![](Fig_1.png)
 Figure 1. Two lines of code using FMU\_explore to make the following diagrams
 
-![](Fig_1.png)
-
-Figure 2. The corresponding plain Python-script to make the same diagrams
 
 ![](Fig_2.png)
+Figure 2. The corresponding plain Python-script to make the same diagrams
 
 Here is a need in a Jupyter notebook context for:
 
