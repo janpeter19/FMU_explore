@@ -17,8 +17,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as img
 import pandas as pd
 
-from pyfmi.fmi import FMUException
-from pyfmi import load_fmu
+
 
 
 def empty_function(*args, **kwargs):
