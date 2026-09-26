@@ -68,6 +68,14 @@ Improved code quality using pylint:
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
 
+2026-09-26 Started **version 1.2.5** with an early version of fmu\_explore\_oms.
+
+2026-09-26 Tested in Colab BPL\_TEST2\_Chemostat with the older FMU done in Ubuntu 24.04 and worked fine. Then I changed the setup-file back to use the newer one made in Ubuntu 22.04. Later in the fall I think all FMUs should be recompiled.
+
+2026-09-24 Continue to play with OMSimulator and now try to find out how to extract simulation results using Modelica variable names. Needs other packages to do. The plan forward is I think to make a rudimentary module for oms that includes par(), init(), newplot(). Then I work out simu() in the notebook and when reasonable I bring it into the module. I think simu('cont') need to wait.
+
+2026-09-23 Started to play with OMSimulator in BPL\_TEST2\_Batch application. Made it work and had some interaction with Arun Palanisamy in Linköping. Made a first plot of batch growth.
+
 2026-09-21 Now also made all docstrings and improbed code fpr iteration in par(), init(), describe_parts(). Tested in six applications. Call this **1.2.4**
 
 2026-09-21 Now made indentation to 4 spaces instead of 3. Call this **1.2.3**.
