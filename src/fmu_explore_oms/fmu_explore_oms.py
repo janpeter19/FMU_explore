@@ -75,7 +75,7 @@ class AdaptWith:
         self.prevFinalTime = 0
         
         self.model = oms.FMU(fmu_model)
-        self.options = none
+        self.options = None
 
         # Create stateValue that later will be used to store final state
         # and used for initialization in 'cont'
