@@ -74,7 +74,7 @@ class AdaptWith:
         self.t = None
         self.prevFinalTime = 0
         
-        self.model = oms.FMU(fmu_model)
+        self.model = oms.FMU(self.fmu_model)
         self.options = None
 
         # Create stateValue that later will be used to store final state
@@ -159,7 +159,11 @@ class AdaptWith:
         parValue.update(x_init)
 
 
+    def restart(self):
+        """Restart the model"""
 
+        self.model = oms.FMU(self.fmu_model)
+        self.model.instantiate()
 
 
     def setPen(self, lines_new):
