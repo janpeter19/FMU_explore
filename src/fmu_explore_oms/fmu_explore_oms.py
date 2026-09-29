@@ -17,7 +17,9 @@ import matplotlib.pyplot as plt
 import matplotlib.image as img
 import pandas as pd
 
-
+import OMSimulator as oms
+import scipy.io
+import DyMat
 
 
 def empty_function(*args, **kwargs):
@@ -36,13 +38,13 @@ class AdaptWith:
         parValue,
         parLocation,
         parCheck,
-        model,
+#        model,
         fmu_model,
         fmu_process_diagram,
         MSL_usage,
         MSL_version,
         BPL_version,
-        options,
+#        options,
         simulationTime,
         timeDiscreteStates,
         diagrams,
@@ -55,13 +57,13 @@ class AdaptWith:
         self.parValue = parValue
         self.parLocation = parLocation
         self.parCheck = parCheck
-        self.model = model
+#        self.model = model
         self.fmu_model = fmu_model
         self.fmu_process_diagram = fmu_process_diagram
         self.MSL_usage = MSL_usage
         self.MSL_version = MSL_version
         self.BPL_version = BPL_version
-        self.options = options
+#        self.options = options
         self.simulationTime = simulationTime
         self.timeDiscreteStates = timeDiscreteStates
         self.diagrams = diagrams
@@ -71,6 +73,9 @@ class AdaptWith:
         self.sim_res = None
         self.t = None
         self.prevFinalTime = 0
+        
+        self.model = omf.FMU(fmu_model)
+        self.options = none
 
         # Create stateValue that later will be used to store final state
         # and used for initialization in 'cont'
