@@ -68,6 +68,8 @@ Improved code quality using pylint:
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
 
+2026-09-30 Now a rudimentary version of fmu\_explore\_oms is in place. It works for BPL\_TEST2\_Batch and I plan to test also on BPL\_TEST2\_Fedbatch soon.
+
 2026-09-26 Started **version 1.2.5** with an early version of fmu\_explore\_oms.
 
 2026-09-26 Tested in Colab BPL\_TEST2\_Chemostat with the older FMU done in Ubuntu 24.04 and worked fine. Then I changed the setup-file back to use the newer one made in Ubuntu 22.04. Later in the fall I think all FMUs should be recompiled.
