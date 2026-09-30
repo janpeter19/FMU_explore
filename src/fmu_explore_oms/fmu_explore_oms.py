@@ -197,7 +197,7 @@ class AdaptWith:
         for command in diagrams:
             eval(command, {}, context)
 
-
+"""
     def simu(self):
         """Simulation of the model."""
 
@@ -241,6 +241,8 @@ class AdaptWith:
         # Close the model
         model.terminate()
         model.delete()
+"""
+
 
 
     def describe_MSL(self):
