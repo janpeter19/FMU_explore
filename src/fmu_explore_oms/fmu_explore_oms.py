@@ -199,8 +199,11 @@ class AdaptWith:
             eval(command, {}, context)
 
 
-    def simu(self):
+    def simu(self, simulationTime=None):
         """Simulation of model and plot of results"""
+
+        if simulationTime is None:
+            siulationTime = self.simulationTime
 
         diagrams = self.diagrams
         ax = self.ax
@@ -218,6 +221,7 @@ class AdaptWith:
         # Set parameters
         for key in parValue.keys():
             model.setValue(parLocation[key], parValue[key])
+        model.setStopTime(self.simulationTime)
 
         # Simulation
         model.initialize()
@@ -247,9 +251,6 @@ class AdaptWith:
         MSL_usage = self.MSL_usage
 
         print("MSL:", MSL_usage)
-
-
-
 
 
     def process_diagram(self):
