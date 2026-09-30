@@ -199,7 +199,6 @@ class AdaptWith:
 
 """
     def simu(self):
-        """Simulation of the model."""
 
         diagrams = self.diagrams
         ax = self.ax
