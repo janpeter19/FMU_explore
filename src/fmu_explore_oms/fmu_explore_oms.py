@@ -203,7 +203,7 @@ class AdaptWith:
         """Simulation of model and plot of results"""
 
         if simulationTime is None:
-            siulationTime = self.simulationTime
+            simulationTime = self.simulationTime
 
         diagrams = self.diagrams
         ax = self.ax
