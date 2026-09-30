@@ -5,6 +5,7 @@
 # License:  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 # ------------------------------------------------------------------------------------------------------------------
 # 2026-09-26 - Created from a script-version 1.0.3 date 2026-03-26 with origin long time back, presnte 2022-01-31
+# 2026-09-30 - A first rudimentary version of the module with functions: par(), init(), simu(), show()
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -19,7 +20,7 @@ import pandas as pd
 
 import OMSimulator as oms
 import scipy.io
-import DyMat
+#import DyMat
 
 
 def empty_function(*args, **kwargs):
@@ -314,12 +315,12 @@ class AdaptWith:
             print(" -Scipy:", version("scipy"))
         except PackageNotFoundError:
             print(" -Scipy: not installed in the notebook")
-        print(" -OMSimulator:")
-        print(" -FMU by:") #, model.get_generation_tool())
-        print(" -FMI:") # model.get_version())
-        print(" -Type:") # FMU_type)
+        print(" -OMSimulator:", oms.__version__)
+        print(" -FMU by:", self.model.generationTool)
+        print(" -FMI:", self.model.fmiVersion)
+        print(" -Type:", self.model.fmuType)
         print(" -Name:", self.model.modelName)
-        print(" -Generated:") # model.get_generation_date_and_time())
+        print(" -Generated:", self.model.generationDateAndTime)
         print(" -MSL:", MSL_version)
         print(" -Description:", BPL_version)
         print(" -Interaction: FMU_explore version", version("FMU_explore"))
