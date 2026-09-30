@@ -197,6 +197,7 @@ class AdaptWith:
         for command in diagrams:
             eval(command, {}, context)
 
+
 """
     def simu(self):
 
@@ -241,7 +242,6 @@ class AdaptWith:
         model.terminate()
         model.delete()
 """
-
 
 
     def describe_MSL(self):
