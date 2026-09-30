@@ -215,6 +215,8 @@ class AdaptWith:
         model = oms.FMU(fmu_model)
         self.model = model
         model.instantiate()
+        model.setResultFile('sim_res.mat')
+        self.sim_res = sim_res
         
         # Set parameters and initial values
         for key in parValue.keys():
@@ -227,6 +229,7 @@ class AdaptWith:
         # Open up result file
         sim_res = scipy.io.loadmat('sim_res.mat')
         t = sim_res['data_2'][0];
+        self.t = t
         
         # Plot results
         linetype = next(linecycler)
