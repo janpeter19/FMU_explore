@@ -198,7 +198,46 @@ class AdaptWith:
             eval(command, {}, context)
 
 
+    def simu(self):
+        """Simulation of the model."""
 
+        diagrams = self.diagrams
+        ax = self.ax
+        linecycler = self.linecycler
+
+        parValue = self.parValue
+        parLocation = self.parLocation
+
+        fmu_model = self.fmu_model
+        #model = self.model
+
+        # Prepare for simulation
+        model = oms.FMU(fmu_model)
+        self.model = model
+        model.instantiate()
+        
+        # Set parameters and initial values
+        for key in parValue.keys():
+            model.setValue(parLocation[key], parValue[key])        
+        
+        # Simulation
+        model.initialize()
+        model.simulate()
+
+        # Open up result file
+        sim_res = scipy.io.loadmat('sim_res.mat')
+        t = sim_res['data_2'][0];
+        
+        # Plot results
+        linetype = next(linecycler)
+        context = locals().copy()
+        
+        for command in diagrams:
+            eval(command, {}, context)
+            
+        # Close the model
+        model.terminate()
+        model.delete()
 
 
     def describe_MSL(self):
