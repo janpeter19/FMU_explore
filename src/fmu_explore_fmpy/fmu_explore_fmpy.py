@@ -1,6 +1,6 @@
 """Explain the module"""
 
-# module fmu_explore_fmpy
+# Module: fmu_explore_fmpy
 # Author: Jan Peter Axelsson
 # License:  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 # ------------------------------------------------------------------------------------------------------------------

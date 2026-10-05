@@ -1,10 +1,10 @@
 """Explain the module"""
 
-# module fmu_explore_oms
+# Module: fmu_explore_oms
 # Author: Jan Peter Axelsson
 # License:  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 # ------------------------------------------------------------------------------------------------------------------
-# 2026-09-26 - Created from a script-version 1.0.3 date 2026-03-26 with origin long time back, presnte 2022-01-31
+# 2026-09-26 - Created from a script-version 1.0.3 date 2026-03-26 with origin long time back, presented 2022-01-31
 # 2026-09-30 - A first rudimentary version of the module with functions: par(), init(), simu(), show()
 # ------------------------------------------------------------------------------------------------------------------
 
