@@ -59,7 +59,6 @@ class AdaptWith:
         self.parValue = parValue
         self.parLocation = parLocation
         self.parCheck = parCheck
-#        self.model = model
         self.fmu_model = fmu_model
         self.fmu_process_diagram = fmu_process_diagram
         self.MSL_usage = MSL_usage
@@ -75,9 +74,9 @@ class AdaptWith:
         self.sim_res = None
         self.t = None
         self.prevFinalTime = 0
-        
+
+        # Create the model
         self.model = oms.FMU(self.fmu_model)
-        self.options = None
 
         # Create stateValue that later will be used to store final state
         # and used for initialization in 'cont'
