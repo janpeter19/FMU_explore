@@ -205,6 +205,7 @@ class AdaptWith:
 
         if simulationTime is None:
             simulationTime = self.simulationTime
+            
         if options is None:
             options = self.options
 
@@ -221,7 +222,7 @@ class AdaptWith:
         model.instantiate()
         model.setResultFile('sim_res.mat')
         for command in options: 
-            eval(command
+            eval(command)
 
         # Set parameters
         for key in parValue.keys():
