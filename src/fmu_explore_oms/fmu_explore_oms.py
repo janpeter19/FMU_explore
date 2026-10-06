@@ -6,6 +6,7 @@
 # ------------------------------------------------------------------------------------------------------------------
 # 2026-09-26 - Created from a script-version 1.0.3 date 2026-03-26 with origin long time back, presented 2022-01-31
 # 2026-09-30 - A first rudimentary version of the module with functions: par(), init(), simu(), show()
+# 2026-10-06 - Added options as a parameter
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -45,7 +46,7 @@ class AdaptWith:
         MSL_usage,
         MSL_version,
         BPL_version,
-#        options,
+        options,
         simulationTime,
         timeDiscreteStates,
         diagrams,
@@ -64,7 +65,7 @@ class AdaptWith:
         self.MSL_usage = MSL_usage
         self.MSL_version = MSL_version
         self.BPL_version = BPL_version
-#        self.options = options
+        self.options = options
         self.simulationTime = simulationTime
         self.timeDiscreteStates = timeDiscreteStates
         self.diagrams = diagrams
@@ -199,11 +200,13 @@ class AdaptWith:
             eval(command, {}, context)
 
 
-    def simu(self, simulationTime=None):
+    def simu(self, simulationTime=None, options=None):
         """Simulation of model and plot of results"""
 
         if simulationTime is None:
             simulationTime = self.simulationTime
+        if options is None:
+            options = self.options
 
         diagrams = self.diagrams
         ax = self.ax
@@ -217,6 +220,8 @@ class AdaptWith:
         self.model = model
         model.instantiate()
         model.setResultFile('sim_res.mat')
+        for command in options: 
+            eval(command
 
         # Set parameters
         for key in parValue.keys():

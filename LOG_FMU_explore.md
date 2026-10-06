@@ -68,6 +68,10 @@ Improved code quality using pylint:
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
 
+2026-10-05 I make a pre-release of  **version 1.2.5** and start up the next version. Focus is to handle the options of simulation to facilitate the calibration application.
+
+2026-10-05 I made the application BPL\_TEST2\_Batch\_calibration work with oms. 
+
 2026-09-30 Now a rudimentary version of fmu\_explore\_oms is in place. It works for BPL\_TEST2\_Batch and I plan to test also on BPL\_TEST2\_Fedbatch soon.
 
 2026-09-26 Started **version 1.2.5** with an early version of fmu\_explore\_oms.
