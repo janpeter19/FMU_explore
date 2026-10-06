@@ -220,8 +220,9 @@ class AdaptWith:
         self.model = model
         model.instantiate()
         model.setResultFile('sim_res.mat')
-        for command in options: 
-            eval(command)
+        if option is not None:
+            for command in options: 
+                eval(command)
 
         # Set parameters
         for key in parValue.keys():
