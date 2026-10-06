@@ -220,7 +220,7 @@ class AdaptWith:
         self.model = model
         model.instantiate()
         model.setResultFile('sim_res.mat')
-        if option is not None:
+        if options is not None:
             for command in options: 
                 eval(command)
 
