@@ -80,8 +80,8 @@ class AdaptWith:
         self.prevFinalTime = 0
 
         # Create the model
-        #self.model = oms.FMU(self.fmu_model)
-        self.model = None
+        self.model = oms.FMU(self.fmu_model)
+#        self.model = None
 
         # Create stateValue that later will be used to store final state
         # and used for initialization in 'cont'
@@ -207,7 +207,7 @@ class AdaptWith:
     def simu(self, simulationTime=None, options=None):
         """Simulation of model and plot of results"""
 
-        model = self.model
+#        model = self.model
 
         if simulationTime is None:
             simulationTime = self.simulationTime
@@ -223,11 +223,13 @@ class AdaptWith:
         parLocation = self.parLocation
 
         # Prepare for simulation
-        if model is None:
-            model = oms.FMU(self.fmu_model)
-            self.model = model
-            model.instantiate()
-        model.reset()
+#        if model is None:
+#            model = oms.FMU(self.fmu_model)
+#            self.model = model
+#            model.instantiate()
+#        model.reset()
+        model = oms.FMU(self.fmu_model)
+        model.instantiate()
         model.setResultFile('sim_res.mat')
         
         # Set options for the result file and more
@@ -248,9 +250,6 @@ class AdaptWith:
         temp = scipy.io.loadmat('sim_res.mat')
         t = temp['data_2'][0];
         sim_res = DyMat.DyMatFile('sim_res.mat')
-
-        #sim_res = scipy.io.loadmat('sim_res.mat')
-        #t = sim_res['data_2'][0];
         self.t = t
         self.sim_res = sim_res
 
