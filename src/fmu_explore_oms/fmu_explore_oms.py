@@ -237,12 +237,14 @@ class AdaptWith:
         model.simulate()
 
         # Open up result file
-        sim_res = scipy.io.loadmat('sim_res.mat')
-        sim_res2 = DyMat.DyMatFile('sim_res.mat')
-        t = sim_res['data_2'][0];
-        self.sim_res = sim_res
+        temp = scipy.io.loadmat('sim_res.mat')
+        t = temp['data_2'][0];
+        sim_res = DyMat.DyMatFile('sim_res.mat')
+
+        #sim_res = scipy.io.loadmat('sim_res.mat')
+        #t = sim_res['data_2'][0];
         self.t = t
-        self.sim_res2 = sim_res2
+        self.sim_res = sim_res
 
         # Plot results
         linetype = next(linecycler)
