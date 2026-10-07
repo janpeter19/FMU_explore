@@ -8,6 +8,7 @@
 # 2026-09-30 - A first rudimentary version of the module with functions: par(), init(), simu(), show()
 # 2026-10-06 - Added options as a parameter
 # 2026-10-07 - Handle sim_res file with DyMat
+# 2026-10-07 - Make use of model.reset() introduced in ver 3.0.0.post198 released today
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -219,10 +220,14 @@ class AdaptWith:
         parLocation = self.parLocation
 
         # Prepare for simulation
-        model = oms.FMU(self.fmu_model)
-        self.model = model
-        model.instantiate()
+        if model is None:
+            model = oms.FMU(self.fmu_model)
+            self.model = model
+            model.instantiate()
+        model.reset()
         model.setResultFile('sim_res.mat')
+        
+        # Set options for the result file and more
         if options is not None:
             for command in options: 
                 eval(command)
