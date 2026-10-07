@@ -285,7 +285,7 @@ class AdaptWith:
             print(description, "[", unit, "]")
 
         elif name == "process":
-            print(model.description())
+            print(model.description)
 
 
     def process_diagram(self):
