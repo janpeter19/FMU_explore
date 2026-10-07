@@ -7,6 +7,7 @@
 # 2026-09-26 - Created from a script-version 1.0.3 date 2026-03-26 with origin long time back, presented 2022-01-31
 # 2026-09-30 - A first rudimentary version of the module with functions: par(), init(), simu(), show()
 # 2026-10-06 - Added options as a parameter
+# 2026-10-07 - Handle sim_res file with DyMat
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -21,7 +22,7 @@ import pandas as pd
 
 import OMSimulator as oms
 import scipy.io
-#import DyMat
+import DyMat
 
 
 def empty_function(*args, **kwargs):
@@ -235,9 +236,11 @@ class AdaptWith:
 
         # Open up result file
         sim_res = scipy.io.loadmat('sim_res.mat')
+        sim_res2 = DyMat.DyMatFile('sim_res.mat')
         t = sim_res['data_2'][0];
         self.sim_res = sim_res
         self.t = t
+        self.sim_res2 = sim_res2
 
         # Plot results
         linetype = next(linecycler)

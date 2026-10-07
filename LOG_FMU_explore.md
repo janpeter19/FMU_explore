@@ -68,6 +68,8 @@ Improved code quality using pylint:
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
 
+2026-10-06 Now options 
+
 2026-10-05 I make a pre-release of  **version 1.2.5** and start up the next version. Focus is to handle the options of simulation to facilitate the calibration application.
 
 2026-10-05 I made the application BPL\_TEST2\_Batch\_calibration work with oms. 
