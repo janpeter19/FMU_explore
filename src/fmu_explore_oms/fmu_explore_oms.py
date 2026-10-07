@@ -273,6 +273,21 @@ class AdaptWith:
         print("MSL:", MSL_usage)
 
 
+    def describe_general(self, name, decimals):
+        """Describe time, process, parameters and variables in the Modelica code."""
+
+        parLocation = self.parLocation
+        model = self.model
+
+        if name == "time":
+            description = "Time"
+            unit = "h"
+            print(description, "[", unit, "]")
+
+        elif name == "process":
+            print(model.description())
+
+
     def process_diagram(self):
         """Plot the process diagram."""
 
