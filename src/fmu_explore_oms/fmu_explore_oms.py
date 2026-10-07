@@ -80,7 +80,8 @@ class AdaptWith:
         self.prevFinalTime = 0
 
         # Create the model
-        self.model = oms.FMU(self.fmu_model)
+        #self.model = oms.FMU(self.fmu_model)
+        self.model = None
 
         # Create stateValue that later will be used to store final state
         # and used for initialization in 'cont'
@@ -205,6 +206,8 @@ class AdaptWith:
 
     def simu(self, simulationTime=None, options=None):
         """Simulation of model and plot of results"""
+
+        model = self.model
 
         if simulationTime is None:
             simulationTime = self.simulationTime
