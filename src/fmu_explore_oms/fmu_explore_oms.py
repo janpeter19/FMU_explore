@@ -72,7 +72,9 @@ class AdaptWith:
         self.ax = ax
         self.lines = lines
         self.external_function = external_function
+
         self.sim_res = None
+        self.sim_res2 = None
         self.t = None
         self.prevFinalTime = 0
 
