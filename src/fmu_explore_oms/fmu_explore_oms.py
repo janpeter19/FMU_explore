@@ -9,6 +9,7 @@
 # 2026-10-06 - Added options as a parameter
 # 2026-10-07 - Handle sim_res file with DyMat
 # 2026-10-07 - Make use of model.reset() introduced in ver 3.0.0.post198 released today
+# 2026-10-08 - Added function disp() from pyfmi and just repalated get() with getValue()
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -163,6 +164,79 @@ class AdaptWith:
                     "- seems not an initial value, use par() instead - check the spelling",
                 )
         parValue.update(x_init)
+
+
+    def disp(self, name="", decimals=3, mode="short"):
+        """Display intial values and parameters in the model that include "name" and 
+        is in parLocation list. Note, it does not take the value from the dictionary par 
+        but from the model."""
+
+        model = self.model
+        parValue = self.parValue
+        parLocation = self.parLocation
+
+        def dict_reverser(d):
+            """Simply reverse the dictionary. A help function."""
+
+            seen = set()
+            return {v: k for k, v in d.items() if v not in seen or seen.add(v)}
+
+        if mode in ["short"]:
+            k = 0
+            for Location in [parLocation[k] for k in parValue.keys()]:
+                if name in Location:
+                    if not isinstance(model.getValue(Location)[0], np.bool_):
+                        print(
+                            dict_reverser(parLocation)[Location],
+                            ":",
+                            np.round(model.getValue(Location)[0], decimals),
+                        )
+                    else:
+                        print(
+                            dict_reverser(parLocation)[Location],
+                            ":",
+                            model.getValue(Location)[0],
+                        )
+                else:
+                    k = k + 1
+            if k == len(parLocation):
+                for parName in parValue.keys():
+                    if name in parName:
+                        if not isinstance(model.getValue(Location)[0], np.bool_):
+                            print(
+                                parName,
+                                ":",
+                                np.round(model.getValue(parLocation[parName])[0], decimals),
+                            )
+                        else:
+                            print(parName, ":", model.getValue(parLocation[parName])[0])
+        if mode in ["long", "location"]:
+            k = 0
+            for Location in [parLocation[k] for k in parValue.keys()]:
+                if name in Location:
+                    if not isinstance(model.getValue(Location)[0], np.bool_):
+                        print(
+                            Location,
+                            ":",
+                            dict_reverser(parLocation)[Location],
+                            ":",
+                            np.round(model.getValue(Location)[0], decimals),
+                        )
+                else:
+                    k = k + 1
+            if k == len(parLocation):
+                for parName in parValue.keys():
+                    if name in parName:
+                        if not isinstance(model.getValue(Location)[0], np.bool_):
+                            print(
+                                parLocation[parName],
+                                ":",
+                                dict_reverser(parLocation)[Location],
+                                ":",
+                                parName,
+                                ":",
+                                np.round(model.getValue(parLocation[parName])[0], decimals),
+                            )
 
 
     def restart(self):
