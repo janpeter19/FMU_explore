@@ -9,7 +9,7 @@
 # 2026-10-06 - Added options as a parameter
 # 2026-10-07 - Handle sim_res file with DyMat
 # 2026-10-07 - Make use of model.reset() introduced in ver 3.0.0.post198 released today
-# 2026-10-08 - Added function disp() from pyfmi and just repalated get() with getValue()
+# 2026-10-08 - Added function disp() from pyfmi and just repalated get() with getValue() - need to use reset() first!
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
