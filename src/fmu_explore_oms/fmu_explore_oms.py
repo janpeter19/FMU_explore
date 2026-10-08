@@ -185,49 +185,49 @@ class AdaptWith:
             k = 0
             for Location in [parLocation[k] for k in parValue.keys()]:
                 if name in Location:
-                    if not isinstance(model.getValue(Location)[0], np.bool_):
+                    if not isinstance(model.getValue(Location), np.bool_):
                         print(
                             dict_reverser(parLocation)[Location],
                             ":",
-                            np.round(model.getValue(Location)[0], decimals),
+                            np.round(model.getValue(Location), decimals),
                         )
                     else:
                         print(
                             dict_reverser(parLocation)[Location],
                             ":",
-                            model.getValue(Location)[0],
+                            model.getValue(Location),
                         )
                 else:
                     k = k + 1
             if k == len(parLocation):
                 for parName in parValue.keys():
                     if name in parName:
-                        if not isinstance(model.getValue(Location)[0], np.bool_):
+                        if not isinstance(model.getValue(Location), np.bool_):
                             print(
                                 parName,
                                 ":",
-                                np.round(model.getValue(parLocation[parName])[0], decimals),
+                                np.round(model.getValue(parLocation[parName]), decimals),
                             )
                         else:
-                            print(parName, ":", model.getValue(parLocation[parName])[0])
+                            print(parName, ":", model.getValue(parLocation[parName]))
         if mode in ["long", "location"]:
             k = 0
             for Location in [parLocation[k] for k in parValue.keys()]:
                 if name in Location:
-                    if not isinstance(model.getValue(Location)[0], np.bool_):
+                    if not isinstance(model.getValue(Location), np.bool_):
                         print(
                             Location,
                             ":",
                             dict_reverser(parLocation)[Location],
                             ":",
-                            np.round(model.getValue(Location)[0], decimals),
+                            np.round(model.getValue(Location), decimals),
                         )
                 else:
                     k = k + 1
             if k == len(parLocation):
                 for parName in parValue.keys():
                     if name in parName:
-                        if not isinstance(model.getValue(Location)[0], np.bool_):
+                        if not isinstance(model.getValue(Location), np.bool_):
                             print(
                                 parLocation[parName],
                                 ":",
@@ -235,7 +235,7 @@ class AdaptWith:
                                 ":",
                                 parName,
                                 ":",
-                                np.round(model.getValue(parLocation[parName])[0], decimals),
+                                np.round(model.getValue(parLocation[parName]), decimals),
                             )
 
 
