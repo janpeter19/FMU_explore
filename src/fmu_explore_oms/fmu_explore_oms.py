@@ -9,7 +9,8 @@
 # 2026-10-06 - Added options as a parameter
 # 2026-10-07 - Handle sim_res file with DyMat
 # 2026-10-07 - Make use of model.reset() introduced in ver 3.0.0.post198 released today
-# 2026-10-08 - Added function disp() from pyfmi and just repalated get() with getValue() - need to use reset() first!
+# 2026-10-08 - Added function disp() from pyfmi and just replacedted get() with getValue() - need reset() first!
+# 2026-10-09 - Fix simu() with proper reset-handling
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -81,7 +82,6 @@ class AdaptWith:
 
         # Create the model
         self.model = oms.FMU(self.fmu_model)
-#        self.model = None
 
         # Create stateValue that later will be used to store final state
         # and used for initialization in 'cont'
@@ -280,7 +280,7 @@ class AdaptWith:
     def simu(self, simulationTime=None, options=None):
         """Simulation of model and plot of results"""
 
-#        model = self.model
+        model = self.model
 
         if simulationTime is None:
             simulationTime = self.simulationTime
@@ -295,13 +295,13 @@ class AdaptWith:
         parValue = self.parValue
         parLocation = self.parLocation
 
-        # Prepare for simulation
-#        if model is None:
-#            model = oms.FMU(self.fmu_model)
-#            self.model = model
-#            model.instantiate()
-#        model.reset()
-        model = oms.FMU(self.fmu_model)
+        Prepare for simulation
+        if model is None:
+            model = oms.FMU(self.fmu_model)
+            self.model = model
+            model.instantiate()
+        model.reset()
+#        model = oms.FMU(self.fmu_model)
         model.instantiate()
         model.setResultFile('sim_res.mat')
         
@@ -318,6 +318,7 @@ class AdaptWith:
         # Simulation
         model.initialize()
         model.simulate()
+        self.model = model
 
         # Open up result file
         temp = scipy.io.loadmat('sim_res.mat')
@@ -334,8 +335,8 @@ class AdaptWith:
             eval(command, {}, context)
 
         # Close the model
-        model.terminate()
-        model.delete()
+#        model.terminate()
+#        model.delete()
 
 
     def describe_MSL(self):
