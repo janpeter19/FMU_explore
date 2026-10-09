@@ -296,12 +296,10 @@ class AdaptWith:
         parLocation = self.parLocation
 
         # Prepare for simulation
-        if model is None:
+        if not isinstance(model, oms.fmu.FMU):
             model = oms.FMU(self.fmu_model)
             self.model = model
-            model.instantiate()
         model.instantiate()
-        model.reset()
 
         # Set options for the result file and more
         model.setResultFile('sim_res.mat')
@@ -310,12 +308,14 @@ class AdaptWith:
                 eval(command)
 
         # Set parameters
+        model.initialize()
+        model.reset()
         for key in parValue.keys():
             model.setValue(parLocation[key], parValue[key])
         model.setStopTime(simulationTime)
 
         # Simulation
-        model.initialize()
+
         model.simulate()
         self.model = model
 
