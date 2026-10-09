@@ -300,12 +300,11 @@ class AdaptWith:
             model = oms.FMU(self.fmu_model)
             self.model = model
             model.instantiate()
-        model.reset()
-#        model = oms.FMU(self.fmu_model)
         model.instantiate()
-        model.setResultFile('sim_res.mat')
-        
+        model.reset()
+
         # Set options for the result file and more
+        model.setResultFile('sim_res.mat')
         if options is not None:
             for command in options: 
                 eval(command)
