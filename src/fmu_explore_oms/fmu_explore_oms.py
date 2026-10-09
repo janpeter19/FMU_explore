@@ -309,7 +309,7 @@ class AdaptWith:
 
         # Set parameters
         model.initialize()
-        model.reset()
+#        model.reset()
         for key in parValue.keys():
             model.setValue(parLocation[key], parValue[key])
         model.setStopTime(simulationTime)
