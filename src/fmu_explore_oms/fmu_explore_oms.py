@@ -315,7 +315,6 @@ class AdaptWith:
         model.setStopTime(simulationTime)
 
         # Simulation
-
         model.simulate()
         self.model = model
 
@@ -334,8 +333,8 @@ class AdaptWith:
             eval(command, {}, context)
 
         # Close the model
-#        model.terminate()
-#        model.delete()
+        model.terminate()
+        model.delete()
 
 
     def describe_MSL(self):
