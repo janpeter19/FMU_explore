@@ -299,6 +299,7 @@ class AdaptWith:
         if not isinstance(model, oms.fmu.FMU):
             model = oms.FMU(self.fmu_model)
             self.model = model
+            print('Made new model')
         model.instantiate()
 
         # Set options for the result file and more
