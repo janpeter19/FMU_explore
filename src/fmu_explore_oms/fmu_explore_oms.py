@@ -319,7 +319,7 @@ class AdaptWith:
         # Simulation
         model.initialize()
         model.simulate()
-        self.model = model
+#        self.model = model
 
         # Open up result file
         temp = scipy.io.loadmat('sim_res.mat')
