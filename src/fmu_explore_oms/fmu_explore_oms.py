@@ -297,7 +297,7 @@ class AdaptWith:
         parLocation = self.parLocation
 
         # Prepare for simulation
-        if isinstance(model, oms.fmu.FMI):
+        if isinstance(model, oms.fmu.FMU):
             model.terminate()
             model.delete()        
         
