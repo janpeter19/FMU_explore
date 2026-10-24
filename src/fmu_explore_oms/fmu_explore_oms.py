@@ -11,6 +11,7 @@
 # 2026-10-07 - Make use of model.reset() introduced in ver 3.0.0.post198 released today
 # 2026-10-08 - Added function disp() from pyfmi and just replacedted get() with getValue() - need reset() first!
 # 2026-10-09 - Fix simu() with proper reset-handling
+# 2026-10-24 - Role back simu() to v1.2.6 
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -280,7 +281,7 @@ class AdaptWith:
     def simu(self, simulationTime=None, options=None):
         """Simulation of model and plot of results"""
 
-        model = self.model
+#        model = self.model
 
         if simulationTime is None:
             simulationTime = self.simulationTime
@@ -296,10 +297,11 @@ class AdaptWith:
         parLocation = self.parLocation
 
         # Prepare for simulation
-        if not isinstance(model, oms.fmu.FMU):
-            model = oms.FMU(self.fmu_model)
-            self.model = model
-            print('Made new model')
+#        if not isinstance(model, oms.fmu.FMU):
+#            model = oms.FMU(self.fmu_model)
+#            self.model = model
+#            print('Made new model')
+        model = oms.FMU(self.fmu_model)
         model.instantiate()
 
         # Set options for the result file and more

@@ -48,7 +48,10 @@ Specific goals - now reached:
 * 
 * Handle cstrProdMax etc for fmpy
 * Test if sufficient to create the model just inside the module
+* Take away model generation pyfmi and fmpy from the setup-file
+* Generate the states in the class
 * Handle default simulation time at least from OpenModelica FMUs
+* Handle component_list_minimum and bring to the class
 
 Tentative release note for version 1.3.0 say
 
@@ -67,6 +70,8 @@ Improved code quality using pylint:
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-10-23 I have now updated all application notebooks for Windows using the word Application instead of Adapated for the instance of the class.
 
 2026-10-07 I made another pre-release **version 1.2.6** and start on the next version.
 
