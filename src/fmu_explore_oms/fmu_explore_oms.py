@@ -298,7 +298,7 @@ class AdaptWith:
 
         # Prepare for simulation
         if isinstance(model, oms.fmu.FMU):
-            model.terminate()
+            #model.terminate()
             model.delete()        
         
 #        if not isinstance(model, oms.fmu.FMU):
@@ -340,7 +340,7 @@ class AdaptWith:
             eval(command, {}, context)
 
         # Close the model
-#        model.terminate()
+        model.terminate()
 #        model.delete()
 
 
