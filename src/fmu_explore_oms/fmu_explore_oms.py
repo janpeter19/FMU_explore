@@ -297,6 +297,10 @@ class AdaptWith:
         parLocation = self.parLocation
 
         # Prepare for simulation
+        if isinstance(model, oms.fmu.FMI):
+            model.terminate()
+            model.delete()        
+        
 #        if not isinstance(model, oms.fmu.FMU):
 #            model = oms.FMU(self.fmu_model)
 #            self.model = model
@@ -336,8 +340,8 @@ class AdaptWith:
             eval(command, {}, context)
 
         # Close the model
-        model.terminate()
-        model.delete()
+#        model.terminate()
+#        model.delete()
 
 
     def describe_MSL(self):
