@@ -281,7 +281,7 @@ class AdaptWith:
     def simu(self, simulationTime=None, options=None):
         """Simulation of model and plot of results"""
 
-#        model = self.model
+        model = self.model
 
         if simulationTime is None:
             simulationTime = self.simulationTime
