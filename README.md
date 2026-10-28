@@ -26,7 +26,7 @@ The package contains one module for each simulator-engine, and so far:
 
 Here is also a rudimentary pre-release version of:
 
-* fmu\_explore\_oms - using OMSimulator pre-release v3.0.0 - https://github.com/OpenModelica/OMSimulator
+* fmu\_explore\_oms - using OMSimulator using pre-release v3.0.0 - https://github.com/OpenModelica/OMSimulator
 
 License information: The package FMU\_explore is shared under the GPL 3.0 license.
 
