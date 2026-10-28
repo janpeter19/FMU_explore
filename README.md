@@ -24,7 +24,7 @@ The package contains one module for each simulator-engine, and so far:
 * fmu\_explore\_pyfmi - using PyFMI - https://github.com/modelon-community/PyFMI
 * fmu\_explore\_fmpy - using FMPy - https://github.com/CATIA-Systems/FMPy
 
-Here is also a rudimentary pre-release version of:
+Here is also under development a rudimentary pre-release version of:
 
 * fmu\_explore\_oms - using OMSimulator using pre-release v3.0.0 - https://github.com/OpenModelica/OMSimulator
 
