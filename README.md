@@ -39,5 +39,3 @@ Axelsson, J. P., "Design apsects of FMU\_explore a Python module to complement P
 Axelsson, J. P., "Experience with Google Colab for running Modelica FMU in notebooks and no installation", OpenModelica workshop in Linköping, February 3, 2025, 
 [abstract](https://github.com/janpeter19/References/blob/main/Axelsson_2025_abstract.pdf)
 [slides](https://openmodelica.org/images/M_images/OpenModelicaWorkshop_2025/2025-02-03_Google_Colab_FMU_Notebooks.pdf).
-
-
