@@ -47,11 +47,12 @@ Specific goals - now reached:
 * Improved code: indentation, iterations in par(), init(), describe_parts() / Done 260921
 * 
 * Handle cstrProdMax etc for fmpy
+* Check describe() - commented in two applications during testing
 * Test if sufficient to create the model just inside the module
 * Take away model generation pyfmi and fmpy from the setup-file
-* Generate the states in the class
+* And generate the states in the class
 * Handle default simulation time at least from OpenModelica FMUs
-* Handle component_list_minimum and bring to the class
+* Handle component\_list\_minimum and bring to the class
 
 Tentative release note for version 1.3.0 say
 
@@ -64,12 +65,13 @@ Improved code quality using pylint:
 * change indentation to 4 spaces / done 1.2.3
 * docstrings for class and functions / done 1.2.3 
 * modify some expression of loops over dictionaries and lists / done now 1.2.4
-* 
-* handle cstrProdMax
+
 
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-10-28 Now all applications are updated for both Linux and Windows using the word Appplication. Each repositoy also harmomized to a common (informal) standard.
 
 2026-10-23 I have now updated all application notebooks for Windows using the word Application instead of Adapated for the instance of the class.
 
