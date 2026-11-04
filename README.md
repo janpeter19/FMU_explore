@@ -4,7 +4,7 @@ The purpose of this software is to provide a simplified, yet powerful, interface
 The simplified interface is especially useful when simulations are used in teaching where the focus is on dynamics of the process, rather than on Python scripting. The examples below illustrate the virtue of the simplified user interface.
 
 ![](Fig_1.png)
-Figure 1. Two lines of code using FMU\_explore to make the following diagrams
+Figure 1. Two lines of code using FMU\_explore to make the diagrams
 
 
 ![](Fig_2.png)
@@ -24,9 +24,9 @@ The package contains one module for each simulator-engine, and so far:
 * fmu\_explore\_pyfmi - using PyFMI - https://github.com/modelon-community/PyFMI
 * fmu\_explore\_fmpy - using FMPy - https://github.com/CATIA-Systems/FMPy
 
-Here is also a rudimentary pre-release version of:
+Here is also under development a rudimentary pre-release version of:
 
-* fmu\_explore\_oms - using OMSimulator using pre-release v3.0.0 - https://github.com/OpenModelica/OMSimulator
+* fmu\_explore\_oms - using OMSimulator pre-release v3.0.0 - https://github.com/OpenModelica/OMSimulator
 
 License information: The package FMU\_explore is shared under the GPL 3.0 license.
 
@@ -39,5 +39,3 @@ Axelsson, J. P., "Design apsects of FMU\_explore a Python module to complement P
 Axelsson, J. P., "Experience with Google Colab for running Modelica FMU in notebooks and no installation", OpenModelica workshop in Linköping, February 3, 2025, 
 [abstract](https://github.com/janpeter19/References/blob/main/Axelsson_2025_abstract.pdf)
 [slides](https://openmodelica.org/images/M_images/OpenModelicaWorkshop_2025/2025-02-03_Google_Colab_FMU_Notebooks.pdf).
-
-
