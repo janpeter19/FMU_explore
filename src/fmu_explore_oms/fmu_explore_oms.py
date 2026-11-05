@@ -302,7 +302,7 @@ class AdaptWith:
 
         # Prepare for simulation
         if 'self.model' in locals():
-           if isinstance(self.model, oms.fmu.FMU) and getattr(model, 'instanceName', None) is not None:
+           if isinstance(self.model, oms.fmu.FMU) and getattr(self.model, 'instanceName', None) is not None:
                self.model.delete()
 
         self.model = oms.FMU(fmu_model)
