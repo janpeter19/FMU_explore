@@ -45,16 +45,16 @@ Specific goals - now reached:
 * Reorganise the list of arguments for the class (and update notebooks) / Done 
 260911
 * Improved code: indentation, iterations in par(), init(), describe_parts() / Done 260921
+* Test if sufficient to create the model just inside the module / Done 260930
 * 
 * Handle cstrProdMax etc for fmpy
 * Check describe() - commented in two applications during testing
-* Test if sufficient to create the model just inside the module
 * Take away model generation pyfmi and fmpy from the setup-file
 * And generate the states in the class
 * Handle default simulation time at least from OpenModelica FMUs
 * Handle component\_list\_minimum and bring to the class
 
-Tentative release note for version 1.3.0 say
+Tentative release note for version 1.3.0 say with new parameter list
 
 Improved code quality using pylint:
 
@@ -70,6 +70,8 @@ Improved code quality using pylint:
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+
+2026-11-05 Now 9 applications can run with OMSimulator with FMU\_explore **version 1.2.6**. The remaining 4 applications needs more interaction and an update of the package.
 
 2026-10-28 Now all applications are updated for both Linux and Windows using the word Appplication. Each repositoy also harmomized to a common (informal) standard.
 
