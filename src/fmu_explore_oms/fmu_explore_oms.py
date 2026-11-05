@@ -301,9 +301,15 @@ class AdaptWith:
         linecycler = self.linecycler
 
         # Prepare for simulation
-        if 'self.model' in locals():
-           if isinstance(self.model, oms.fmu.FMU) and getattr(self.model, 'instanceName', None) is not None:
-               self.model.delete()
+#        if 'self.model' in locals():
+#           if isinstance(self.model, oms.fmu.FMU) and getattr(self.model, 'instanceName', None) is not None:
+#               self.model.delete()
+
+        if hasattr(self, 'model') and self.model is not null:
+            try:
+                self.model.delete()
+            except Exception:
+                pass
 
         self.model = oms.FMU(fmu_model)
         self.model.instantiate()
