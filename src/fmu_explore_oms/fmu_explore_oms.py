@@ -12,6 +12,7 @@
 # 2026-10-08 - Added function disp() from pyfmi and just replacedted get() with getValue() - need reset() first!
 # 2026-10-09 - Fix simu() with proper reset-handling
 # 2026-10-24 - Role back simu() to v1.2.6 
+# 2026-11-05 - New structure of simu() and avoid terminate() and delete to enable acess to model after simu()
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -282,6 +283,12 @@ class AdaptWith:
         """Simulation of model and plot of results"""
 
         model = self.model
+        
+        parValue = self.parValue
+        
+        parLocation = self.parLocation
+        
+        fmu_model = self.fmu_model
 
         if simulationTime is None:
             simulationTime = self.simulationTime
@@ -293,19 +300,12 @@ class AdaptWith:
         ax = self.ax
         linecycler = self.linecycler
 
-        parValue = self.parValue
-        parLocation = self.parLocation
-
         # Prepare for simulation
-        if isinstance(model, oms.fmu.FMU):
-            #model.terminate()
-            model.delete()        
-        
-#        if not isinstance(model, oms.fmu.FMU):
-#            model = oms.FMU(self.fmu_model)
-#            self.model = model
-#            print('Made new model')
-        model = oms.FMU(self.fmu_model)
+        if 'model' in locals():
+           if isinstance(model, oms.fmu.FMU) and getattr(model, 'instanceName', None) is not None:
+               model.delete()
+
+        model = oms.FMU(fmu_model)
         model.instantiate()
 
         # Set options for the result file and more
@@ -338,10 +338,6 @@ class AdaptWith:
 
         for command in diagrams:
             eval(command, {}, context)
-
-        # Close the model
-        model.terminate()
-#        model.delete()
 
 
     def describe_MSL(self):
