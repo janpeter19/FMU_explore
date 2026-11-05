@@ -305,7 +305,7 @@ class AdaptWith:
 #           if isinstance(self.model, oms.fmu.FMU) and getattr(self.model, 'instanceName', None) is not None:
 #               self.model.delete()
 
-        if hasattr(self, 'model') and self.model is not null:
+        if hasattr(self, 'model') and self.model is not None:
             try:
                 self.model.delete()
             except Exception:
