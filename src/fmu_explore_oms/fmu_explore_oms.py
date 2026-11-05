@@ -282,7 +282,7 @@ class AdaptWith:
     def simu(self, simulationTime=None, options=None):
         """Simulation of model and plot of results"""
 
-        model = self.model
+#        model = self.model
         
         parValue = self.parValue
         
@@ -301,15 +301,15 @@ class AdaptWith:
         linecycler = self.linecycler
 
         # Prepare for simulation
-        if 'model' in locals():
-           if isinstance(model, oms.fmu.FMU) and getattr(model, 'instanceName', None) is not None:
-               model.delete()
+        if 'self.model' in locals():
+           if isinstance(self.model, oms.fmu.FMU) and getattr(model, 'instanceName', None) is not None:
+               self.model.delete()
 
-        model = oms.FMU(fmu_model)
-        model.instantiate()
+        self.model = oms.FMU(fmu_model)
+        self.model.instantiate()
 
         # Set options for the result file and more
-        model.setResultFile('sim_res.mat')
+        self.model.setResultFile('sim_res.mat')
         if options is not None:
             for command in options: 
                 eval(command)
@@ -317,12 +317,12 @@ class AdaptWith:
         # Set parameters
 #        model.reset()
         for key in parValue.keys():
-            model.setValue(parLocation[key], parValue[key])
-        model.setStopTime(simulationTime)
+            self.model.setValue(parLocation[key], parValue[key])
+        self.model.setStopTime(simulationTime)
 
         # Simulation
-        model.initialize()
-        model.simulate()
+        self.model.initialize()
+        self.model.simulate()
 #        self.model = model
 
         # Open up result file
