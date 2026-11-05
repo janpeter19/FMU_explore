@@ -42,10 +42,10 @@ Specific goals - now reached:
 * Added to simu() the context parameter with model_get() good for eval() / Done 260909
 * Added to simu() in fmu\_explore\_fmpy a return of sim\_res / Done 260910
 * Make version of scipy.optimize visible in system_info() / Done 260910
-* Reorganise the list of arguments for the class (and update notebooks) / Done 
-260911
+* Reorganise the list of arguments for the class (and update notebooks) / Done 260911
 * Improved code: indentation, iterations in par(), init(), describe_parts() / Done 260921
 * Test if sufficient to create the model just inside the module / Done 260930
+* Correct check for existance of model in simu() for OMSimulato / Done 261105
 * 
 * Handle cstrProdMax etc for fmpy
 * Check describe() - commented in two applications during testing
@@ -69,7 +69,9 @@ Improved code quality using pylint:
 
 
 ## Day to day notes in reversed time order 
-Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though. 
+Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though.
+
+2026-11-05 Now I have fmu\_expore\_oms **version 1.2.7** working after restructuring simu()! Works for several applications. Now I can use this to make disp() work I am quite sure.
 
 2026-11-05 Now 9 applications can run with OMSimulator with FMU\_explore **version 1.2.6**. The remaining 4 applications needs more interaction and an update of the package.
 
