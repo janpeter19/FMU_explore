@@ -46,6 +46,7 @@ Specific goals - now reached:
 * Improved code: indentation, iterations in par(), init(), describe_parts() / Done 260921
 * Test if sufficient to create the model just inside the module / Done 260930
 * Correct check for existance of model in simu() for OMSimulato / Done 261105
+* Now disp() also works for OMSimulator / Done 261106
 * 
 * Handle cstrProdMax etc for fmpy
 * Check describe() - commented in two applications during testing
@@ -71,7 +72,9 @@ Improved code quality using pylint:
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though.
 
-2026-11-05 Now I have fmu\_expore\_oms **version 1.2.7** working after restructuring simu()! Works for several applications. Now I can use this to make disp() work I am quite sure.
+2026-11-06 Now I made pre-release **version v1.2.7** and disp() works and also function model_get() is identical for all three mdoules.
+
+2026-11-05 Now I have fmu\_expore\_oms **version v1.2.7** working after restructuring simu()! Works for several applications. Now I can use this to make disp() work I am quite sure.
 
 2026-11-05 Now 9 applications can run with OMSimulator with FMU\_explore **version 1.2.6**. The remaining 4 applications needs more interaction and an update of the package.
 
