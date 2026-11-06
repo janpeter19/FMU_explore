@@ -167,6 +167,12 @@ class AdaptWith:
         parValue.update(x_init)
 
 
+    def model_get(self, parLoc):
+        """Function corresponds to pyfmi model.get() but returns just a value and not a list"""
+        
+        value = self.model.getValue(parLoc)
+        return value
+
     def disp(self, name="", decimals=3, mode="short"):
         """Display intial values and parameters in the model that include "name" and 
         is in parLocation list. Note, it does not take the value from the dictionary par 
