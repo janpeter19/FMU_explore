@@ -1,4 +1,4 @@
-"""Explain the module"""
+"""The module provide a simplified interaction with PyFMI useful for Jupyter notebook"""
 
 # Module: fmu_explore_pyfmi
 # Author: Jan Peter Axelsson
@@ -39,6 +39,7 @@
 # 2026-09-21 - Added docstrings to some functions. Took away in par() the variable index since not used
 # 2026-09-21 - Simplifed the code for iteration over kwarg in par() and init()
 # 2026-09-21 - Simplified the code for iteration over variables in describe_parts()
+# 2026-11-06 - Added function model_get to harmonize notebooks
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -191,6 +192,12 @@ class AdaptWith:
                 )
         parValue.update(x_init)
 
+
+    def model_get(self, parLoc):
+        """Function corresponds to pyfmi model.get() but returns just a value and not a list"""
+
+        value = self.model.get(parLoc)
+        return value
 
     def disp(self, name="", decimals=3, mode="short"):
         """Display intial values and parameters in the model that include "name" and 

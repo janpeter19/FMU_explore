@@ -1,4 +1,4 @@
-"""Explain the module"""
+"""The module provide a simplified interaction with FMPy useful for Jupyter notebook"""
 
 # Module: fmu_explore_fmpy
 # Author: Jan Peter Axelsson

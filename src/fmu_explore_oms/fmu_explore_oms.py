@@ -1,4 +1,4 @@
-"""Explain the module"""
+"""The module provide a simplified interaction with OMSimulator useful for Jupyter notebook"""
 
 # Module: fmu_explore_oms
 # Author: Jan Peter Axelsson
@@ -13,6 +13,7 @@
 # 2026-10-09 - Fix simu() with proper reset-handling
 # 2026-10-24 - Role back simu() to v1.2.6 
 # 2026-11-05 - New structure of simu() and avoid terminate() and delete to enable acess to model after simu()
+# 2026-11-06 - Added function model_get to harmonize notebooks
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -46,7 +47,6 @@ class AdaptWith:
         parValue,
         parLocation,
         parCheck,
-#        model,
         fmu_model,
         fmu_process_diagram,
         MSL_usage,
@@ -288,8 +288,6 @@ class AdaptWith:
     def simu(self, simulationTime=None, options=None):
         """Simulation of model and plot of results"""
 
-#        model = self.model
-        
         parValue = self.parValue
         
         parLocation = self.parLocation
@@ -307,10 +305,6 @@ class AdaptWith:
         linecycler = self.linecycler
 
         # Prepare for simulation
-#        if 'self.model' in locals():
-#           if isinstance(self.model, oms.fmu.FMU) and getattr(self.model, 'instanceName', None) is not None:
-#               self.model.delete()
-
         if hasattr(self, 'model') and self.model is not None:
             try:
                 self.model.delete()
@@ -327,7 +321,6 @@ class AdaptWith:
                 eval(command)
 
         # Set parameters
-#        model.reset()
         for key in parValue.keys():
             self.model.setValue(parLocation[key], parValue[key])
         self.model.setStopTime(simulationTime)
@@ -335,7 +328,6 @@ class AdaptWith:
         # Simulation
         self.model.initialize()
         self.model.simulate()
-#        self.model = model
 
         # Open up result file
         temp = scipy.io.loadmat('sim_res.mat')
