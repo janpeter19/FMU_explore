@@ -196,7 +196,7 @@ class AdaptWith:
     def model_get(self, parLoc):
         """Function corresponds to pyfmi model.get() but returns just a value and not a list"""
 
-        value = self.model.get(parLoc)
+        value = self.model.get(parLoc)[0]
         return value
 
     def disp(self, name="", decimals=3, mode="short"):
