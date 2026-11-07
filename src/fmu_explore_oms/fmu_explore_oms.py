@@ -14,6 +14,7 @@
 # 2026-10-24 - Role back simu() to v1.2.6 
 # 2026-11-05 - New structure of simu() and avoid terminate() and delete to enable acess to model after simu()
 # 2026-11-06 - Added function model_get to harmonize notebooks
+# 2026-11-07 - Added external_function usage
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -303,6 +304,8 @@ class AdaptWith:
         diagrams = self.diagrams
         ax = self.ax
         linecycler = self.linecycler
+        
+        external_function = self.external_function
 
         # Prepare for simulation
         if hasattr(self, 'model') and self.model is not None:
@@ -339,6 +342,7 @@ class AdaptWith:
         # Plot results
         linetype = next(linecycler)
         context = locals().copy()
+        context[self.external_function.__name__] = self.external_function
 
         for command in diagrams:
             eval(command, {}, context)
