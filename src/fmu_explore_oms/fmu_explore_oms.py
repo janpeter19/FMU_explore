@@ -15,6 +15,7 @@
 # 2026-11-05 - New structure of simu() and avoid terminate() and delete to enable acess to model after simu()
 # 2026-11-06 - Added function model_get to harmonize notebooks
 # 2026-11-07 - Added external_function usage
+# 2026-11-09 - Added code for hanling simu('cont')
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -88,7 +89,10 @@ class AdaptWith:
 
         # Create stateValue that later will be used to store final state
         # and used for initialization in 'cont'
-
+        stateValue = {}
+        # More OMS code here...
+        stateValue.update(timeDiscreteStates)
+        self.stateValue = stateValue
 
     # ---------------------------------------------------------------------------------------------
 
@@ -286,8 +290,9 @@ class AdaptWith:
             eval(command, {}, context)
 
 
-    def simu(self, simulationTime=None, options=None):
-        """Simulation of model and plot of results"""
+    def simu(self, simulationTime=None, mode="Initial", options=None):
+        """Simulation of model and plot of results.T he given intial values and parameters are given in parValue 
+        and given before. The plot window is also setup before."""
 
         parValue = self.parValue
         
@@ -306,6 +311,9 @@ class AdaptWith:
         linecycler = self.linecycler
         
         external_function = self.external_function
+        
+        # Simulation flag
+        simulationDone = False
 
         # Prepare for simulation
         if hasattr(self, 'model') and self.model is not None:
@@ -323,30 +331,53 @@ class AdaptWith:
             for command in options: 
                 eval(command)
 
-        # Set parameters
-        for key in parValue.keys():
-            self.model.setValue(parLocation[key], parValue[key])
-        self.model.setStopTime(simulationTime)
+        # Run simulation
+        if mode in ["Initial", "initial", "init"]:
 
-        # Simulation
-        self.model.initialize()
-        self.model.simulate()
+            # Set parameters and initial values:
+            for key in parValue.keys():
+                self.model.setValue(parLocation[key], parValue[key])
+            self.model.setStopTime(simulationTime)
+            
+            self.model.initialize()
+            self.model.simulate()
+            simulationDone = True
 
-        # Open up result file
-        temp = scipy.io.loadmat('sim_res.mat')
-        t = temp['data_2'][0];
-        sim_res = DyMat.DyMatFile('sim_res.mat')
-        self.t = t
-        self.sim_res = sim_res
+        elif mode in ["Continued", "continued", "cont"]:
 
-        # Plot results
-        linetype = next(linecycler)
-        context = locals().copy()
-        context[self.external_function.__name__] = self.external_function
+            if prevFinalTime == 0:
+                print("Error: Simulation is first done with default mode = init'")
+            else:
+                
+                # Set parameters and intial state values:
+                for key in parValue.keys():
+                    model.set(parLocation[key], parValue[key])
 
-        for command in diagrams:
-            eval(command, {}, context)
+                # Simulate
+                
+                simulationDone = True
+        else:
+            print("Simulation mode not correct")
 
+        if simulationDone:
+
+            # Open up result file
+            temp = scipy.io.loadmat('sim_res.mat')
+            t = temp['data_2'][0];
+            sim_res = DyMat.DyMatFile('sim_res.mat')
+            self.t = t
+            self.sim_res = sim_res
+
+            # Plot results
+            linetype = next(linecycler)
+            context = locals().copy()
+            context[self.external_function.__name__] = self.external_function
+
+            for command in diagrams:
+                eval(command, {}, context)
+
+        else:
+            print("Error: No simulation done")
 
     def describe_MSL(self):
         """List MSL version and components used."""
