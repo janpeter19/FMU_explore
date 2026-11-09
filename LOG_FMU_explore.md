@@ -72,6 +72,8 @@ Improved code quality using pylint:
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though.
 
+2026-11-09 Now also the IEC applications work and use development release **version v1.2.8**. Try also include functionality for simu('cont') soon and the make a pre-relase of this.
+
 2026-11-06 Now I made pre-release **version v1.2.7** and disp() works and also function model_get() is identical for all three mdoules.
 
 2026-11-05 Now I have fmu\_expore\_oms **version v1.2.7** working after restructuring simu()! Works for several applications. Now I can use this to make disp() work I am quite sure.
