@@ -296,25 +296,27 @@ class AdaptWith:
         and given before. The plot window is also setup before."""
 
         parValue = self.parValue
-        
+
         parLocation = self.parLocation
-        
+
         stateValue = self.stateValue
-        
+
+        prevFinalTime = self.prevFinalTime
+
         fmu_model = self.fmu_model
 
         if simulationTime is None:
             simulationTime = self.simulationTime
-            
+
         if options is None:
             options = self.options
 
         diagrams = self.diagrams
         ax = self.ax
         linecycler = self.linecycler
-        
+
         external_function = self.external_function
-        
+
         # Simulation flag
         simulationDone = False
 
@@ -341,7 +343,7 @@ class AdaptWith:
             for key in parValue.keys():
                 self.model.setValue(parLocation[key], parValue[key])
             self.model.setStopTime(simulationTime)
-            
+
             self.model.initialize()
             self.model.simulate()
             simulationDone = True
@@ -351,7 +353,7 @@ class AdaptWith:
             if prevFinalTime == 0:
                 print("Error: Simulation is first done with default mode = init'")
             else:
-                
+
                 # Set parameters and intial state values:
                 for key in parValue.keys():
                     self.model.setValue(parLocation[key], parValue[key])
@@ -375,8 +377,8 @@ class AdaptWith:
                         break
 
                 # Set simulation time
-                self.model.setStartTime = self.prevFinalTime
-                self.model.setStopTime = self.prevFinalTime + simulationTime
+                self.model.setStartTime = prevFinalTime
+                self.model.setStopTime = prevFinalTime + simulationTime
 
                 # Simulate
                 self.model.initialize()
@@ -499,7 +501,7 @@ class AdaptWith:
         except PackageNotFoundError:
             print(" -Scipy: not installed in the notebook")
         print(" -OMSimulator:", oms.__version__)
-        print(" -FMU by:", self.model.generationTool)
+        print(" -FMU by:", self.f.generationTool)
         print(" -FMI:", self.model.fmiVersion)
         print(" -Type:", self.model.fmuType)
         print(" -Name:", self.model.modelName)
