@@ -15,7 +15,8 @@
 # 2026-11-05 - New structure of simu() and avoid terminate() and delete to enable acess to model after simu()
 # 2026-11-06 - Added function model_get to harmonize notebooks
 # 2026-11-07 - Added external_function usage
-# 2026-11-09 - Added code for hanling simu('cont')
+# 2026-11-09 - Added code for handling simu('cont')
+# 2026-11-10 - Added code to initially make stateValue dictionary 
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -91,7 +92,7 @@ class AdaptWith:
         # and used for initialization in 'cont'
         stateValue = {}
         # More OMS code here...
-        stateValue.update(timeDiscreteStates)
+        stateValue.update(self.timeDiscreteStates)
         self.stateValue = stateValue
 
     # ---------------------------------------------------------------------------------------------
