@@ -375,6 +375,8 @@ class AdaptWith:
                         break
 
                 # Set simulation time
+                self.model.setStartTime = self.prevFinalTime
+                self.model.setStopTime = self.prevFinalTime + simulationTime
 
                 # Simulate
                 self.model.initialize()
@@ -399,6 +401,13 @@ class AdaptWith:
 
             for command in diagrams:
                 eval(command, {}, context)
+
+            # Store final state values stateValue:
+            for key in list(stateValue.keys()):
+                stateValue[key] = model.getValue(key)
+
+            # Store time from where simulation will start next time
+            self.prevFinalTime = t[-1]
 
         else:
             print("Error: No simulation done")
