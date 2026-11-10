@@ -395,7 +395,7 @@ class AdaptWith:
 
                 # Store results to the class
                 temp = scipy.io.loadmat('sim_res.mat')
-                t = temp['data_2'][0];
+                t = temp['data_2'][0] + prevFinalTime
                 sim_res = DyMat.DyMatFile('sim_res.mat')
                 self.t = t
                 self.sim_res = sim_res
