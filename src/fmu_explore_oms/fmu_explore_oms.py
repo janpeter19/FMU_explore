@@ -387,6 +387,9 @@ class AdaptWith:
                 # Set simulation time
                 self.model.setStartTime = prevFinalTime
                 self.model.setStopTime = prevFinalTime + simulationTime
+                
+                print('StartTime', prefFinalTime)
+                print('StopTime', prevFinalTime + simulationTime)
 
                 # Simulate
                 self.model.initialize()
@@ -419,6 +422,8 @@ class AdaptWith:
 
             # Store time from where simulation will start next time
             self.prevFinalTime = t[-1]
+            
+            print('Next prevFinalTime', t[-1])
 
         else:
             print("Error: No simulation done")
