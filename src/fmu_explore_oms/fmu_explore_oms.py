@@ -299,6 +299,8 @@ class AdaptWith:
         
         parLocation = self.parLocation
         
+        stateValue = self.stateValue
+        
         fmu_model = self.fmu_model
 
         if simulationTime is None:
@@ -352,10 +354,31 @@ class AdaptWith:
                 
                 # Set parameters and intial state values:
                 for key in parValue.keys():
-                    model.set(parLocation[key], parValue[key])
+                    model.setValue(parLocation[key], parValue[key])
+
+                for key in stateValue.keys():
+                    if not key[-1] == "]":
+                        if key[-3:] == "I.y":
+                            model.setValue(key[:-10] + "I_start", stateValue[key])
+                        elif key[-3:] == "D.x":
+                            model.setValue(key[:-10] + "D_start", stateValue[key])
+                        else:
+                            model.setValue(key + "_start", stateValue[key])
+                    elif key[-3] == "[":
+                        model.setValue(key[:-3] + "_start" + key[-3:], stateValue[key])
+                    elif key[-4] == "[":
+                        model.setValue(key[:-4] + "_start" + key[-4:], stateValue[key])
+                    elif key[-5] == "[":
+                        model.setValue(key[:-5] + "_start" + key[-5:], stateValue[key])
+                    else:
+                        print("The state vecotr has more than 1000 states")
+                        break
+
+                # Set simulation time
 
                 # Simulate
-                
+                self.model.initialize()
+                self.model.simulate()
                 simulationDone = True
         else:
             print("Simulation mode not correct")

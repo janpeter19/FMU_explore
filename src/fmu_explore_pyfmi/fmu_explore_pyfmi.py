@@ -40,6 +40,7 @@
 # 2026-09-21 - Simplifed the code for iteration over kwarg in par() and init()
 # 2026-09-21 - Simplified the code for iteration over variables in describe_parts()
 # 2026-11-06 - Added function model_get to harmonize notebooks
+# 2026-11-10 - Corrected the initial update of the dictionary stateValue
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -112,7 +113,7 @@ class AdaptWith:
         # and used for initialization in 'cont'
         stateValue = {}
         stateValue = model.get_states_list()
-        stateValue.update(timeDiscreteStates)
+        stateValue.update(self.timeDiscreteStates)
         self.stateValue = stateValue
 
     # ---------------------------------------------------------------------------------------------

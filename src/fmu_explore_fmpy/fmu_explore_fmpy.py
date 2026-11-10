@@ -23,6 +23,7 @@
 # 2026-09-21 - Added docstrings to some functions. Took away in par() the variable index since not used
 # 2026-09-21 - Simplified the code for iteration over kwarg in par() and init()
 # 2026-09-21 - Simplified the code for iteration over variables in describe_parts()
+# 2026-11-10 - Corrected the initial update of the dictionary stateValue
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -103,7 +104,7 @@ class AdaptWith:
             for variable in self.model_description.modelVariables
             if variable.derivative is not None
         }
-        stateValue.update(timeDiscreteStates)
+        stateValue.update(self.timeDiscreteStates)
         self.stateValue = stateValue
 
         stateValueInitial = {}
