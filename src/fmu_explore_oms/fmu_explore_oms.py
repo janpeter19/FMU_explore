@@ -501,7 +501,7 @@ class AdaptWith:
         except PackageNotFoundError:
             print(" -Scipy: not installed in the notebook")
         print(" -OMSimulator:", oms.__version__)
-        print(" -FMU by:", self.f.generationTool)
+        print(" -FMU by:", self.model.generationTool)
         print(" -FMI:", self.model.fmiVersion)
         print(" -Type:", self.model.fmuType)
         print(" -Name:", self.model.modelName)
