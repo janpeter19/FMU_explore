@@ -386,10 +386,10 @@ class AdaptWith:
 
                 # Set simulation time
                 self.model.setStartTime = prevFinalTime
-                self.model.setStopTime = prevFinalTime + simulationTime
+                self.model.setStopTime = simulationTime
                 
-                print('StartTime', prevFinalTime)
-                print('StopTime', prevFinalTime + simulationTime)
+                print('StartTime -cont', prevFinalTime)
+                print('StopTime -cont', simulationTime)
 
                 # Simulate
                 self.model.initialize()
