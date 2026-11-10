@@ -344,9 +344,17 @@ class AdaptWith:
                 self.model.setValue(parLocation[key], parValue[key])
             self.model.setStopTime(simulationTime)
 
+            # Simulate
             self.model.initialize()
             self.model.simulate()
             simulationDone = True
+            
+            # Store results to the class
+            temp = scipy.io.loadmat('sim_res.mat')
+            t = temp['data_2'][0];
+            sim_res = DyMat.DyMatFile('sim_res.mat')
+            self.t = t
+            self.sim_res = sim_res
 
         elif mode in ["Continued", "continued", "cont"]:
 
@@ -384,17 +392,18 @@ class AdaptWith:
                 self.model.initialize()
                 self.model.simulate()
                 simulationDone = True
+
+                # Store results to the class
+                temp = scipy.io.loadmat('sim_res.mat')
+                t = temp['data_2'][0];
+                sim_res = DyMat.DyMatFile('sim_res.mat')
+                self.t = t
+                self.sim_res = sim_res
+
         else:
             print("Simulation mode not correct")
 
         if simulationDone:
-
-            # Open up result file
-            temp = scipy.io.loadmat('sim_res.mat')
-            t = temp['data_2'][0];
-            sim_res = DyMat.DyMatFile('sim_res.mat')
-            self.t = t
-            self.sim_res = sim_res
 
             # Plot results
             linetype = next(linecycler)
