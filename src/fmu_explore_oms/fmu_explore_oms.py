@@ -334,7 +334,7 @@ class AdaptWith:
 
         # Set options for the result file and more
         self.model.setResultFile('sim_res.mat')
-        context = {'self': self, 'model: self.model'}
+        context = {'self': self, 'model': self.model}
         if options is not None:
             for command in options: 
                 exec(command, {}, context)
