@@ -375,10 +375,13 @@ class AdaptWith:
                             self.model.setValue(key + "_start", self.stateValue[key])
                     elif key[-3] == "[":
                         self.model.setValue(key[:-3] + "_start" + key[-3:], self.stateValue[key])
+                        print(self.stateValue[key])
                     elif key[-4] == "[":
                         self.model.setValue(key[:-4] + "_start" + key[-4:], self.stateValue[key])
+                        print(self.stateValue[key])
                     elif key[-5] == "[":
                         self.model.setValue(key[:-5] + "_start" + key[-5:], self.stateValue[key])
+                        print(self.stateValue[key])
                     else:
                         print("The state vecotr has more than 1000 states")
                         break
