@@ -334,9 +334,10 @@ class AdaptWith:
 
         # Set options for the result file and more
         self.model.setResultFile('sim_res.mat')
+        context = {'self': self, 'model: self.model'}
         if options is not None:
             for command in options: 
-                eval(command)
+                exec(command, {}, context)
 
         # Run simulation
         if mode in ["Initial", "initial", "init"]:
@@ -353,15 +354,6 @@ class AdaptWith:
             self.model.initialize()
             self.model.simulate()
             simulationDone = True
-            
-            # Store results to the class
-            temp = loadmat('sim_res.mat')
-            t = temp['data_2'][0]
-            
-            self.t = t
-            self.prevFinalTime = float(t[-1])
-            sim_res = DyMatFile('sim_res.mat')
-            self.sim_res = sim_res
 
         elif mode in ["Continued", "continued", "cont"]:
 
@@ -400,19 +392,19 @@ class AdaptWith:
                 self.model.simulate()
                 simulationDone = True
 
-                # Store results to the class
-                temp = loadmat('sim_res.mat')
-                t = temp['data_2'][0]
-            
-                self.t = t
-                self.prevFinalTime = float(t[-1])
-                sim_res = DyMatFile('sim_res.mat')
-                self.sim_res = sim_res
-
         else:
             print("Simulation mode not correct")
 
         if simulationDone:
+
+            # Store results to the class
+            temp = loadmat('sim_res.mat')
+            t = temp['data_2'][0]
+            
+            self.t = t
+            self.prevFinalTime = float(t[-1])
+            sim_res = DyMatFile('sim_res.mat')
+            self.sim_res = sim_res
 
             # Plot results
             linetype = next(linecycler)
