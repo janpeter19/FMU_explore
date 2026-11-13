@@ -356,7 +356,8 @@ class AdaptWith:
             
             self.t = t
             self.prevFinalTime = float(t[-1])
-            self.sim_res = DyMatFile('sim_res.mat')
+            sim_res = DyMatFile('sim_res.mat')
+            self.sim_res = sim_res
 
         elif mode in ["Continued", "continued", "cont"]:
 
@@ -401,7 +402,8 @@ class AdaptWith:
             
                 self.t = t
                 self.prevFinalTime = float(t[-1])
-                self.sim_res = DyMatFile('sim_res.mat')
+                sim_res = DyMatFile('sim_res.mat')
+                self.sim_res = sim_res
 
         else:
             print("Simulation mode not correct")
