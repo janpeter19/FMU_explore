@@ -357,7 +357,7 @@ class AdaptWith:
             self.sim_res = sim_res
 
             # Store time from where simulation will start next time
-            self.prevFinalTime = [t-1]
+            self.prevFinalTime = t[-1]
 
         elif mode in ["Continued", "continued", "cont"]:
 
