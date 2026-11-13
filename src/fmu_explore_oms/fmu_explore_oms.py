@@ -422,8 +422,8 @@ class AdaptWith:
                 eval(command, {}, context)
 
             # Store final state values stateValue:
-            for key in list(stateValue.keys()):
-                stateValue[key] = self.model.getValue(key)
+            for key in self.stateValue.keys():
+                self.stateValue[key] = self.model.getValue(key)
         else:
             print("Error: No simulation done")
 
