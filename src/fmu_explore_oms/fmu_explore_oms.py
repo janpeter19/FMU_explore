@@ -17,6 +17,7 @@
 # 2026-11-07 - Added external_function usage
 # 2026-11-09 - Added code for handling simu('cont')
 # 2026-11-10 - Added code to initially make stateValue dictionary 
+# 2026-11-13 - Improve code simu('cont') including prevFinaltime etc
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -30,8 +31,8 @@ import matplotlib.image as img
 import pandas as pd
 
 import OMSimulator as oms
-import scipy.io
-import DyMat
+from scipy.io import loadmat
+from DyMat import DyMatFile
 
 
 def empty_function(*args, **kwargs):
@@ -350,10 +351,10 @@ class AdaptWith:
             simulationDone = True
             
             # Store results to the class
-            temp = scipy.io.loadmat('sim_res.mat')
+            temp = loadmat('sim_res.mat')
             t = temp['data_2'][0]
-            self.prevFinalTime = t[-1]
-            sim_res = DyMat.DyMatFile('sim_res.mat')
+            self.prevFinalTime = t[-1].copy()
+            sim_res = DyMatFile('sim_res.mat')
             self.t = t
             self.sim_res = sim_res
 
@@ -398,10 +399,10 @@ class AdaptWith:
                 simulationDone = True
 
                 # Store results to the class
-                temp = scipy.io.loadmat('sim_res.mat')
+                temp = loadmat('sim_res.mat')
                 t = temp['data_2'][0]
-                self.prevFinalTime = t[-1]
-                sim_res = DyMat.DyMatFile('sim_res.mat')
+                self.prevFinalTime = t[-1].copy()
+                sim_res = DyMatFile('sim_res.mat')
                 self.t = t
                 self.sim_res = sim_res
 
