@@ -373,6 +373,7 @@ class AdaptWith:
                             self.model.setValue(key[:-10] + "D_start", self.stateValue[key])
                         else:
                             self.model.setValue(key + "_start", self.stateValue[key])
+                            print(self.stateValue[key])
                     elif key[-3] == "[":
                         self.model.setValue(key[:-3] + "_start" + key[-3:], self.stateValue[key])
                         print(self.stateValue[key])
