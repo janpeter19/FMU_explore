@@ -324,6 +324,7 @@ class AdaptWith:
         # Prepare for simulation
         if hasattr(self, 'model') and self.model is not None:
             try:
+                self.model.terminate()
                 self.model.delete()
             except Exception:
                 pass
