@@ -343,6 +343,9 @@ class AdaptWith:
             # Set parameters and initial values:
             for key in parValue.keys():
                 self.model.setValue(parLocation[key], parValue[key])
+
+            # Set simulation time
+            self.model.setStartTime(0.0)
             self.model.setStopTime(simulationTime)
 
             # Simulate
@@ -388,8 +391,8 @@ class AdaptWith:
                         break
 
                 # Set simulation time
-                self.model.setStartTime = self.prevFinalTime
-                self.model.setStopTime = self.prevFinalTime + simulationTime
+                self.model.setStartTime(self.prevFinalTime)
+                self.model.setStopTime(self.prevFinalTime + simulationTime)
 
                 # Simulate
                 self.model.initialize()
