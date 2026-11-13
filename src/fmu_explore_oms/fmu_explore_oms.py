@@ -84,7 +84,7 @@ class AdaptWith:
 
         self.sim_res = None
         self.t = None
-        self.prevFinalTime = 0
+        self.prevFinalTime = 0.0
 
         # Create the model
         self.model = oms.FMU(self.fmu_model)
@@ -353,10 +353,10 @@ class AdaptWith:
             # Store results to the class
             temp = loadmat('sim_res.mat')
             t = temp['data_2'][0]
-            self.prevFinalTime = t[-1].copy()
-            sim_res = DyMatFile('sim_res.mat')
+            
             self.t = t
-            self.sim_res = sim_res
+            self.prevFinalTime = float(t[-1])
+            self.sim_res = DyMatFile('sim_res.mat')
 
         elif mode in ["Continued", "continued", "cont"]:
 
@@ -398,10 +398,10 @@ class AdaptWith:
                 # Store results to the class
                 temp = loadmat('sim_res.mat')
                 t = temp['data_2'][0]
-                self.prevFinalTime = t[-1].copy()
-                sim_res = DyMatFile('sim_res.mat')
+            
                 self.t = t
-                self.sim_res = sim_res
+                self.prevFinalTime = float(t[-1])
+                self.sim_res = DyMatFile('sim_res.mat')
 
         else:
             print("Simulation mode not correct")
