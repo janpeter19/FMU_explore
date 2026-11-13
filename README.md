@@ -4,7 +4,7 @@ The purpose of this software is to provide a simplified, yet powerful, interface
 The simplified interface is especially useful when simulations are used in teaching where the focus is on dynamics of the process, rather than on Python scripting. The examples below illustrate the virtue of the simplified user interface.
 
 ![](Fig_1.png)
-Figure 1. Two lines of code using FMU\_explore to make the diagrams
+Figure 1. Two lines of code using <code>FMU\_explore</code> to make the diagrams
 
 
 ![](Fig_2.png)
@@ -17,16 +17,16 @@ Here is a need in a Jupyter notebook context for:
 * Facilitate change of simulator-engine without changing the notebook
 * Same notebook for both Windows and Linux environment
 
-The package FMU\_explore try to meet these needs, by introducing a handfull of functions adapted to the context of the application. The user provides short names of important parameters and variables as well as definitions of standard plots. The main ideas behind the package were presented in OpenModelica workshops a few years ago, see references below.
+The package <code>FMU\_explore</code> try to meet these needs, by introducing a handfull of functions adapted to the context of the application. The user provides short names of important parameters and variables as well as definitions of standard plots. The main ideas behind the package were presented in OpenModelica workshops a few years ago, see references below.
 
 The package contains one module for each simulator-engine, and so far:
 
-* fmu\_explore\_pyfmi - using PyFMI - https://github.com/modelon-community/PyFMI
-* fmu\_explore\_fmpy - using FMPy - https://github.com/CATIA-Systems/FMPy
+* <code>fmu\_explore\_pyfmi</code> - using PyFMI - https://github.com/modelon-community/PyFMI
+* <code>fmu\_explore\_fmpy</code> - using FMPy - https://github.com/CATIA-Systems/FMPy
 
 Here is also under development a rudimentary pre-release version of:
 
-* fmu\_explore\_oms - using OMSimulator pre-release v3.0.0 - https://github.com/OpenModelica/OMSimulator
+* <code>fmu\_explore\_oms</code> - using OMSimulator pre-release v3.0.0 - https://github.com/OpenModelica/OMSimulator
 
 License information: The package FMU\_explore is shared under the GPL 3.0 license.
 
