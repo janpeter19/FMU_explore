@@ -369,23 +369,23 @@ class AdaptWith:
             else:
 
                 # Set parameters and intial state values:
-                for key in parValue.keys():
-                    self.model.setValue(parLocation[key], parValue[key])
+                for key in self.parValue.keys():
+                    self.model.setValue(parLocation[key], self.parValue[key])
 
-                for key in stateValue.keys():
+                for key in self.stateValue.keys():
                     if not key[-1] == "]":
                         if key[-3:] == "I.y":
-                            self.model.setValue(key[:-10] + "I_start", stateValue[key])
+                            self.model.setValue(key[:-10] + "I_start", self.stateValue[key])
                         elif key[-3:] == "D.x":
-                            self.model.setValue(key[:-10] + "D_start", stateValue[key])
+                            self.model.setValue(key[:-10] + "D_start", self.stateValue[key])
                         else:
-                            self.model.setValue(key + "_start", stateValue[key])
+                            self.model.setValue(key + "_start", self.stateValue[key])
                     elif key[-3] == "[":
-                        self.model.setValue(key[:-3] + "_start" + key[-3:], stateValue[key])
+                        self.model.setValue(key[:-3] + "_start" + key[-3:], self.stateValue[key])
                     elif key[-4] == "[":
-                        self.model.setValue(key[:-4] + "_start" + key[-4:], stateValue[key])
+                        self.model.setValue(key[:-4] + "_start" + key[-4:], self.stateValue[key])
                     elif key[-5] == "[":
-                        self.model.setValue(key[:-5] + "_start" + key[-5:], stateValue[key])
+                        self.model.setValue(key[:-5] + "_start" + key[-5:], self.stateValue[key])
                     else:
                         print("The state vecotr has more than 1000 states")
                         break
