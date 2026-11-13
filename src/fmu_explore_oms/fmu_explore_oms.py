@@ -356,6 +356,9 @@ class AdaptWith:
             self.t = t
             self.sim_res = sim_res
 
+            # Store time from where simulation will start next time
+            self.prevFinalTime = [t-1]
+
         elif mode in ["Continued", "continued", "cont"]:
 
             if prevFinalTime == 0:
@@ -402,6 +405,9 @@ class AdaptWith:
                 sim_res = DyMat.DyMatFile('sim_res.mat')
                 self.t = t
                 self.sim_res = sim_res
+                
+                # Store time from where simulation will start next time
+                self.prevFinalTime = t[-1]
 
         else:
             print("Simulation mode not correct")
@@ -419,12 +425,6 @@ class AdaptWith:
             # Store final state values stateValue:
             for key in list(stateValue.keys()):
                 stateValue[key] = self.model.getValue(key)
-
-            # Store time from where simulation will start next time
-            self.prevFinalTime = t[-1]
-            
-            #print('Next prevFinalTime', t[-1])
-
         else:
             print("Error: No simulation done")
 
