@@ -19,7 +19,7 @@
 # 2026-11-10 - Added code to initially make stateValue dictionary 
 # 2026-11-13 - Improve code simu('cont') including prevFinaltime etc
 # 2026-11-20 - Extended rudimentary describe_general with output value for name in parLocation
-# 2026-11-20 - Extended describe_general() with handling of parameter unit
+# 2026-11-20 - Extended describe_general() with handling of parameter unit and description
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -442,10 +442,16 @@ class AdaptWith:
 
         variables = self.model.variables
 
-        def get_unit(var_location, variables=variables):
+        def model_getUnit(var_location, variables=variables):
             for var in variables:
                 if var_location in str(var.name):
                     return var.unit
+            return None
+
+        def model_getDescription(var_location, variables=variables):
+            for var in variables:
+                if var_location in str(var.name):
+                    return var.description
             return None
 
         if name == "time":
@@ -457,9 +463,9 @@ class AdaptWith:
             print(model.description)
 
         elif name in parLocation.keys():
-            description = ""
+            description = model_getDescription(parLocation[name])
             value = model.getValue(parLocation[name])
-            unit = get_unit(parLocation[name])
+            unit = model_getUnit(parLocation[name])
             print(description, ":", np.round(value, decimals), "[", unit, "]")
 
         else:
