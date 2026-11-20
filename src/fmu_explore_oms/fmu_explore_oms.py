@@ -18,6 +18,7 @@
 # 2026-11-09 - Added code for handling simu('cont')
 # 2026-11-10 - Added code to initially make stateValue dictionary 
 # 2026-11-13 - Improve code simu('cont') including prevFinaltime etc
+# 2026-11-20 - Extended rudimentary describe_general with output value for name in parLocation
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -447,7 +448,7 @@ class AdaptWith:
             print(model.description)
 
         elif name in parLocation.keys():
-            value = model.getValue(parlLocation[name])
+            value = model.getValue(parLocation[name])
 
         else:
             print('Name not found.')
