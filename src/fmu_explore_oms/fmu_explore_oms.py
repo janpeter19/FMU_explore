@@ -442,7 +442,7 @@ class AdaptWith:
         
         variables = self.model.variables
         
-        def get_unit(var_location):
+        def get_unit(var_location, variables=variables):
             for var in variables:
                 if var_location in str(var.name):
                     return var.unit
