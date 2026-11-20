@@ -72,6 +72,8 @@ Improved code quality using pylint:
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though.
 
+2026-11-20 Work on development **version v1.2.9** and now introduced get_unit() in describe_general() after contact with Arun at LiU.
+
 2026-11-20 Public pre-release **version v1.2.8** and added a bit more in describe_general(). The work to complete simu('cont') needs to wait for correction in OMSimulator.
 
 2026-11-13 A lot of work around simu('cont') today. The problem most likely is the initiailization of the fmu in the "cont" case. Got input to changes from ChatGPT and can be implemented later for the other two modules, I think.

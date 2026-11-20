@@ -439,9 +439,9 @@ class AdaptWith:
 
         parLocation = self.parLocation
         model = self.model
-        
+
         variables = self.model.variables
-        
+
         def get_unit(var_location, variables=variables):
             for var in variables:
                 if var_location in str(var.name):
@@ -464,7 +464,6 @@ class AdaptWith:
 
         else:
             print('Name not found.')
-
 
     def process_diagram(self):
         """Plot the process diagram."""
