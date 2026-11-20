@@ -304,7 +304,6 @@ class AdaptWith:
         for command in diagrams:
             eval(command, {}, context)
 
-
     def simu(self, simulationTime=None, mode="Initial", options=None):
         """Simulation of the model. The given intial values and parameters are given in parValue 
         and given before. The plot window is also setup before."""

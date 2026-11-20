@@ -446,6 +446,12 @@ class AdaptWith:
         elif name == "process":
             print(model.description)
 
+        elif name in parLocation.keys():
+            value = model.getValue(parlLocation[name])
+
+        else:
+            print('Name not found.')
+
 
     def process_diagram(self):
         """Plot the process diagram."""
