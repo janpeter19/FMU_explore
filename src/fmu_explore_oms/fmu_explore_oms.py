@@ -448,7 +448,10 @@ class AdaptWith:
             print(model.description)
 
         elif name in parLocation.keys():
+            description = ""
             value = model.getValue(parLocation[name])
+            unit = ""
+            print(description, ":", np.round(value, decimals), "[", unit, "]")
 
         else:
             print('Name not found.')
