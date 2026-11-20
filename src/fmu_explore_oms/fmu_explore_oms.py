@@ -459,7 +459,7 @@ class AdaptWith:
         elif name in parLocation.keys():
             description = ""
             value = model.getValue(parLocation[name])
-            unit = get_unit(parLocation)
+            unit = get_unit(parLocation|name])
             print(description, ":", np.round(value, decimals), "[", unit, "]")
 
         else:
