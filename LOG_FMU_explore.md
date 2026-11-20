@@ -47,6 +47,7 @@ Specific goals - now reached:
 * Test if sufficient to create the model just inside the module / Done 260930
 * Correct check for existance of model in simu() for OMSimulato / Done 261105
 * Now disp() also works for OMSimulator / Done 261106
+* Now describe() also works for OMSimulator - first applications / Done 261120
 * 
 * Handle cstrProdMax etc for fmpy
 * Check describe() - commented in two applications during testing
@@ -72,7 +73,7 @@ Improved code quality using pylint:
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though.
 
-2026-11-20 Work on development **version v1.2.9** and now introduced get_unit() in describe_general() after contact with Arun at LiU.
+2026-11-20 Work on development **version v1.2.9** and now introduced model_getUnit() and model_getDescription() in describe_general() after contact with Arun at LiU.
 
 2026-11-20 Public pre-release **version v1.2.8** and added a bit more in describe_general(). The work to complete simu('cont') needs to wait for correction in OMSimulator.
 
