@@ -470,10 +470,10 @@ class AdaptWith:
             print(description, ":", np.round(value, decimals), "[", unit, "]")
 
         else:
-            description = model.get_Description(name)
+            description = model_getDescription(name)
             value = model.getValue(name)
             try:
-                unit = model.getUnit(name)
+                unit = model_getUnit(name)
             except FMUException:
                 unit = ""
             if unit == "":
