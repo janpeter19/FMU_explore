@@ -20,6 +20,7 @@
 # 2026-11-13 - Improve code simu('cont') including prevFinaltime etc
 # 2026-11-20 - Extended rudimentary describe_general with output value for name in parLocation
 # 2026-11-20 - Extended describe_general() with handling of parameter unit and description
+# 2026-11-23 - Extended describe_general() and now compliant with the two othre modules
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -469,7 +470,20 @@ class AdaptWith:
             print(description, ":", np.round(value, decimals), "[", unit, "]")
 
         else:
-            print('Name not found.')
+            description = model.get_Description(name)
+            value = model.getValue(name)
+            try:
+                unit = model.getUnit(name)
+            except FMUException:
+                unit = ""
+            if unit == "":
+                if not isinstance(value, np.bool_):
+                    print(description, ":", np.round(value, decimals))
+                else:
+                    print(description, ":", value)
+            else:
+                print(description, ":", np.round(value, decimals), "[", unit, "]")
+
 
     def process_diagram(self):
         """Plot the process diagram."""

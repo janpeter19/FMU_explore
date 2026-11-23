@@ -51,12 +51,15 @@ Specific goals - now reached:
 * 
 * Handle cstrProdMax etc for fmpy
 * Check describe() - commented in two applications during testing
+* Improve describe() for OMSimulator for variables not in parLocation
 * Take away model generation pyfmi and fmpy from the setup-file
 * And generate the states in the class
 * Handle default simulation time at least from OpenModelica FMUs
 * Handle component\_list\_minimum and bring to the class
 
 Tentative release note for version 1.3.0 say with new parameter list
+* Skip model and only use link to fmu_model
+* Transfer component_list_minimum to the class - and delete it from workspace
 
 Improved code quality using pylint:
 
@@ -67,7 +70,6 @@ Improved code quality using pylint:
 * change indentation to 4 spaces / done 1.2.3
 * docstrings for class and functions / done 1.2.3 
 * modify some expression of loops over dictionaries and lists / done now 1.2.4
-
 
 
 ## Day to day notes in reversed time order 
