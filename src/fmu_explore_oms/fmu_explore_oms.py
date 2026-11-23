@@ -21,6 +21,7 @@
 # 2026-11-20 - Extended rudimentary describe_general with output value for name in parLocation
 # 2026-11-20 - Extended describe_general() with handling of parameter unit and description
 # 2026-11-23 - Extended describe_general() and now compliant with the two othre modules
+# 2026-11-23 - Work on the function describe_parts()
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -426,6 +427,41 @@ class AdaptWith:
                 self.stateValue[key] = self.model.getValue(key)
         else:
             print("Error: No simulation done")
+            
+            
+    def describe_parts(self, component_list=[]):
+        
+        model = self.model
+        
+        def model_component(variable_name):
+            i = 0
+            name = ""
+            finished = False
+            if not variable_name[0] == "_":
+                while not finished:
+                    name = name + variable_name[i]
+                    if i == len(variable_name) - 1:
+                        finished = True
+                    elif variable_name[i + 1] in [".", "("]:
+                        finished = True
+                    else:
+                        i = i + 1
+            if name in [
+                "der",
+                "temp_1",
+                "temp_2",
+                "temp_3",
+                "temp_4",
+                "temp_5",
+                "temp_6",
+                "temp_7",
+            ]:
+                name = ""
+            return name
+            
+            
+        print(sorted(component_list, key=str.casefold))
+
 
     def describe_MSL(self):
         """List MSL version and components used."""
