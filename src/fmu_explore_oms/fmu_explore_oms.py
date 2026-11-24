@@ -22,6 +22,7 @@
 # 2026-11-20 - Extended describe_general() with handling of parameter unit and description
 # 2026-11-23 - Extended describe_general() and now compliant with the two othre modules
 # 2026-11-23 - Work on the function describe_parts()
+# 2026-11-24 - Finalized describe_parts()
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -430,9 +431,9 @@ class AdaptWith:
             
             
     def describe_parts(self, component_list=[]):
-        
+
         model = self.model
-        
+
         def model_component(variable_name):
             i = 0
             name = ""
@@ -458,8 +459,26 @@ class AdaptWith:
             ]:
                 name = ""
             return name
-            
-            
+
+        variables = [str(v.name) for v in model.variables]
+
+        for i, name in enumerate(variables):
+            component = model_component(variables[i])
+            if (component not in component_list) & (
+                component
+                not in [
+                    "",
+                    "BPL",
+                    "Customer",
+                    "today[1]",
+                    "today[2]",
+                    "today[3]",
+                    "temp_2",
+                    "temp_3",
+                ]
+            ):
+                component_list.append(component)
+
         print(sorted(component_list, key=str.casefold))
 
 
