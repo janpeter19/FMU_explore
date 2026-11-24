@@ -436,7 +436,7 @@ class AdaptWith:
     def describe_parts(self):
 
         model = self.model
-        component_list_minimum = self.component_list_minimum
+        component_list = self.component_list_minimum
 
         def model_component(variable_name):
             i = 0
@@ -468,7 +468,7 @@ class AdaptWith:
 
         for i, name in enumerate(variables):
             component = model_component(variables[i])
-            if (component not in component_list_minimum) & (
+            if (component not in component_list) & (
                 component
                 not in [
                     "",
