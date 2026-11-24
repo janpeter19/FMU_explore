@@ -78,7 +78,7 @@ class AdaptWith:
         self.parCheck = parCheck
         self.fmu_model = fmu_model
         self.fmu_process_diagram = fmu_process_diagram
-        self.component_list_minimum
+        self.component_list_minimum = component_list_minimum
         self.MSL_usage = MSL_usage
         self.MSL_version = MSL_version
         self.BPL_version = BPL_version
