@@ -47,7 +47,7 @@ Specific goals - now reached:
 * Test if sufficient to create the model just inside the module / Done 260930
 * Correct check for existance of model in simu() for OMSimulato / Done 261105
 * Now disp() also works for OMSimulator / Done 261106
-* Now describe() also works for OMSimulator - first applications / Done 261123
+* Now describe() also works for OMSimulator - first applications / Done 261125
 * 
 * Handle cstrProdMax etc for fmpy
 * Check describe() - commented in two applications during testing
@@ -74,6 +74,8 @@ Improved code quality using pylint:
 
 ## Day to day notes in reversed time order 
 Note that commit ID are now given after the date and description (i.e. opposite to Git).  Far from all commits are described here though.
+
+2026-11-25 Now describe_parts() is compliant with the same function for the other two modules. Pre-release **version v1.2.9** out and start developement of  **version v1.2.10**. Remains to do simu('cont') at least.
 
 2026-11-23 Now describe_general() is further extended and compliant with the function in the two other modules.
 
