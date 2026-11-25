@@ -24,6 +24,7 @@
 # 2026-11-23 - Work on the function describe_parts()
 # 2026-11-24 - Finalized describe_parts()
 # 2026-11-24 - Bring in component_list_minimu as a new parameter to the class
+# 2026-11-25 - Corrected component_list_minimum to remain minimum even after call of describe_parts()
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -436,7 +437,7 @@ class AdaptWith:
     def describe_parts(self):
 
         model = self.model
-        component_list = self.component_list_minimum
+        component_list = self.component_list_minimum.copy()
 
         def model_component(variable_name):
             i = 0
