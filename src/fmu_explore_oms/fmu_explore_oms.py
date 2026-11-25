@@ -25,6 +25,7 @@
 # 2026-11-24 - Finalized describe_parts()
 # 2026-11-24 - Bring in component_list_minimu as a new parameter to the class
 # 2026-11-25 - Corrected component_list_minimum to remain minimum even after call of describe_parts()
+# 2026-11-25 - Slight adjustemnet of simu('cont') by comment out print() commands for earlier troubleshooting
 # ------------------------------------------------------------------------------------------------------------------
 
 import platform
@@ -382,16 +383,16 @@ class AdaptWith:
                             self.model.setValue(key[:-10] + "D_start", self.stateValue[key])
                         else:
                             self.model.setValue(key + "_start", self.stateValue[key])
-                            print(self.stateValue[key])
+#                            print(self.stateValue[key])
                     elif key[-3] == "[":
                         self.model.setValue(key[:-3] + "_start" + key[-3:], self.stateValue[key])
-                        print(self.stateValue[key])
+#                        print(self.stateValue[key])
                     elif key[-4] == "[":
                         self.model.setValue(key[:-4] + "_start" + key[-4:], self.stateValue[key])
-                        print(self.stateValue[key])
+#                        print(self.stateValue[key])
                     elif key[-5] == "[":
                         self.model.setValue(key[:-5] + "_start" + key[-5:], self.stateValue[key])
-                        print(self.stateValue[key])
+#                        print(self.stateValue[key])
                     else:
                         print("The state vecotr has more than 1000 states")
                         break
